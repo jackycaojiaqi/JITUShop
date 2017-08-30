@@ -1,15 +1,14 @@
 package com.jitu.shop.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
-import com.jitu.shop.util.SPUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,26 +16,36 @@ import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
 /**
- * Created by jacky on 2017/8/28.
+ * Created by jacky on 2017/8/29.
  */
-public class SettingActivity extends BaseActivity {
+public class PayDepositeActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
-    @BindView(R.id.tv_setting_quit)
-    TextView tvSettingQuit;
+    @BindView(R.id.tv_pay_amount)
+    TextView tvPayAmount;
+    @BindView(R.id.tv_pay_project_name)
+    TextView tvPayProjectName;
+    @BindView(R.id.tv_pay_getmoney_name)
+    TextView tvPayGetmoneyName;
+    @BindView(R.id.tv_pay_username)
+    TextView tvPayUsername;
+    @BindView(R.id.btn_pay_wechat)
+    Button btnPayWechat;
+    @BindView(R.id.btn_pay_zhifubao)
+    Button btnPayZhifubao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTranslucentStatus();
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_pay_deposite);
         ButterKnife.bind(this);
-        initview();
-    } @Override
+    }
+    @Override
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(getApplicationContext());
@@ -48,23 +57,15 @@ public class SettingActivity extends BaseActivity {
         JPushInterface.onPause(getApplicationContext());
     }
 
-
-    private void initview() {
-        setText(tvTitle, "设置");
-    }
-
-    @OnClick({R.id.iv_back, R.id.tv_setting_quit})
+    @OnClick({R.id.iv_back, R.id.btn_pay_wechat, R.id.btn_pay_zhifubao})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.tv_setting_quit:
-                Intent intent = new Intent(context, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-                SPUtil.clear(context);
+            case R.id.btn_pay_wechat:
+                break;
+            case R.id.btn_pay_zhifubao:
                 break;
         }
     }

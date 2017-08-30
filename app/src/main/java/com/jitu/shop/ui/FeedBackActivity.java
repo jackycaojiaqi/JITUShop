@@ -1,15 +1,16 @@
 package com.jitu.shop.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
-import com.jitu.shop.util.SPUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,26 +18,32 @@ import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
 /**
- * Created by jacky on 2017/8/28.
+ * Created by jacky on 2017/8/29.
  */
-public class SettingActivity extends BaseActivity {
+public class FeedBackActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
-    @BindView(R.id.tv_setting_quit)
-    TextView tvSettingQuit;
+    @BindView(R.id.ll_feedback_talk)
+    LinearLayout llFeedbackTalk;
+    @BindView(R.id.ll_feedback_phone)
+    LinearLayout llFeedbackPhone;
+    @BindView(R.id.et_feedback_content)
+    EditText etFeedbackContent;
+    @BindView(R.id.btn_feedback_submit)
+    Button btnFeedbackSubmit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTranslucentStatus();
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_feedback);
         ButterKnife.bind(this);
-        initview();
-    } @Override
+    }
+    @Override
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(getApplicationContext());
@@ -48,23 +55,17 @@ public class SettingActivity extends BaseActivity {
         JPushInterface.onPause(getApplicationContext());
     }
 
-
-    private void initview() {
-        setText(tvTitle, "设置");
-    }
-
-    @OnClick({R.id.iv_back, R.id.tv_setting_quit})
+    @OnClick({R.id.iv_back, R.id.ll_feedback_talk, R.id.ll_feedback_phone, R.id.btn_feedback_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.tv_setting_quit:
-                Intent intent = new Intent(context, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-                SPUtil.clear(context);
+            case R.id.ll_feedback_talk:
+                break;
+            case R.id.ll_feedback_phone:
+                break;
+            case R.id.btn_feedback_submit:
                 break;
         }
     }

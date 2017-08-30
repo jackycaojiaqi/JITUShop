@@ -1,5 +1,6 @@
 package com.jitu.shop.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.jitu.shop.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by jacky on 2017/8/29.
@@ -60,6 +62,17 @@ public class CashManageActivity extends BaseActivity {
         initview();
         initdate();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(getApplicationContext());
+    }
 
     private void initview() {
         setText(tvTitle,"提现管理");
@@ -76,6 +89,7 @@ public class CashManageActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rll_cash_manage:
+                startActivity(new Intent(context,GetCashActivity.class));
                 break;
             case R.id.rll_cash_manage_detail:
                 break;

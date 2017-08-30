@@ -11,6 +11,7 @@ import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.OkHttpClient;
 
 /**
@@ -22,6 +23,9 @@ public class App extends Application {
         super.onCreate();
         //初始化 okgo
         initOkGo();
+        JPushInterface.init(getApplicationContext());//初始化极光推送
+        JPushInterface.setDebugMode(true);
+        JPushInterface.initCrashHandler(getApplicationContext());
         LiteOrmDBUtil.createDb(getApplicationContext(), "jitushop");
     }
     private void initOkGo() {

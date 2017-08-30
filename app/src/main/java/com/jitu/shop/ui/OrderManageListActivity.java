@@ -26,6 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by jacky on 2017/8/28.
@@ -52,7 +53,18 @@ public class OrderManageListActivity extends BaseActivity {
         ButterKnife.bind(this);
         initview();
         initdate();
+    } @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(getApplicationContext());
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(getApplicationContext());
+    }
+
 
     private void initview() {
         setText(tvTitle, "订单管理");

@@ -25,6 +25,7 @@ import com.lzy.okgo.model.Response;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by jacky on 2017/8/28.
@@ -51,6 +52,17 @@ public class ChangePassActivity extends BaseActivity {
         setContentView(R.layout.activity_change_pass);
         ButterKnife.bind(this);
         intview();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(getApplicationContext());
     }
 
     private void intview() {

@@ -1,5 +1,6 @@
 package com.jitu.shop.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -15,12 +16,6 @@ import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.ui.fragment.CommodityListOneFragment;
 import com.jitu.shop.ui.fragment.CommodityListThreeFragment;
 import com.jitu.shop.ui.fragment.CommodityListTwoFragment;
-import com.jitu.shop.ui.fragment.OrderListFiveFragment;
-import com.jitu.shop.ui.fragment.OrderListFourFragment;
-import com.jitu.shop.ui.fragment.OrderListOneFragment;
-import com.jitu.shop.ui.fragment.OrderListSixFragment;
-import com.jitu.shop.ui.fragment.OrderListThreeFragment;
-import com.jitu.shop.ui.fragment.OrderListTwoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +23,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by jacky on 2017/8/28.
  */
-public class CommodityManageListActivity  extends BaseActivity {
+public class CommodityManageListActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
@@ -43,6 +39,8 @@ public class CommodityManageListActivity  extends BaseActivity {
     TabLayout tlOrdermanageList;
     @BindView(R.id.vp_order_list)
     ViewPager vpOrderList;
+    @BindView(R.id.tv_commonditymanege_classify)
+    TextView tvCommonditymanegeClassify;
     private List<String> titles = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
 
@@ -54,7 +52,18 @@ public class CommodityManageListActivity  extends BaseActivity {
         ButterKnife.bind(this);
         initview();
         initdate();
+    } @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(getApplicationContext());
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(getApplicationContext());
+    }
+
 
     private void initview() {
         setText(tvTitle, "商品管理");
@@ -74,11 +83,14 @@ public class CommodityManageListActivity  extends BaseActivity {
     private void initdate() {
     }
 
-    @OnClick({R.id.iv_back, R.id.vp_order_list})
+    @OnClick({R.id.iv_back, R.id.vp_order_list, R.id.tv_commonditymanege_classify})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_commonditymanege_classify:
+                startActivity(new Intent(context,CategoryManegeActivity.class));
                 break;
         }
     }

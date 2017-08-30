@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.banner)
@@ -46,8 +47,20 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         initview();
         initdate();
+        JPushInterface.requestPermission(context);//请求权限
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(getApplicationContext());
+    }
 
     private void initview() {
         images.add("http://imgsrc.baidu.com/imgad/pic/item/267f9e2f07082838b5168c32b299a9014c08f1f9.jpg");

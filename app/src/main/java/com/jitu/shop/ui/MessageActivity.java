@@ -11,6 +11,7 @@ import com.jitu.shop.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by jacky on 2017/8/29.
@@ -32,6 +33,17 @@ public class MessageActivity extends BaseActivity {
         setContentView(R.layout.activity_message);
         ButterKnife.bind(this);
         initview();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(getApplicationContext());
     }
 
     private void initview() {

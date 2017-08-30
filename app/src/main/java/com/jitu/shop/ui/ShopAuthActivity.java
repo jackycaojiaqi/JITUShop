@@ -1,18 +1,16 @@
 package com.jitu.shop.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.widget.ClearableEditText;
-import com.white.countdownbutton.CountDownButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,34 +18,41 @@ import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
 /**
- * Created by jacky on 2017/8/28.
+ * Created by jacky on 2017/8/29.
  */
-public class ForgetPassActivity extends BaseActivity {
+public class ShopAuthActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
-    @BindView(R.id.et_forget_account)
-    ClearableEditText etForgetAccount;
-    @BindView(R.id.et_forget_pass)
-    ClearableEditText etForgetPass;
-    @BindView(R.id.cdb_forget_time)
-    CountDownButton cdbForgetTime;
-    @BindView(R.id.btn_forgetpass_next)
-    Button btnForgetpassNext;
-    private String type;
+    @BindView(R.id.iv_cash_auth_pic1)
+    ImageView ivCashauthPic1;
+    @BindView(R.id.iv_cash_auth_pic2)
+    ImageView ivCashauthPic2;
+    @BindView(R.id.et_cash_auth_user_name)
+    ClearableEditText etCashauthUserName;
+    @BindView(R.id.et_cash_auth_shop_phone)
+    ClearableEditText etCashauthShopPhone;
+    @BindView(R.id.et_cash_auth_shop_name)
+    ClearableEditText etCashauthShopName;
+    @BindView(R.id.et_cash_auth_address)
+    ClearableEditText etCashauthAddress;
+    @BindView(R.id.tv_cash_auth_category)
+    TextView tvCashauthCategory;
+    @BindView(R.id.rll_cash_auth_category)
+    RelativeLayout rllCashauthCategory;
+    @BindView(R.id.btn_cash_auth_save)
+    Button btnCashauthSave;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTranslucentStatus();
-        setContentView(R.layout.activity_forgetpass);
+        setContentView(R.layout.activity_shopauth);
         ButterKnife.bind(this);
-        type = getIntent().getStringExtra(AppConstant.OBJECT);
         initview();
-        initdate();
     }
     @Override
     protected void onResume() {
@@ -62,26 +67,22 @@ public class ForgetPassActivity extends BaseActivity {
     }
 
     private void initview() {
-        setText(tvTitle,"重置密码");
+        setText(tvTitle,"实体认证");
     }
 
-    private void initdate() {
-    }
-
-    @OnClick({R.id.iv_back, R.id.cdb_forget_time, R.id.btn_forgetpass_next})
+    @OnClick({R.id.iv_back, R.id.iv_cash_auth_pic1, R.id.iv_cash_auth_pic2, R.id.rll_cash_auth_category, R.id.btn_cash_auth_save})
     public void onViewClicked(View view) {
-        Intent intent;
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.cdb_forget_time:
+            case R.id.iv_cash_auth_pic1:
                 break;
-            case R.id.btn_forgetpass_next:
-                intent = new Intent(context, ChangePassActivity.class);
-                intent.putExtra(AppConstant.OBJECT, type);
-                startActivity(intent);
-                finish();
+            case R.id.iv_cash_auth_pic2:
+                break;
+            case R.id.rll_cash_auth_category:
+                break;
+            case R.id.btn_cash_auth_save:
                 break;
         }
     }

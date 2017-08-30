@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
-import com.jitu.shop.util.SPUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,23 +17,23 @@ import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
 /**
- * Created by jacky on 2017/8/28.
+ * Created by jacky on 2017/8/29.
  */
-public class SettingActivity extends BaseActivity {
+public class DepositeActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
-    @BindView(R.id.tv_setting_quit)
-    TextView tvSettingQuit;
+    @BindView(R.id.rll_deposite_goto)
+    RelativeLayout rllDepositeGoto;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTranslucentStatus();
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_deposite);
         ButterKnife.bind(this);
         initview();
     } @Override
@@ -50,21 +50,19 @@ public class SettingActivity extends BaseActivity {
 
 
     private void initview() {
-        setText(tvTitle, "设置");
+        setText(tvTitle,"交纳保证金");
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_setting_quit})
+    @OnClick({R.id.iv_back, R.id.rll_deposite_goto})
     public void onViewClicked(View view) {
+        Intent intent ;
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.tv_setting_quit:
-                Intent intent = new Intent(context, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            case R.id.rll_deposite_goto:
+                intent = new Intent(context,PayDepositeActivity.class);
                 startActivity(intent);
-                finish();
-                SPUtil.clear(context);
                 break;
         }
     }
