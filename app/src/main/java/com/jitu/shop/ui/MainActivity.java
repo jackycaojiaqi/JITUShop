@@ -22,6 +22,7 @@ import com.jitu.shop.util.ToastUtil;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.socks.library.KLog;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class MainActivity extends BaseActivity {
         initview();
         initdate();
         JPushInterface.requestPermission(context);//请求权限
+        String id = JPushInterface.getRegistrationID(context);
     }
 
     @Override
@@ -72,7 +74,6 @@ public class MainActivity extends BaseActivity {
         banner.setImages(images);
         //banner设置方法全部调用完毕时最后调用
         banner.start();
-
     }
 
     private void initdate() {

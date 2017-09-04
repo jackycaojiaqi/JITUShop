@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:id="@+id/iv_order_goods_list_pic"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_no_pic" />
+
+        <TextView
+            android:id="@+id/tv_order_goods_list_name"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            android:maxLines="3"
+            android:text="你号你你号你号你号你号你号号你号"
+            android:textColor="@color/black_3a3a3a"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tv_order_goods_list_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="75dp"
+            android:text="颜色分类："
+            android:textColor="@color/gray_deep"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tv_order_goods_list_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="25dp"
+            android:text="¥ 45"
+            android:textColor="@color/black_3a3a3a"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tv_order_goods_list_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="55dp"
+            android:text="x 1"
+            android:textColor="@color/gray_deep"
+            android:textSize="12dp" />
+    </RelativeLayout>
+</LinearLayout>

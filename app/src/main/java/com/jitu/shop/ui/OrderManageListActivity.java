@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.adapter.MainMenuAdapter;
 import com.jitu.shop.adapter.WelcomePagerAdapter;
@@ -53,7 +54,9 @@ public class OrderManageListActivity extends BaseActivity {
         ButterKnife.bind(this);
         initview();
         initdate();
-    } @Override
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(getApplicationContext());
@@ -72,17 +75,41 @@ public class OrderManageListActivity extends BaseActivity {
         titles.add("待付款");
         titles.add("待发货");
         titles.add("已发货");
-        titles.add("待评价");
         titles.add("待售后");
-        fragments.add(new OrderListOneFragment());
-        fragments.add(new OrderListTwoFragment());
-        fragments.add(new OrderListThreeFragment());
-        fragments.add(new OrderListFourFragment());
-        fragments.add(new OrderListFiveFragment());
-        fragments.add(new OrderListSixFragment());
+        OrderListOneFragment fragment1 = new OrderListOneFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AppConstant.TYPE, "1");
+        fragment1.setArguments(bundle);
+
+        OrderListOneFragment fragment2 = new OrderListOneFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString(AppConstant.TYPE, "2");
+        fragment2.setArguments(bundle2);
+
+        OrderListOneFragment fragment3 = new OrderListOneFragment();
+        Bundle bundle3 = new Bundle();
+        bundle3.putString(AppConstant.TYPE, "3");
+        fragment3.setArguments(bundle3);
+
+        OrderListOneFragment fragment4 = new OrderListOneFragment();
+        Bundle bundle4 = new Bundle();
+        bundle4.putString(AppConstant.TYPE, "4");
+        fragment4.setArguments(bundle4);
+
+        OrderListOneFragment fragment5 = new OrderListOneFragment();
+        Bundle bundle5 = new Bundle();
+        bundle5.putString(AppConstant.TYPE, "5");
+        fragment5.setArguments(bundle5);
+
+
+        fragments.add(fragment1);
+        fragments.add(fragment2);
+        fragments.add(fragment3);
+        fragments.add(fragment4);
+        fragments.add(fragment5);
         WelcomePagerAdapter adapter = new WelcomePagerAdapter(getSupportFragmentManager(), fragments, titles);
         vpOrderList.setAdapter(adapter);
-        vpOrderList.setOffscreenPageLimit(2);
+        vpOrderList.setOffscreenPageLimit(1);
         tlOrdermanageList.setupWithViewPager(vpOrderList);
         tlOrdermanageList.setTabMode(TabLayout.MODE_FIXED);
     }

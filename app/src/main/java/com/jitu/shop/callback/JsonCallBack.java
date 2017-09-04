@@ -3,6 +3,7 @@ package com.jitu.shop.callback;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.lzy.okgo.callback.AbsCallback;
+import com.socks.library.KLog;
 
 import java.lang.reflect.Type;
 
@@ -35,6 +36,8 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
         JsonReader jsonReader = new JsonReader(body.charStream());
         if (type != null) date = gson.fromJson(jsonReader, type);
         if (clazz != null) date = gson.fromJson(jsonReader, clazz);
+
+
         return date;
     }
 }

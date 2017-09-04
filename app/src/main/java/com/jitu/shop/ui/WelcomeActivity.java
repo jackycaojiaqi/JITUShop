@@ -1,7 +1,9 @@
 package com.jitu.shop.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -43,13 +45,19 @@ public class WelcomeActivity extends BaseActivity {
         setTranslucentStatus();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        if (!StringUtil.isEmptyandnull((String) SPUtil.get(context, AppConstant.TOKEN, ""))) {
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        ButterKnife.bind(this);
-        initview();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!StringUtil.isEmptyandnull((String) SPUtil.get(context, AppConstant.TOKEN, ""))) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    ButterKnife.bind((Activity) context);
+                    initview();
+                }
+            }
+        }, 2000);
     }
 
     private void initview() {
@@ -59,7 +67,6 @@ public class WelcomeActivity extends BaseActivity {
         WelcomePagerAdapter adapter = new WelcomePagerAdapter(getSupportFragmentManager(), fragments, titles);
         vpWelcome.setAdapter(adapter);
         vpWelcome.setOffscreenPageLimit(2);
-
         vpWelcome.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
