@@ -23,6 +23,9 @@ import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.vondear.rxtools.RxBarUtils;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -43,13 +46,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTranslucentStatus();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initview();
         initdate();
         JPushInterface.requestPermission(context);//请求权限
         String id = JPushInterface.getRegistrationID(context);
+        Beta.checkUpgrade();
     }
 
     @Override

@@ -8,8 +8,14 @@ android {
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi' , 'x86', 'armeabi-v7a', 'x86_64';
+        }
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -20,6 +26,7 @@ android {
             storePassword 'caojiaqi1314'
         }
     }
+
     buildTypes {
         debug {
             // 是否开启混淆
@@ -37,6 +44,7 @@ android {
 }
 
 dependencies {
+    compile 'com.android.support:multidex:1.0.1'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -67,7 +75,6 @@ dependencies {
     compile 'com.afollestad.material-dialogs:core:0.9.4.5'
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
     compile 'com.jaredrummler:material-spinner:1.1.0'
-    compile files('libs/gson-2.2.4.jar')
     compile files('libs/klog.jar')
     compile files('libs/lite-orm-1.9.2.jar')
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
@@ -76,8 +83,12 @@ dependencies {
     compile 'com.github.lguipeng:AnimCheckBox:1.0.1'
     compile files('libs/jcore-android-1.1.6.jar')
     compile files('libs/jpush-android-3.0.8.jar')
-
     compile 'in.srain.cube:ultra-ptr:1.0.11'
-
     compile 'org.simple:androideventbus:1.0.5.1'
+    compile 'com.github.vondear:RxTools:v1.7.3.9'
+
+    //bugly 错误提交
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    //bugly 版本更新
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
 }

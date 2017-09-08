@@ -1,12 +1,18 @@
 package com.jitu.shop;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
+import com.jitu.shop.ui.MainActivity;
 import com.jitu.shop.util.LiteOrmDBUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.vondear.rxtools.RxUtils;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -17,17 +23,24 @@ import okhttp3.OkHttpClient;
 /**
  * Created by jacky on 2017/8/28.
  */
-public class App extends Application {
+public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
         //初始化 okgo
         initOkGo();
+        //初始化工具类
+        RxUtils.init(this);
+        Beta.autoCheckUpgrade = false;
+        Beta.initDelay = 2 * 1000;
+        Beta.canShowUpgradeActs.add(MainActivity.class);
+        Bugly.init(getApplicationContext(), "4ab93d8a42", true);
         JPushInterface.init(getApplicationContext());//初始化极光推送
         JPushInterface.setDebugMode(true);
         JPushInterface.initCrashHandler(getApplicationContext());
         LiteOrmDBUtil.createDb(getApplicationContext(), "jitushop");
     }
+
     private void initOkGo() {
         //---------这里给出的是示例代码,告诉你可以这么传,实际使用的时候,根据需要传,不需要就不传-------------//
 //        HttpHeaders headers = new HttpHeaders();

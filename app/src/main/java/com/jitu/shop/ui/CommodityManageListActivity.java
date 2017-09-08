@@ -24,6 +24,8 @@ import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
+import com.vondear.rxtools.RxBarUtils;
+import com.vondear.rxtools.view.dialog.RxDialog;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -79,6 +81,7 @@ public class CommodityManageListActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         initview();
         initdate();
+
     }
 
     @Override

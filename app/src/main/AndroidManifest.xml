@@ -161,6 +161,19 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="30f02ca499a667452d2fbd92" /> <!--  </>值来自开发者平台取得的AppKey-->
+
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:theme="@android:style/Theme.Translucent" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
     <!-- Required  一些系统要求的权限，如访问网络等-->
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
