@@ -11,23 +11,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.adapter.OrderListAdapter;
 import com.jitu.shop.base.BaseFragment;
-import com.jitu.shop.callback.JsonCallBack;
 import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.ui.DeliveryInfoActity;
+import com.jitu.shop.ui.DeliveryPickPeopleActity;
 import com.jitu.shop.ui.OrdrInfoActivity;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
-import com.jitu.shop.util.ScreenUtils;
 import com.jitu.shop.widget.DividerItemDecoration;
-import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
+import com.vondear.rxtools.view.tooltips.RxToolTip;
+import com.vondear.rxtools.view.tooltips.RxToolTipsManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,11 +41,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
-import in.srain.cube.views.ptr.header.MaterialHeader;
-import in.srain.cube.views.ptr.header.StoreHouseHeader;
 
 /**
  * Created by jacky on 2017/7/11.
@@ -53,6 +52,8 @@ public class OrderListOneFragment extends BaseFragment {
     @BindView(R.id.srl_order_list)
     SwipeRefreshLayout srlOrderList;
     Unbinder unbinder;
+    @BindView(R.id.rll_order_content)
+    RelativeLayout rllOrderContent;
     private Context context;
     private BaseQuickAdapter adapter;
     private List<OrderListEntity.ResultBean> list_order = new ArrayList<>();
@@ -90,6 +91,8 @@ public class OrderListOneFragment extends BaseFragment {
         initdate();
     }
 
+    private PopupWindow popupWindow;
+
     private void initview() {
         //设置下拉刷新
         srlOrderList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -126,6 +129,42 @@ public class OrderListOneFragment extends BaseFragment {
                 Intent intent = new Intent(context, OrdrInfoActivity.class);
                 intent.putExtra(AppConstant.OBJECT, list_order.get(position).getOrderCode());
                 startActivity(intent);
+            }
+        });
+
+        popupWindow = new PopupWindow(context);
+        View contentView = LayoutInflater.from(context).inflate(
+                R.layout.pop_pick_send_type, null);
+        final PopupWindow popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.color.transparent));
+        TextView tv_kuaidi = (TextView) contentView.findViewById(R.id.tv_pop_kuaidi);
+        TextView tv_paidan = (TextView) contentView.findViewById(R.id.tv_pop_paidan);
+        tv_kuaidi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,DeliveryInfoActity.class);
+                startActivity(intent);
+                popupWindow.dismiss();
+            }
+        });
+        tv_paidan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context,DeliveryPickPeopleActity.class);
+                startActivity(intent);
+                popupWindow.dismiss();
+            }
+        });
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                // 设置好参数之后再show
+                popupWindow.showAsDropDown(view);
+
             }
         });
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

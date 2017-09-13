@@ -6,5 +6,10 @@
         <item>@color/yellow_dan</item>
         <item>@color/green_626262</item>
     </integer-array>
-    F
+    <integer-array name="deliver_type">
+        <item>1212</item>
+        <item>1323</item>
+        <item>434</item>
+        <item>1212</item>
+    </integer-array>
 </resources>

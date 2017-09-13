@@ -22,7 +22,9 @@ import com.jitu.shop.entity.BasePaserEntity;
 import com.jitu.shop.entity.CommondityListEntity;
 import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.ui.CommodityManageListActivity;
 import com.jitu.shop.ui.OrdrInfoActivity;
+import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.StringUtil;
@@ -82,9 +84,6 @@ public class CommodityListOneFragment extends BaseFragment {
             type = "2";//上架
         } else if (result.equals("2")) {
             page_num = 1;
-            type = "3";//售完
-        } else if (result.equals("3")) {
-            page_num = 2;
             type = "1";//下架
         }
         initview();
@@ -100,6 +99,15 @@ public class CommodityListOneFragment extends BaseFragment {
                 pagenum = 1;
                 initdate();
                 adapter.showAllCheckBox(false);
+                //下拉刷新后充值列表显示状态
+                switch (page_num) {
+                    case 0:
+                        CommodityManageListActivity.is_1show_checkbox = false;
+                        break;
+                    case 1:
+                        CommodityManageListActivity.is_2show_checkbox = false;
+                        break;
+                }
             }
         });
         srlOrderList.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -142,7 +150,6 @@ public class CommodityListOneFragment extends BaseFragment {
     }
 
     private void initdate() {
-        adapter.showAllCheckBox(false);
         Map<String, String> map = new HashMap<>();
         map.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
         map.put("type", type);
@@ -180,6 +187,7 @@ public class CommodityListOneFragment extends BaseFragment {
                             adapter.notifyDataSetChanged();
                             adapter.loadMoreComplete();
                         }
+
                     }
                 }
 
@@ -187,22 +195,25 @@ public class CommodityListOneFragment extends BaseFragment {
         });
     }
 
-    private String ids;
+    private String ids = " ";
 
     private void doGoodsAction(String action_type) {//0上架，1下架，2全店下架，3删除
-        ids = "";
-        for (CommondityListEntity.ResultBean resultBean : list_order) {
-            if (resultBean.is_check()) {
-
-                ids = ids + "|" + resultBean.getId();
-                KLog.e(ids);
+        DialogFactory.showRequestDialog(context);
+        //不是全店下架都要拼接ids
+        if (!action_type.equals("2")) {
+            ids = "";
+            for (CommondityListEntity.ResultBean resultBean : list_order) {
+                if (resultBean.is_check()) {
+                    ids = ids + "|" + resultBean.getId();
+                    KLog.e(ids);
+                }
             }
-        }
-        ids = ids.substring(1, ids.length());
-        KLog.e(ids);
-        if (ids.length() <= 0) {
-            ToastUtil.show(context, "请至少选择一种商品");
-            return;
+            ids = ids.substring(1, ids.length());
+            KLog.e(ids);
+            if (ids.length() <= 0) {
+                ToastUtil.show(context, "请至少选择一种商品");
+                return;
+            }
         }
         Map<String, String> map = new HashMap<>();
         map.put("token", (String) SPUtil.get(getActivity(), AppConstant.TOKEN, ""));
@@ -211,18 +222,24 @@ public class CommodityListOneFragment extends BaseFragment {
         NetClient.getInstance(BasePaserEntity.class).Get(context, AppConstant.BASE_URL + AppConstant.URL_BATCHRELEASE, map, new MyCallBack() {
             @Override
             public void onResponse(Response object) {
+                DialogFactory.hideRequestDialog();
                 BasePaserEntity entity = (BasePaserEntity) object.body();
                 if (entity.getErrorCode() == 0) {
                     ToastUtil.show(context, "操作成功");
                 } else {
                     ToastUtil.show(context, "操作失败");
                 }
+                pagenum=1;
+                date_type=0;
                 initdate();
+                //重置布局状态
                 EventBus.getDefault().post("invisible_view", "invisible_view");
+                adapter.showAllCheckBox(false);
             }
 
             @Override
             public void onFailure(int code) {
+                DialogFactory.hideRequestDialog();
                 srlOrderList.setRefreshing(false);
             }
         });
@@ -237,22 +254,22 @@ public class CommodityListOneFragment extends BaseFragment {
     private void commondity_action_up_or_down(int object) {
         if (page_num == 0 && object == 0) {//接受上架事件并处理
             doGoodsAction("1");
-        } else if (page_num == 1 && object == 1) {//接受下架事件并处理
-            doGoodsAction("0");
-        } else if (page_num == 2 && object == 2) {//接受下架事件并处理
+        } else {//接受下架事件并处理
             doGoodsAction("0");
         }
     }
 
     @Subscriber(tag = "commondity_action_delete")
     private void commondity_action_delete(int object) {
-        if (page_num == 0 && object == 0) {//接受上架事件并处理
-            doGoodsAction("2");
-        } else if (page_num == 1 && object == 1) {//接受下架事件并处理
-            doGoodsAction("2");
-        } else if (page_num == 2 && object == 2) {//接受下架事件并处理
-            doGoodsAction("2");
+        doGoodsAction("2");
+    }
+
+    @Subscriber(tag = "commondity_action_del_select")
+    private void commondity_action_del_select(int object) {
+        if (object == 1) {
+            doGoodsAction("3");
         }
+
     }
 
     @Override

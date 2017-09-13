@@ -26,6 +26,7 @@ import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
 import com.vondear.rxtools.RxBarUtils;
 import com.vondear.rxtools.view.dialog.RxDialog;
+import com.vondear.rxtools.view.dialog.RxDialogSureCancel;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -67,15 +68,13 @@ public class CommodityManageListActivity extends BaseActivity {
 
     private List<String> titles = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
-    private boolean is_1show_checkbox = false;
-    private boolean is_2show_checkbox = false;
-    private boolean is_3show_checkbox = false;
+    public static boolean is_1show_checkbox = false;
+    public static boolean is_2show_checkbox = false;
     private int select_page = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTranslucentStatus();
         setContentView(R.layout.activity_commonditymanage_list);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
@@ -100,29 +99,22 @@ public class CommodityManageListActivity extends BaseActivity {
     private void initview() {
         setText(tvTitle, "商品管理");
         titles.add("出售中");
-        titles.add("已售完");
         titles.add("已下架");
         CommodityListOneFragment fragment1 = new CommodityListOneFragment();
         Bundle bundle = new Bundle();
         bundle.putString(AppConstant.TYPE, "1");
         fragment1.setArguments(bundle);
 
+
         CommodityListOneFragment fragment2 = new CommodityListOneFragment();
         Bundle bundle2 = new Bundle();
         bundle2.putString(AppConstant.TYPE, "2");
         fragment2.setArguments(bundle2);
 
-        CommodityListOneFragment fragment3 = new CommodityListOneFragment();
-        Bundle bundle3 = new Bundle();
-        bundle3.putString(AppConstant.TYPE, "3");
-        fragment3.setArguments(bundle3);
-
         fragments.add(fragment1);
         fragments.add(fragment2);
-        fragments.add(fragment3);
         WelcomePagerAdapter adapter = new WelcomePagerAdapter(getSupportFragmentManager(), fragments, titles);
         vpOrderList.setAdapter(adapter);
-        vpOrderList.setOffscreenPageLimit(2);
         tlOrdermanageList.setupWithViewPager(vpOrderList);
         tlOrdermanageList.setTabMode(TabLayout.MODE_FIXED);
         vpOrderList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -137,20 +129,16 @@ public class CommodityManageListActivity extends BaseActivity {
                 if (position == 0) {
                     cbCommondityListAction.setText("批量下架");
                     tvCommondityGoodsAction.setText("下架");
-                    tvCommondityGoodsDelete.setClickable(true);
-                    tvCommondityGoodsDelete.setBackgroundResource(R.color.main_color);
+                    tvCommondityGoodsDelete.setText("全部下架");
                 } else {
                     cbCommondityListAction.setText("批量上架");
                     tvCommondityGoodsAction.setText("上架");
-                    tvCommondityGoodsDelete.setBackgroundResource(R.color.gray_c);
-                    tvCommondityGoodsDelete.setClickable(false);
+                    tvCommondityGoodsDelete.setText("删除");
                 }
                 //切换tab后需要  把状态置成false
                 is_1show_checkbox = false;
                 is_2show_checkbox = false;
-                is_3show_checkbox = false;
                 EventBus.getDefault().post(false, "checkbox_action");
-
             }
 
             @Override
@@ -174,7 +162,6 @@ public class CommodityManageListActivity extends BaseActivity {
                 startActivity(new Intent(context, ClassifyManageActivity.class));
                 break;
             case R.id.cb_commondity_list_action:
-
                 if (select_page == 0) {//下架
                     tvCommondityGoodsAction.setText("下架");
                     is_1show_checkbox = !is_1show_checkbox;
@@ -193,24 +180,64 @@ public class CommodityManageListActivity extends BaseActivity {
                         llCommondityAction.setVisibility(View.VISIBLE);
                     }
                     EventBus.getDefault().post(is_2show_checkbox, "checkbox_action");
-                } else if (select_page == 2) {//上架
-                    tvCommondityGoodsAction.setText("上架");
-                    is_3show_checkbox = !is_3show_checkbox;
-                    if (!is_3show_checkbox) {
-                        llCommondityAction.setVisibility(View.GONE);
-                    } else {
-                        llCommondityAction.setVisibility(View.VISIBLE);
-                    }
-                    EventBus.getDefault().post(is_3show_checkbox, "checkbox_action");
                 }
-
+                switch (select_page) {
+                    case 0:
+                        if (!is_1show_checkbox) {
+                            cbCommondityListAction.setText("批量下架");
+                        } else {
+                            cbCommondityListAction.setText("取消");
+                        }
+                        break;
+                    case 1:
+                        if (!is_2show_checkbox) {
+                            cbCommondityListAction.setText("批量上架");
+                        } else {
+                            cbCommondityListAction.setText("取消");
+                        }
+                        break;
+                }
 
                 break;
             case R.id.tv_commondity_goods_action:
                 EventBus.getDefault().post(select_page, "commondity_action_up_or_down");
                 break;
             case R.id.tv_commondity_goods_delete:
-                EventBus.getDefault().post(select_page, "commondity_action_delete");
+                if (is_1show_checkbox) {
+                    final RxDialogSureCancel rxDialogSureCancel = new RxDialogSureCancel(context);//提示弹窗
+                    rxDialogSureCancel.setContent("确认下架全店商品？");
+                    rxDialogSureCancel.getTvSure().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EventBus.getDefault().post(select_page, "commondity_action_delete");
+                            rxDialogSureCancel.cancel();
+                        }
+                    });
+                    rxDialogSureCancel.getTvCancel().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rxDialogSureCancel.cancel();
+                        }
+                    });
+                    rxDialogSureCancel.show();
+                }else if (is_2show_checkbox){
+                    final RxDialogSureCancel rxDialogSureCancel = new RxDialogSureCancel(context);//提示弹窗
+                    rxDialogSureCancel.setContent("确认删除商品？");
+                    rxDialogSureCancel.getTvSure().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EventBus.getDefault().post(select_page, "commondity_action_del_select");
+                            rxDialogSureCancel.cancel();
+                        }
+                    });
+                    rxDialogSureCancel.getTvCancel().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rxDialogSureCancel.cancel();
+                        }
+                    });
+                    rxDialogSureCancel.show();
+                }
                 break;
         }
     }
@@ -219,11 +246,11 @@ public class CommodityManageListActivity extends BaseActivity {
     private void invisible_view(String object) {
         llCommondityAction.setVisibility(View.GONE);
         if (select_page == 0) {//下架
+            cbCommondityListAction.setText("批量下架");
             is_1show_checkbox = false;
         } else if (select_page == 1) {//上架
+            cbCommondityListAction.setText("批量上架");
             is_2show_checkbox = false;
-        } else if (select_page == 2) {//上架
-            is_3show_checkbox = false;
         }
 
     }

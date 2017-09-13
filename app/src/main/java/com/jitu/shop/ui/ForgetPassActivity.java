@@ -42,7 +42,6 @@ public class ForgetPassActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTranslucentStatus();
         setContentView(R.layout.activity_forgetpass);
         ButterKnife.bind(this);
         type = getIntent().getStringExtra(AppConstant.OBJECT);

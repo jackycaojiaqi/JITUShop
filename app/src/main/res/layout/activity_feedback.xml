@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="◇在线客服"
+            android:text="◇ 在线客服"
             android:textColor="@color/black_3a3a3a"
             android:textSize="14dp" />
     </LinearLayout>
@@ -38,10 +38,16 @@
         android:background="@drawable/shap_rec_10dp_main_color"
         android:gravity="center">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_qq" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="客服QQ：999999"
+            android:layout_marginLeft="10dp"
+            android:text="2445957652"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -54,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="◇电话客服"
+            android:text="◇ 电话客服"
             android:textColor="@color/black_3a3a3a"
             android:textSize="14dp" />
     </LinearLayout>
@@ -65,11 +71,18 @@
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/shap_rec_10dp_blue"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_customer_service" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="40080652828"
             android:textColor="@color/white" />
     </LinearLayout>
@@ -83,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="◇意见反馈"
+            android:text="◇ 意见反馈"
             android:textColor="@color/black_3a3a3a"
             android:textSize="14dp" />
     </LinearLayout>
@@ -92,13 +105,13 @@
         android:id="@+id/et_feedback_content"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:textSize="14dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/shap_rec_2dp_search_white_bg"
         android:gravity="left"
         android:hint="请输入意见和建议..."
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:textSize="14dp" />
 
     <Button
         android:id="@+id/btn_feedback_submit"

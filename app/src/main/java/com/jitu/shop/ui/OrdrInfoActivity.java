@@ -70,7 +70,6 @@ public class OrdrInfoActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTranslucentStatus();
         setContentView(R.layout.activity_order_info);
         ButterKnife.bind(this);
         order_code = getIntent().getStringExtra(AppConstant.OBJECT);

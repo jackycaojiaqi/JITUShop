@@ -51,9 +51,9 @@ public class MainMenuAdapter extends BaseQuickAdapter<MainMenuEntity.ResultBean.
         } else if (item.getCM_MenuId() == 4) {
             helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_merchant_management);
         } else if (item.getCM_MenuId() == 5) {
-            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_message_management);
+            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_management_profile);
         } else if (item.getCM_MenuId() == 6) {
-            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_setting_management);
+            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_message_management);
         }
         helper.setText(R.id.tv_main_menu_name, item.getCM_MenuName());
     }

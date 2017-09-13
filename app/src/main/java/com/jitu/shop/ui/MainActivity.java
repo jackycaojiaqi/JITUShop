@@ -2,11 +2,10 @@ package com.jitu.shop.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jitu.shop.AppConstant;
@@ -14,18 +13,14 @@ import com.jitu.shop.R;
 import com.jitu.shop.adapter.MainMenuAdapter;
 import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.callback.JsonCallBack;
-import com.jitu.shop.entity.LoginEntity;
 import com.jitu.shop.entity.MainMenuEntity;
 import com.jitu.shop.util.GlideImageLoader;
-import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.ToastUtil;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
-import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
-import com.vondear.rxtools.RxBarUtils;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -33,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity extends BaseActivity {
@@ -40,6 +36,8 @@ public class MainActivity extends BaseActivity {
     Banner banner;
     @BindView(R.id.rv_main)
     RecyclerView rvMain;
+    @BindView(R.id.iv_setting)
+    ImageView ivSetting;
     private List<String> images = new ArrayList<>();
     private BaseQuickAdapter adapter;
 
@@ -52,7 +50,8 @@ public class MainActivity extends BaseActivity {
         initdate();
         JPushInterface.requestPermission(context);//请求权限
         String id = JPushInterface.getRegistrationID(context);
-        Beta.checkUpgrade();
+        KLog.e(id);
+        Beta.checkUpgrade(false, false);
     }
 
     @Override
@@ -77,6 +76,7 @@ public class MainActivity extends BaseActivity {
         banner.setImages(images);
         //banner设置方法全部调用完毕时最后调用
         banner.start();
+
     }
 
     private void initdate() {
@@ -107,10 +107,10 @@ public class MainActivity extends BaseActivity {
                                                 startActivity(new Intent(context, ShopCenterActivity.class));
                                                 break;
                                             case 4:
-                                                startActivity(new Intent(context, MessageActivity.class));
+                                                startActivity(new Intent(context, ShopInfoActivity.class));
                                                 break;
                                             case 5:
-                                                startActivity(new Intent(context, SettingActivity.class));
+                                                startActivity(new Intent(context, MessageActivity.class));
                                                 break;
                                         }
                                     }
@@ -132,5 +132,15 @@ public class MainActivity extends BaseActivity {
                         super.onError(response);
                     }
                 });
+    }
+
+    @OnClick({R.id.iv_setting, R.id.rv_main})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_setting:
+                startActivity(new Intent(context, SettingActivity.class));
+                break;
+
+        }
     }
 }

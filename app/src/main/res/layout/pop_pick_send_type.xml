@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="110dp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="101dp"
+            android:background="@drawable/shap_rec_2dp_search_white_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_pop_kuaidi"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="快递"
+                android:textColor="@color/black_3a3a3a" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/gray_c" />
+
+            <TextView
+                android:id="@+id/tv_pop_paidan"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="派单"
+                android:textColor="@color/main_color" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

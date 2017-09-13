@@ -42,7 +42,6 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTranslucentStatus();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         new Handler().postDelayed(new Runnable() {

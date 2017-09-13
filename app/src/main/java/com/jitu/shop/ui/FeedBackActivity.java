@@ -61,7 +61,6 @@ public class FeedBackActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTranslucentStatus();
         setContentView(R.layout.activity_feedback);
         ButterKnife.bind(this);
     }

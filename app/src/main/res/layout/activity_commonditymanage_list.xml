@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="45dp"
         android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
@@ -74,7 +74,6 @@
             android:id="@+id/vp_order_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="40dp"
             android:background="@color/white"></android.support.v4.view.ViewPager>
     </LinearLayout>
 
@@ -87,7 +86,8 @@
         android:gravity="center"
         android:text="分类管理"
         android:textColor="@color/white"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_commondity_action"
@@ -96,8 +96,9 @@
         android:layout_alignParentBottom="true"
         android:background="@color/main_color"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="horizontal"
-        android:visibility="gone">
+      >
 
 
         <TextView
@@ -110,13 +111,7 @@
             android:textColor="@color/white"
             android:textSize="14dp" />
 
-        <View
 
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:background="@color/white" />
 
         <TextView
             android:id="@+id/tv_commondity_goods_action"
@@ -125,6 +120,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="上架"
+            android:background="@color/blue_1b99d1"
             android:textColor="@color/white"
             android:textSize="14dp" />
     </LinearLayout>

@@ -33,11 +33,12 @@ public class App extends MultiDexApplication {
         RxUtils.init(this);
         Beta.autoCheckUpgrade = false;
         Beta.initDelay = 2 * 1000;
+        Beta.showInterruptedStrategy = false;
         Beta.canShowUpgradeActs.add(MainActivity.class);
         Bugly.init(getApplicationContext(), "4ab93d8a42", true);
         JPushInterface.init(getApplicationContext());//初始化极光推送
         JPushInterface.setDebugMode(true);
-        JPushInterface.initCrashHandler(getApplicationContext());
+//        JPushInterface.initCrashHandler(getApplicationContext());
         LiteOrmDBUtil.createDb(getApplicationContext(), "jitushop");
     }
 

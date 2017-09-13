@@ -14,13 +14,12 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@color/red_dan" />
+            android:background="@drawable/img_merchant_background_map" />
 
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
             android:padding="15dp"
             android:src="@drawable/ic_back" />
 
@@ -28,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="18dp"
             android:text="商家中心"
             android:textColor="@color/white"
             android:textSize="16dp" />
@@ -118,6 +117,7 @@
         android:id="@+id/rll_shop_center_about_us"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:visibility="gone"
         android:background="@color/white"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
@@ -141,6 +141,7 @@
 
     <View
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="10dp"
         android:background="@color/gray_dan" />
 
@@ -150,6 +151,7 @@
         android:layout_height="50dp"
         android:background="@color/white"
         android:paddingLeft="10dp"
+        android:visibility="gone"
         android:paddingRight="10dp">
 
         <TextView

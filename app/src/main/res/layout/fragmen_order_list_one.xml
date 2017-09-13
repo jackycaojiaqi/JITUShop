@@ -3,7 +3,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
-
+    android:id="@+id/rll_order_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">

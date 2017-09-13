@@ -1,11 +1,10 @@
 package com.jitu.shop.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jitu.shop.R;
@@ -14,54 +13,46 @@ import com.jitu.shop.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
 
 /**
- * Created by jacky on 2017/8/29.
+ * Created by jacky on 2017/9/13.
  */
-public class DepositeActivity extends BaseActivity {
+public class CheckShopTypeActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
-    @BindView(R.id.rll_deposite_goto)
-    RelativeLayout rllDepositeGoto;
+    @BindView(R.id.rv_shop_type_left)
+    RecyclerView rvShopTypeLeft;
+    @BindView(R.id.rv_shop_type_right)
+    RecyclerView rvShopTypeRight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_deposite);
+        setContentView(R.layout.layoutactivity_check_shop_type);
         ButterKnife.bind(this);
         initview();
-    } @Override
-    protected void onResume() {
-        super.onResume();
-        JPushInterface.onResume(getApplicationContext());
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JPushInterface.onPause(getApplicationContext());
+        initdate();
     }
 
 
     private void initview() {
-        setText(tvTitle,"交纳保证金");
+        setText(tvTitle,"类目选择");
     }
 
-    @OnClick({R.id.iv_back, R.id.rll_deposite_goto})
+    private void initdate() {
+    }
+
+    @OnClick({R.id.iv_back, R.id.tv_title})
     public void onViewClicked(View view) {
-        Intent intent ;
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.rll_deposite_goto:
-                intent = new Intent(context,PayDepositeActivity.class);
-                startActivity(intent);
+            case R.id.tv_title:
                 break;
         }
     }

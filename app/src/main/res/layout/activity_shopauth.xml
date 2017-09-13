@@ -13,9 +13,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:text="手持省份证"
+                    android:text="手持身份证"
                     android:textColor="@color/gray_deep" />
 
                 <View
@@ -206,8 +206,17 @@
                     android:layout_marginLeft="70dp"
                     android:background="@null"
                     android:hint="必填"
+                    android:paddingRight="50dp"
                     android:textColorHint="@color/gray_deep"
                     android:textSize="14dp" />
+
+                <ImageView
+                    android:id="@+id/iv_cash_auth_address_ding"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="4dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/entity_authentication_btn_location" />
             </RelativeLayout>
 
             <View
