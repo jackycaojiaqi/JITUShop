@@ -2,6 +2,7 @@ package com.jitu.shop.util;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -28,6 +29,9 @@ public class ImagUtil {
     }
 
     public static void set(Context context, File url, View view) {
+        Glide.with(context).load(url).error(R.drawable.ic_no_pic).centerCrop().placeholder(R.drawable.ic_no_pic).into((ImageView) view);
+    }
+    public static void set(Context context, Uri url, View view) {
         Glide.with(context).load(url).error(R.drawable.ic_no_pic).centerCrop().placeholder(R.drawable.ic_no_pic).into((ImageView) view);
     }
     public static void destroy(Context context){

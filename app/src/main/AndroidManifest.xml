@@ -85,6 +85,9 @@
         <activity
             android:name="io.github.xudaojie.qrcodelib.CaptureActivity"
             android:launchMode="singleTask" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:launchMode="singleTask" />
 
         <!-- Required SDK核心功能-->
         <activity
