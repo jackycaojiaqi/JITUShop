@@ -8,7 +8,6 @@
     <include layout="@layout/common_head" />
 
 
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -100,6 +99,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_arrow_right" />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
@@ -151,16 +151,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="新消息设置"
+            android:text="消息推送开关"
             android:textColor="@color/black_3a3a3a"
             android:textSize="16dp" />
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow_right" />
+            android:src="@drawable/ic_arrow_right"
+            android:visibility="gone" />
+
+        <Switch
+            android:id="@+id/switch_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="" />
     </RelativeLayout>
 
     <View

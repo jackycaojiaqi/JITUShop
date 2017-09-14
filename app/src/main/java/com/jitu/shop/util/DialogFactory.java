@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -49,6 +50,20 @@ public class DialogFactory {
         }
         mDialog = DialogFactory.creatRequestDialog(context, "加载中...", false);
         mDialog.show();
+        mDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (DialogFactory.isShow()) {
+                        dialog.dismiss();
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     public static void showRequestDialog(final Context context, String tip) {
@@ -103,6 +118,7 @@ public class DialogFactory {
             }
         }
     }
+
     public static boolean isShow() {
         if (mDialog != null) {
             if (mDialog.isShowing()) {

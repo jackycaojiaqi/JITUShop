@@ -76,15 +76,15 @@ public class OrderListOneFragment extends BaseFragment {
         Bundle bundle = getArguments();
         String result = bundle.getString(AppConstant.TYPE);
         if (result.equals("1")) {
-            type_code = "0";
+            type_code = "0";//全部
         } else if (result.equals("2")) {
-            type_code = "1";
+            type_code = "1";//代付款
         } else if (result.equals("3")) {
-            type_code = "10";
+            type_code = "10";//待发货
         } else if (result.equals("4")) {
-            type_code = "15";
+            type_code = "15";//已发货
         } else if (result.equals("5")) {
-            type_code = "20";
+            type_code = "20";//待售后
         }
         KLog.e(type_code);
         initview();
@@ -145,7 +145,7 @@ public class OrderListOneFragment extends BaseFragment {
         tv_kuaidi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,DeliveryInfoActity.class);
+                Intent intent = new Intent(context, DeliveryInfoActity.class);
                 startActivity(intent);
                 popupWindow.dismiss();
             }
@@ -154,7 +154,7 @@ public class OrderListOneFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context,DeliveryPickPeopleActity.class);
+                Intent intent = new Intent(context, DeliveryPickPeopleActity.class);
                 startActivity(intent);
                 popupWindow.dismiss();
             }
@@ -162,8 +162,18 @@ public class OrderListOneFragment extends BaseFragment {
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                // 设置好参数之后再show
-                popupWindow.showAsDropDown(view);
+                if (type_code.equals("0")) {
+                    popupWindow.showAsDropDown(view);
+                } else if (type_code.equals("1")) {
+
+                } else if (type_code.equals("10")) {
+                    popupWindow.showAsDropDown(view);
+                } else if (type_code.equals("15")) {
+
+                } else if (type_code.equals("20")) {
+
+                }
+
 
             }
         });

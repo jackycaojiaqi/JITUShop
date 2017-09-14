@@ -4,4 +4,5 @@
     <string name="null_date">暂无数据</string>
     <string name="submit">提交</string>
     <string name="get_auth_code">获取验证码</string>
+    <string name="enter_twice_quite">再点一次退出</string>
 </resources>
