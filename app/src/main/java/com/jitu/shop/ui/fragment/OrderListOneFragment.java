@@ -22,6 +22,7 @@ import com.jitu.shop.adapter.OrderListAdapter;
 import com.jitu.shop.base.BaseFragment;
 import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.ui.AfterSaleActivity;
 import com.jitu.shop.ui.DeliveryInfoActity;
 import com.jitu.shop.ui.DeliveryPickPeopleActity;
 import com.jitu.shop.ui.OrdrInfoActivity;
@@ -131,7 +132,14 @@ public class OrderListOneFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                pagenum++;
+                date_type = 2;
+                initdate();
+            }
+        }); //=========================recycleview配置结束
         popupWindow = new PopupWindow(context);
         View contentView = LayoutInflater.from(context).inflate(
                 R.layout.pop_pick_send_type, null);
@@ -162,29 +170,24 @@ public class OrderListOneFragment extends BaseFragment {
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (type_code.equals("0")) {
+                if (type_code.equals("0")) {//全部
                     popupWindow.showAsDropDown(view);
-                } else if (type_code.equals("1")) {
+                } else if (type_code.equals("1")) {//代付款
 
-                } else if (type_code.equals("10")) {
+                } else if (type_code.equals("10")) {//待发货
                     popupWindow.showAsDropDown(view);
-                } else if (type_code.equals("15")) {
+                } else if (type_code.equals("15")) {//已发货
 
-                } else if (type_code.equals("20")) {
-
+                } else if (type_code.equals("20")) {//售后
+                    Intent intent = new Intent(context, AfterSaleActivity.class);
+                    intent.putExtra(AppConstant.OBJECT, "");
+                    startActivity(intent);
                 }
 
 
             }
         });
-        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                pagenum++;
-                date_type = 2;
-                initdate();
-            }
-        }); //=========================recycleview配置结束
+
 
 
     }
@@ -233,7 +236,8 @@ public class OrderListOneFragment extends BaseFragment {
 
             @Override
             public void onFailure(int code) {
-                srlOrderList.setRefreshing(false);
+                if (srlOrderList != null)
+                    srlOrderList.setRefreshing(false);
             }
         });
     }

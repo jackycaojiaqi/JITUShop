@@ -39,6 +39,11 @@ public class AppConstant {
     public static final String LON = "lon";
     public static final String GENDER = "gender";
 
+    public static final String AUTH_STATE ="auth_state" ;
+    public static final String UNPAY_STATE ="unpay_state" ;
+    public static final String UNDELIVER_STATE ="undeliver_state" ;
+    public static final String DELIVERED_STATE ="delivered_state" ;
+    public static final String AFTERSALE_STATE ="aftersale_state" ;
     public static final String CALLFROM = "callfrom";
     public static final String CALLTO = "callto";
 
@@ -64,5 +69,21 @@ public class AppConstant {
     public static final String URL_USERREVICEPASSWORD = "/api/Home/UserRevicePassword";//用户修改密码
     public static final String URL_ADMINLOGIN = "/api/Home/AdminLogin";//商家登录
     public static final String URL_ADMINREVICEPASSWORD = "/api/Home/AdminRevicePassword";//用户修改密码
+
+    //认证
+    public static final String URL_ADMINAUTHENTICATION = "/api/Admin/Authentication";//提交认证信息
+    public static final String URL_ADMINAUTHINFO = "/api/Admin/QueryAuthentication";//获取认证信息
+
+    //地区信息
+    public static final String URL_ADMINQUERYALLPATH = "/api/Admin/QueryAllpath";//获取地区信息
+
+    //行业分类
+    public static final String URL_ADMINQUERYINDUSTRIES= "/api/Admin/QueryIndustries";//获取地区信息
+
+
+    //获取图片前缀地址
+    public static final String IMAGPATH= BASE_URL+"/api/Tool/GetImg/?path=";//获取地区信息
+
+    public static final String URL_QUERYMYSTATE= BASE_URL+"/api/Admin/QueryMyState"; //首页获取我的状态
 
 }

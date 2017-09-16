@@ -50,7 +50,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/gray_c" />
+                    android:background="@color/gray_dan" />
 
                 <ImageView
                     android:id="@+id/iv_cash_auth_pic1"
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:text="营业执照或店铺实拍照"
+                    android:text="营业执照"
                     android:textColor="@color/gray_deep" />
 
                 <View
@@ -73,7 +73,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/gray_c" />
+                    android:background="@color/gray_dan" />
 
                 <ImageView
                     android:id="@+id/iv_cash_auth_pic2"
@@ -115,7 +115,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/gray_c" />
+                android:background="@color/gray_dan" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -139,6 +139,7 @@
                     android:layout_marginLeft="70dp"
                     android:background="@null"
                     android:hint="必填"
+                    android:maxLength="11"
                     android:inputType="number"
                     android:textColorHint="@color/gray_deep"
                     android:textSize="14dp" />
@@ -149,7 +150,7 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/gray_c" />
+                android:background="@color/gray_dan" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -182,7 +183,49 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/gray_c" />
+                android:background="@color/gray_dan" />
+
+            <RelativeLayout
+                android:id="@+id/rll_auth_pick_addr"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="选择地区"
+                    android:textColor="@color/black_3a3a3a"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/tv_auth_pick_addr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="50dp"
+                    android:gravity="center_vertical"
+                    android:text="请点击选择省市区"
+                    android:textColorHint="@color/gray_deep"
+                    android:textSize="14dp" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/gray_dan" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -214,17 +257,11 @@
                     android:id="@+id/iv_cash_auth_address_ding"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:padding="4dp"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/entity_authentication_btn_location" />
+                    android:background="@drawable/entity_authentication_btn_location"
+                    android:padding="4dp" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/gray_c" />
 
             <RelativeLayout
                 android:id="@+id/rll_cash_auth_category"

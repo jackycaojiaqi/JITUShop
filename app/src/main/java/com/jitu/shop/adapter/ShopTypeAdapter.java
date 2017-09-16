@@ -1,12 +1,23 @@
 package com.jitu.shop.adapter;
 
+import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
-import com.jitu.shop.entity.MainMenuEntity;
+import com.jitu.shop.entity.OrderListEntity;
+import com.jitu.shop.entity.ShopTypeEntity;
+import com.jitu.shop.ui.OrdrInfoActivity;
+import com.vondear.rxtools.view.tooltips.RxToolTip;
+import com.vondear.rxtools.view.tooltips.RxToolTipsManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,34 +45,26 @@ import java.util.List;
  * ━━━━━━神兽出没━━━━━━
  * Created by jacky on 17/3/10.
  */
-public class MainMenuAdapter extends BaseQuickAdapter<MainMenuEntity.ResultBean.TableBean, BaseViewHolder> {
-    private List<MainMenuEntity.ResultBean.TableBean> list;
+public class ShopTypeAdapter extends BaseQuickAdapter<ShopTypeEntity.ResultBean, BaseViewHolder> {
+    private List<ShopTypeEntity.ResultBean> list = new ArrayList<>();
+    private OrderListGoodsAdapter adapter;
+    RxToolTipsManager mRxToolTipsManager;
+    RxToolTip.Builder builder;
+    View tipvView;
 
-    public MainMenuAdapter(int layoutResId, List data) {
+    public ShopTypeAdapter(int layoutResId, List data) {
         super(layoutResId, data);
         list = data;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MainMenuEntity.ResultBean.TableBean item) {
-        if (item.getCM_MenuId() == 1) {
-            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_order_management);
-        } else if (item.getCM_MenuId() == 2) {
-            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_commodity_management);
-        } else if (item.getCM_MenuId() == 3) {
-            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_cash_withdrawal_management);
-        } else if (item.getCM_MenuId() == 4) {
-            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_merchant_management);
-        } else if (item.getCM_MenuId() == 5) {
-            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_management_profile);
-        } else if (item.getCM_MenuId() == 6) {
-            helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_message_management);
-        }
-        helper.setText(R.id.tv_main_menu_name, item.getCM_MenuName());
-        if (item.is_show_spot()) {
-            helper.getView(R.id.iv_red_spot).setVisibility(View.VISIBLE);
+    protected void convert(final BaseViewHolder helper, final ShopTypeEntity.ResultBean item) {
+        helper.setText(R.id.tv_shop_type_name, item.getName() + " ");
+        if (item.is_show_line()) {
+            helper.getView(R.id.v_shop_type_line).setVisibility(View.VISIBLE);
         } else {
-            helper.getView(R.id.iv_red_spot).setVisibility(View.GONE);
+            helper.getView(R.id.v_shop_type_line).setVisibility(View.GONE);
         }
+
     }
 }

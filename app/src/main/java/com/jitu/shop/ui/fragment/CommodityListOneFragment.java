@@ -158,7 +158,8 @@ public class CommodityListOneFragment extends BaseFragment {
         NetClient.getInstance(CommondityListEntity.class).Get(getActivity(), AppConstant.BASE_URL + AppConstant.URL_QUERYPRODUCTS, map, new MyCallBack() {
             @Override
             public void onFailure(int code) {
-                srlOrderList.setRefreshing(false);
+                if (srlOrderList != null)
+                    srlOrderList.setRefreshing(false);
             }
 
             @Override
@@ -229,8 +230,8 @@ public class CommodityListOneFragment extends BaseFragment {
                 } else {
                     ToastUtil.show(context, "操作失败");
                 }
-                pagenum=1;
-                date_type=0;
+                pagenum = 1;
+                date_type = 0;
                 initdate();
                 //重置布局状态
                 EventBus.getDefault().post("invisible_view", "invisible_view");

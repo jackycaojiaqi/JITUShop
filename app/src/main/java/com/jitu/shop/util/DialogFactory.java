@@ -6,13 +6,19 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jitu.shop.R;
+import com.vondear.rxtools.view.dialog.RxDialog;
 
 
 public class DialogFactory {
@@ -334,4 +340,19 @@ public class DialogFactory {
         builder.create().show();
     }
 
+    public static void showBigImageView(Context context, Uri uri) {
+        final RxDialog rxDialog = new RxDialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.image, (ViewGroup) null);
+        view.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                rxDialog.cancel();
+            }
+        });
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.page_item);
+        imageView.setImageURI(uri);
+        rxDialog.setContentView(view);
+        rxDialog.show();
+        rxDialog.setFullScreen();
+    }
 }

@@ -2,6 +2,7 @@ package com.jitu.shop.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -15,11 +16,17 @@ import com.jitu.shop.R;
 import com.jitu.shop.adapter.MainMenuAdapter;
 import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.callback.JsonCallBack;
+import com.jitu.shop.entity.BasePaserEntity;
 import com.jitu.shop.entity.MainMenuEntity;
+import com.jitu.shop.entity.StateEntity;
+import com.jitu.shop.interfaces.MyCallBack;
 import com.jitu.shop.util.GlideImageLoader;
+import com.jitu.shop.util.NetClient;
+import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.ToastUtil;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
 import com.tencent.bugly.beta.Beta;
@@ -40,7 +47,10 @@ public class MainActivity extends BaseActivity {
     RecyclerView rvMain;
     @BindView(R.id.iv_setting)
     ImageView ivSetting;
+    @BindView(R.id.srl_main)
+    SwipeRefreshLayout srlMain;
     private List<String> images = new ArrayList<>();
+    private List<MainMenuEntity.ResultBean.TableBean> list = new ArrayList<>();
     private BaseQuickAdapter adapter;
 
     @Override
@@ -50,11 +60,13 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         initview();
         initdate();
+        initOtherDate();
         JPushInterface.requestPermission(context);//请求权限
         String id = JPushInterface.getRegistrationID(context);
-        KLog.e(id);
+        KLog.e(id + " " + SPUtil.get(context, AppConstant.TOKEN, ""));
         Beta.checkUpgrade(false, false);
     }
+
 
     @Override
     protected void onResume() {
@@ -78,6 +90,13 @@ public class MainActivity extends BaseActivity {
         banner.setImages(images);
         //banner设置方法全部调用完毕时最后调用
         banner.start();
+        srlMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initdate();
+            }
+        });
+        srlMain.setProgressViewOffset(true, 10, 100);
 
     }
 
@@ -87,9 +106,17 @@ public class MainActivity extends BaseActivity {
                 .execute(new JsonCallBack<MainMenuEntity>(MainMenuEntity.class) {
                     @Override
                     public void onSuccess(Response<MainMenuEntity> response) {
+                        srlMain.setRefreshing(false);
                         if (response.body().getErrorCode() == 0) {
                             if (response.body().getResult().getTable().size() > 0) {
-                                adapter = new MainMenuAdapter(R.layout.item_main_menu, response.body().getResult().getTable());
+                                list = response.body().getResult().getTable();
+                                if (auth_state_unpass) {
+                                    response.body().getResult().getTable().get(3).setIs_show_spot(true);
+                                }
+                                if (order_state_show) {
+                                    response.body().getResult().getTable().get(0).setIs_show_spot(true);
+                                }
+                                adapter = new MainMenuAdapter(R.layout.item_main_menu, list);
                                 //设置布局管理器
                                 rvMain.setLayoutManager(new GridLayoutManager(context, 3));
                                 adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -131,6 +158,56 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<MainMenuEntity> response) {
+                        srlMain.setRefreshing(false);
+                        super.onError(response);
+                    }
+                });
+    }
+
+    private boolean auth_state_unpass = true;
+    private boolean order_state_show = true;
+
+    private void initOtherDate() {
+        HttpParams params = new HttpParams();
+        params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
+        NetClient.getInstance(StateEntity.class).Get(context, AppConstant.BASE_URL + AppConstant.URL_QUERYMYSTATE, params, new MyCallBack() {
+            @Override
+            public void onFailure(int code) {
+
+            }
+
+            @Override
+            public void onResponse(Response object) {
+                StateEntity result = (StateEntity) object.body();
+                if (result != null) {
+                    SPUtil.put(context, AppConstant.AUTH_STATE, result.getResult().getIspass());
+                    SPUtil.put(context, AppConstant.UNPAY_STATE, result.getResult().getUnpaid());
+                    SPUtil.put(context, AppConstant.UNDELIVER_STATE, result.getResult().getPiad());
+                    SPUtil.put(context, AppConstant.DELIVERED_STATE, result.getResult().getShipped());
+                    SPUtil.put(context, AppConstant.AFTERSALE_STATE, result.getResult().getCompleted());
+                    if (result.getResult().getIspass() == 0) {
+                        auth_state_unpass = true;
+                    } else {
+                        auth_state_unpass = false;
+                    }
+                    if (result.getResult().getCompleted() + result.getResult().getUnpaid() + result.getResult().getPiad() + result.getResult().getShipped() > 0) {
+                        order_state_show = true;
+                    } else {
+                        order_state_show = false;
+                    }
+                }
+            }
+        });
+        OkGo.<MainMenuEntity>get(AppConstant.BASE_URL + AppConstant.URL_QUERYMYSTATE)
+                .tag(this)
+                .execute(new JsonCallBack<MainMenuEntity>(MainMenuEntity.class) {
+                    @Override
+                    public void onSuccess(Response<MainMenuEntity> response) {
+
+                    }
+
+                    @Override
+                    public void onError(Response<MainMenuEntity> response) {
                         super.onError(response);
                     }
                 });
@@ -142,9 +219,9 @@ public class MainActivity extends BaseActivity {
             case R.id.iv_setting:
                 startActivity(new Intent(context, SettingActivity.class));
                 break;
-
         }
     }
+
     //记录用户首次点击返回键的时间
     private long firstTime = 0;
 

@@ -61,6 +61,7 @@ public class DeliveryInfoActity extends BaseActivity {
         list_type.add("天天快递");
         list_type.add("优速快递");
         list_type.add("EMS");
+        list_type.add("其他");
         spinner.setItems(list_type);
         spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override

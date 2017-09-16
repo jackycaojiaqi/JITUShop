@@ -79,6 +79,16 @@ public class MainMenuEntity {
             private String CM_Url;
             private int CM_Type;
             private int CM_State;
+            private boolean is_show_spot = false;
+
+
+            public boolean is_show_spot() {
+                return is_show_spot;
+            }
+
+            public void setIs_show_spot(boolean is_show_spot) {
+                this.is_show_spot = is_show_spot;
+            }
 
             public int getCM_MenuId() {
                 return CM_MenuId;
