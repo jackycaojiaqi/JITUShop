@@ -29,6 +29,7 @@ import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.StringUtil;
 import com.jitu.shop.util.ToastUtil;
+import com.jitu.shop.widget.DividerGridItemDecoration;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
@@ -108,6 +109,8 @@ public class CommodityListOneFragment extends BaseFragment {
                         CommodityManageListActivity.is_2show_checkbox = false;
                         break;
                 }
+                EventBus.getDefault().post("refresh_button", "refresh_button");
+
             }
         });
         srlOrderList.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -123,11 +126,13 @@ public class CommodityListOneFragment extends BaseFragment {
         adapter = new CommondityListAdapter(R.layout.item_commondity_list, list_order);
 
         rvOrderList.setLayoutManager(new GridLayoutManager(context, 1));
-        adapter.openLoadAnimation();
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         adapter.bindToRecyclerView(rvOrderList);
         adapter.setEmptyView(R.layout.empty_view);
+        adapter.disableLoadMoreIfNotFullPage();
         rvOrderList.setAdapter(adapter);
-//        //水平分割线
+//        rvOrderList.addItemDecoration(new DividerGridItemDecoration(context));
+        //水平分割线
         rvOrderList.addItemDecoration(new DividerItemDecoration(
                 context, DividerItemDecoration.HORIZONTAL_LIST, 1, getResources().getColor(R.color.gray_c)));
         rvOrderList.smoothScrollToPosition(0);
@@ -182,7 +187,7 @@ public class CommodityListOneFragment extends BaseFragment {
                             list_order.addAll(entity.getResult());
                             adapter.notifyDataSetChanged();
                             adapter.loadMoreComplete();
-                            adapter.loadMoreEnd();
+                            adapter.setEnableLoadMore(false);
                         } else if (entity.getResult().size() >= 10) {//不是最后一页
                             list_order.addAll(entity.getResult());
                             adapter.notifyDataSetChanged();

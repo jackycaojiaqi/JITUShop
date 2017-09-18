@@ -220,7 +220,7 @@ public class CommodityManageListActivity extends BaseActivity {
                         }
                     });
                     rxDialogSureCancel.show();
-                }else if (is_2show_checkbox){
+                } else if (is_2show_checkbox) {
                     final RxDialogSureCancel rxDialogSureCancel = new RxDialogSureCancel(context);//提示弹窗
                     rxDialogSureCancel.setContent("确认删除商品？");
                     rxDialogSureCancel.getTvSure().setOnClickListener(new View.OnClickListener() {
@@ -242,6 +242,10 @@ public class CommodityManageListActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 点击按钮，显示或隐藏checkbox，并记住状态
+     * @param object
+     */
     @Subscriber(tag = "invisible_view")
     private void invisible_view(String object) {
         llCommondityAction.setVisibility(View.GONE);
@@ -252,7 +256,19 @@ public class CommodityManageListActivity extends BaseActivity {
             cbCommondityListAction.setText("批量上架");
             is_2show_checkbox = false;
         }
+    }
 
+    /**
+     * 下拉刷新后充值按钮状态
+     * @param object
+     */
+    @Subscriber(tag = "refresh_button")
+    private void refresh_button(String object) {
+        if (select_page == 0) {//下架
+            cbCommondityListAction.setText("批量下架");
+        } else if (select_page == 1) {//上架
+            cbCommondityListAction.setText("批量上架");
+        }
     }
 
     @Override

@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignTop="@+id/tv_order_info_time"
-                    android:text="订单号：201703032232"
+                    android:text="订单号："
                     android:textColor="@color/black_3a3a3a"
                     android:textSize="14dp"
                     android:textStyle="bold" />
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="2-6 10:10"
+                    android:text="00-00 00:00"
                     android:textColor="@color/gray_deep"
                     android:textSize="12dp" />
             </RelativeLayout>
@@ -76,7 +76,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="待发货"
                     android:textColor="@color/blue_1b99d1"
                     android:textSize="14dp" />
 
@@ -110,7 +109,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="不要忘记发货哦"
                     android:textColor="@color/gray_deep"
                     android:textSize="14dp" />
 
@@ -144,7 +142,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="¥ 19"
                     android:textColor="@color/red"
                     android:textSize="16dp"
                     android:textStyle="bold" />
@@ -197,7 +194,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="60dp"
                     android:layout_marginTop="10dp"
-                    android:text="张三"
                     android:textColor="@color/black_3a3a3a"
                     android:textSize="14dp" />
 
@@ -216,7 +212,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
                     android:layout_marginTop="40dp"
-                    android:text="1688989896"
                     android:textColor="@color/blue_1b99d1"
                     android:textSize="14dp" />
 
@@ -234,7 +229,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="70dp"
-                    android:text="浙江省杭州区下城区"
                     android:textColor="@color/black_3a3a3a"
                     android:textSize="14dp" />
             </RelativeLayout>

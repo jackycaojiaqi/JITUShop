@@ -257,11 +257,9 @@ public class ShopAuthActivity extends BaseActivity implements AMapLocationListen
                                     RxImageUtils.showBigImageView(context, uri);
                                 }
                             });
-
                         }
                     });
                 }
-
                 return false;
             }
         });

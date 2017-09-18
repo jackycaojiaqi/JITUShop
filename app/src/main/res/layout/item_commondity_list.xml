@@ -7,12 +7,12 @@
 
     <com.github.lguipeng.library.animcheckbox.AnimCheckBox
         android:id="@+id/cb_commondity"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
-        android:visibility="gone"
         app:checked="false"
+        android:visibility="gone"
         app:circle_color="@color/main_color"
         app:stroke_color="@color/gray_c"
         app:stroke_width="2dp" />

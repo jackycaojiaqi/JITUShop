@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.jitu.shop.ui.DeliveryPickPeopleActity;
 import com.jitu.shop.ui.OrdrInfoActivity;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
+import com.jitu.shop.widget.DividerGridItemDecoration;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
@@ -115,9 +117,10 @@ public class OrderListOneFragment extends BaseFragment {
         srlOrderList.setProgressViewOffset(true, 10, 100);
         //=========================recycleview配置
         adapter = new OrderListAdapter(R.layout.item_order_list, list_order);
-        rvOrderList.setLayoutManager(new GridLayoutManager(context, 1));
+        rvOrderList.setLayoutManager(new LinearLayoutManager(context));
         adapter.openLoadAnimation();
         adapter.bindToRecyclerView(rvOrderList);
+        adapter.disableLoadMoreIfNotFullPage();
         adapter.setEmptyView(R.layout.empty_view);
         rvOrderList.setAdapter(adapter);
         //水平分割线
@@ -132,6 +135,7 @@ public class OrderListOneFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -189,7 +193,6 @@ public class OrderListOneFragment extends BaseFragment {
         });
 
 
-
     }
 
     private int pagenum = 1;
@@ -223,7 +226,7 @@ public class OrderListOneFragment extends BaseFragment {
                             list_order.addAll(orderListEntity.getResult());
                             adapter.notifyDataSetChanged();
                             adapter.loadMoreComplete();
-                            adapter.loadMoreEnd();
+                            adapter.setEnableLoadMore(false);
                         } else if (orderListEntity.getResult().size() >= 10) {//不是最后一页
                             list_order.addAll(orderListEntity.getResult());
                             adapter.notifyDataSetChanged();
