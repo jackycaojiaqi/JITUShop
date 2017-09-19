@@ -100,7 +100,7 @@ public class CheckShopTypeActivity extends BaseActivity {
                 list_sub.get(position).setIs_show_line(true);
                 adapter_sub.notifyDataSetChanged();
                 Intent intent = new Intent();
-                String name = shop_type_name1 + " " + list_sub.get(position).getName();
+                String name = shop_type_name1 + " - " + list_sub.get(position).getName();
                 intent.putExtra(AppConstant.USERNAME, name);
                 intent.putExtra(AppConstant.TYPE, list_sub.get(position).getId());
                 setResult(RESULT_OK, intent);

@@ -193,10 +193,8 @@ public class CommodityListOneFragment extends BaseFragment {
                             adapter.notifyDataSetChanged();
                             adapter.loadMoreComplete();
                         }
-
                     }
                 }
-
             }
         });
     }

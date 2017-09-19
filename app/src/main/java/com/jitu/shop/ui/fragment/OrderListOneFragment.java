@@ -233,7 +233,6 @@ public class OrderListOneFragment extends BaseFragment {
                             adapter.loadMoreComplete();
                         }
                     }
-
                 }
             }
 
