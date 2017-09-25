@@ -29,12 +29,9 @@ import com.jitu.shop.ui.DeliveryPickPeopleActity;
 import com.jitu.shop.ui.OrdrInfoActivity;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
-import com.jitu.shop.widget.DividerGridItemDecoration;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
-import com.vondear.rxtools.view.tooltips.RxToolTip;
-import com.vondear.rxtools.view.tooltips.RxToolTipsManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

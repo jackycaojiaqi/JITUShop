@@ -90,6 +90,8 @@
             android:launchMode="singleTask" />
         <activity android:name=".ui.AfterSaleActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".ui.AddCardActivity"
+            android:launchMode="singleTask"/>
 
         <!-- Required SDK核心功能-->
         <activity

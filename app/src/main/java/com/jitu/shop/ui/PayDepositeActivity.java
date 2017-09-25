@@ -102,12 +102,10 @@ public class PayDepositeActivity extends BaseActivity {
                 break;
             case R.id.btn_pay_zhifubao:
                 Runnable payRunnable = new Runnable() {
-
                     @Override
                     public void run() {
                         PayTask alipay = new PayTask(PayDepositeActivity.this);
                         Map<String, String> result = alipay.payV2(orderInfo, true);
-
                         Message msg = new Message();
                         msg.what = SDK_PAY_FLAG;
                         msg.obj = result;

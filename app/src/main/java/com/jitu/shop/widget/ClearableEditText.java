@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.library.BandCardEditText;
 import com.jitu.shop.R;
 
 
@@ -59,6 +60,8 @@ public class ClearableEditText extends AppCompatEditText implements View.OnTouch
         super.setOnTouchListener(this);
         super.setOnFocusChangeListener(this);
         addTextChangedListener(this);
+
+
     }
 
 

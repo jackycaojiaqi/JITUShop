@@ -86,4 +86,10 @@ public class AppConstant {
 
     public static final String URL_QUERYMYSTATE= BASE_URL+"/api/Admin/QueryMyState"; //首页获取我的状态
 
+    //提现模块
+    public static final String URL_BINDCARD= BASE_URL+"/api/Admin/BindCard"; //添加银行卡
+    public static final String URL_QUERYMYCARD= BASE_URL+"/api/Admin/QueryMyCard"; //查询我的银行卡
+    public static final String URL_DELCARD= BASE_URL+"/api/Admin/DelCard"; //删除银行卡
+
+
 }
