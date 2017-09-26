@@ -113,48 +113,12 @@ public class CashManageActivity extends BaseActivity {
         adapter = new BankCardListAdapter(R.layout.item_bank_card_list, list);
         lvCashCards.setLayoutManager(new LinearLayoutManager(context));
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
-
-//        ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(adapter);
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
-//        itemTouchHelper.attachToRecyclerView(lvCashCards);
-//        // 开启滑动删除
-//        adapter.enableSwipeItem();
-//        adapter.setOnItemSwipeListener(onItemSwipeListener);
-        // 设置监听器。
-//        lvCashCards.setSwipeMenuCreator(mSwipeMenuCreator);
-//        lvCashCards.setItemViewSwipeEnabled(true); // 开启滑动删除。
-//        lvCashCards.setNestedScrollingEnabled(false);
-//        lvCashCards.setSwipeItemClickListener(new SwipeItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                RxToast.success("position:" + position);
-//            }
-//        });
         adapter.bindToRecyclerView(lvCashCards);
         adapter.setEmptyView(R.layout.empty_view);
         lvCashCards.setAdapter(adapter);
         //=========================recycleview配置结束
     }
 
-    OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
-        @Override
-        public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
-        }
-
-        @Override
-        public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
-        }
-
-        @Override
-        public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
-            RxToast.success("position:" + pos);
-        }
-
-        @Override
-        public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-
-        }
-    };
 
     private void initdate() {
         HttpParams params = new HttpParams();

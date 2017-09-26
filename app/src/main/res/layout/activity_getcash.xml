@@ -127,16 +127,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="1、微信零钱、支付宝：24小时到账"
-        android:textSize="12dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:text="2、银行卡：48小时内到账,节假日顺延"
+        android:text="1、银行卡：48小时内到账,节假日顺延"
         android:textSize="12dp" />
 
     <Button

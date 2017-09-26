@@ -1,5 +1,6 @@
 package com.jitu.shop.ui;
 
+import android.content.pm.ProviderInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,11 +17,18 @@ import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.callback.JsonCallBack;
 import com.jitu.shop.entity.ChangePassEntity;
 import com.jitu.shop.entity.MainMenuEntity;
+import com.jitu.shop.entity.OnlyCodeEntity;
+import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.util.NetClient;
+import com.jitu.shop.util.SPUtil;
+import com.jitu.shop.util.StringUtil;
 import com.jitu.shop.util.ToastUtil;
 import com.jitu.shop.widget.ClearableEditText;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.vondear.rxtools.view.RxToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,14 +52,19 @@ public class ChangePassActivity extends BaseActivity {
     ClearableEditText etChangepassPassNew;
     @BindView(R.id.btn_changepass_next)
     Button btnChangepassNext;
+    private String phone, code, type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass);
         ButterKnife.bind(this);
+        phone = getIntent().getStringExtra(AppConstant.PHONE);
+        code = getIntent().getStringExtra(AppConstant.CODE);
+        type = getIntent().getStringExtra(AppConstant.OBJECT);
         intview();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -75,20 +88,59 @@ public class ChangePassActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_changepass_next:
-//                OkGo.<ChangePassEntity>get(AppConstant.BASE_URL + AppConstant.URL_ADMINREVICEPASSWORD)
-//                        .tag(this)
-//                        .execute(new JsonCallBack<ChangePassEntity>(ChangePassEntity.class) {
-//                            @Override
-//                            public void onSuccess(Response<ChangePassEntity> response) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onError(Response<ChangePassEntity> response) {
-//                                super.onError(response);
-//                            }
-//                        });
-                finish();
+                String pass = etChangepassPass.getText().toString().trim();
+                String pass_again = etChangepassPassNew.getText().toString().trim();
+                if (StringUtil.isEmptyandnull(pass)) {
+                    RxToast.error("密不能为空");
+                    return;
+                }
+                if (!pass.equals(pass_again)) {
+                    RxToast.error("两次密码不一致");
+                    return;
+                }
+                if (StringUtil.isEmptyandnull(phone))//无需手机的修改密码，传token
+                {
+                    HttpParams httpParams = new HttpParams();
+                    httpParams.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
+                    httpParams.put("password", pass);
+                    httpParams.put("againpassword", pass_again);
+                    NetClient.getInstance(OnlyCodeEntity.class).Get(context, AppConstant.URL_ADMINREVICEPASSWORD, httpParams, new MyCallBack() {
+                        @Override
+                        public void onFailure(int code) {
+
+                        }
+
+                        @Override
+                        public void onResponse(Response object) {
+                            OnlyCodeEntity entity = (OnlyCodeEntity) object.body();
+                            if (entity.getErrorCode() == 0) {
+                                RxToast.success("修改密码成功");
+                                finish();
+                            }
+                        }
+                    });
+                } else {//需手机的修改密码，不传token
+                    HttpParams httpParams = new HttpParams();
+                    httpParams.put("phone", phone);
+                    httpParams.put("password", pass);
+                    httpParams.put("againpassword", pass_again);
+                    httpParams.put("code", code);
+                    NetClient.getInstance(OnlyCodeEntity.class).Get(context, AppConstant.URL_ADMINREVICEPASSWORD_, httpParams, new MyCallBack() {
+                        @Override
+                        public void onFailure(int code) {
+
+                        }
+
+                        @Override
+                        public void onResponse(Response object) {
+                            OnlyCodeEntity entity = (OnlyCodeEntity) object.body();
+                            if (entity.getErrorCode() == 0) {
+                                RxToast.success("修改密码成功");
+                                finish();
+                            }
+                        }
+                    });
+                }
                 break;
         }
     }

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.jitu.shop.App;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseFragment;
@@ -17,14 +16,15 @@ import com.jitu.shop.callback.JsonCallBack;
 import com.jitu.shop.entity.LoginEntity;
 import com.jitu.shop.ui.ForgetPassActivity;
 import com.jitu.shop.ui.MainActivity;
+import com.jitu.shop.ui.RegisterActivity;
 import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.SPUtil;
-import com.jitu.shop.util.ScreenUtils;
 import com.jitu.shop.util.StringUtil;
 import com.jitu.shop.util.ToastUtil;
 import com.jitu.shop.widget.ClearableEditText;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.vondear.rxtools.view.RxToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +46,8 @@ public class WelcomeThreeFragment extends BaseFragment {
     @BindView(R.id.tv_login_forget_pass)
     TextView tvLoginForgetPass;
     Unbinder unbinder;
+    @BindView(R.id.tv_login_register)
+    TextView tvLoginRegister;
 
     @Nullable
     @Override
@@ -68,19 +70,19 @@ public class WelcomeThreeFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.btn_login, R.id.tv_login_forget_pass})
+    @OnClick({R.id.btn_login, R.id.tv_login_forget_pass, R.id.tv_login_register})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.btn_login:
                 String et_phone = etLoginAccount.getText().toString().trim();
                 String et_pass = etLoginPass.getText().toString().trim();
-
                 if (StringUtil.isEmptyandnull(et_phone)) {
-                    ToastUtil.show(getActivity(), "账号不能为空");
+                    RxToast.error( "账号不能为空");
                     return;
                 }
                 if (StringUtil.isEmptyandnull(et_pass)) {
-                    ToastUtil.show(getActivity(), "密码不能为空");
+                    RxToast.error(  "密码不能为空");
                     return;
                 }
                 DialogFactory.showRequestDialog(getActivity());
@@ -94,7 +96,7 @@ public class WelcomeThreeFragment extends BaseFragment {
                                 DialogFactory.hideRequestDialog();
                                 if (response.body().getErrorCode() == 0) {
                                     if (StringUtil.isEmptyandnull(response.body().getToken())) {
-                                        ToastUtil.show(getActivity(), "登录失败，请重试");
+                                        RxToast.error( "登录失败，请重试");
                                         return;
                                     }
                                     SPUtil.put(getActivity(), AppConstant.TOKEN, response.body().getToken());
@@ -102,10 +104,8 @@ public class WelcomeThreeFragment extends BaseFragment {
                                     startActivity(intent);
                                     getActivity().finish();
                                 } else {
-
-                                    ToastUtil.show(getActivity(), "账号密码错误");
+                                    RxToast.error( "账号密码错误");
                                 }
-
                             }
 
                             @Override
@@ -116,8 +116,12 @@ public class WelcomeThreeFragment extends BaseFragment {
                         });
                 break;
             case R.id.tv_login_forget_pass:
-                Intent intent = new Intent(getActivity(), ForgetPassActivity.class);
+                intent = new Intent(getActivity(), ForgetPassActivity.class);
                 intent.putExtra(AppConstant.OBJECT, "form_login");
+                startActivity(intent);
+                break;
+            case R.id.tv_login_register:
+                intent = new Intent(getActivity(), RegisterActivity.class);
                 startActivity(intent);
                 break;
         }

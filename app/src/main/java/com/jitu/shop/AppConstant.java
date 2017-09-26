@@ -46,7 +46,7 @@ public class AppConstant {
     public static final String AFTERSALE_STATE ="aftersale_state" ;
     public static final String CALLFROM = "callfrom";
     public static final String CALLTO = "callto";
-
+    public static final String CODE = "code";
 
     public static final String URL_QUERYMENUS = "/api/Admin/QueryMenus";//查询后台管理菜单
     public static final String URL_QUERYSHOPCLASSS = "/api/Admin/QueryShopClasss";//查商品分类
@@ -68,7 +68,12 @@ public class AppConstant {
     //Home
     public static final String URL_USERREVICEPASSWORD = "/api/Home/UserRevicePassword";//用户修改密码
     public static final String URL_ADMINLOGIN = "/api/Home/AdminLogin";//商家登录
-    public static final String URL_ADMINREVICEPASSWORD = "/api/Home/AdminRevicePassword";//用户修改密码
+    public static final String URL_ADMINREVICEPASSWORD =BASE_URL+"/api/Home/AdminRevicePassword";//用户修改密码
+    public static final String URL_ADMINSELLERREGISTER = BASE_URL+"/api/Home/SellerRegister";//用户注册
+    public static final String URL_ADMINSENDCODE =BASE_URL+ "/api/Tool/SendCode";//用户验证码
+    public static final String URL_ADMINREVICEPASSWORD_ =BASE_URL+ "/api/Home/AdminRevicePassword_";//商家修改密码（找回密码）
+
+
 
     //认证
     public static final String URL_ADMINAUTHENTICATION = "/api/Admin/Authentication";//提交认证信息
@@ -91,5 +96,7 @@ public class AppConstant {
     public static final String URL_QUERYMYCARD= BASE_URL+"/api/Admin/QueryMyCard"; //查询我的银行卡
     public static final String URL_DELCARD= BASE_URL+"/api/Admin/DelCard"; //删除银行卡
 
+
+    //
 
 }

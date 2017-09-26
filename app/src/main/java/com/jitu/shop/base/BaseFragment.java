@@ -9,6 +9,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
+import com.jitu.shop.App;
+import com.squareup.leakcanary.RefWatcher;
 
 
 /**
@@ -52,8 +54,6 @@ public class BaseFragment extends Fragment {
     private boolean isShowing = false;//动画是否正在进行
 
 
-
-
     public void setText(TextView view, @NonNull String res) {
         view.setVisibility(View.VISIBLE);
         view.setText(res);
@@ -62,5 +62,12 @@ public class BaseFragment extends Fragment {
     public void setText(TextView view, @NonNull int res) {
         view.setVisibility(View.VISIBLE);
         view.setText(res);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = App.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
+import com.jitu.shop.entity.ChangePassEntity;
 import com.jitu.shop.entity.FeedBackEntity;
 import com.jitu.shop.util.SPUtil;
 import com.tencent.bugly.beta.Beta;
@@ -84,6 +85,8 @@ public class SettingActivity extends BaseActivity {
                 SPUtil.clear(context);
                 break;
             case R.id.rll_setting_change_pass:
+                intent = new Intent(context, ChangePassActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rll_setting_about_us:
                 break;

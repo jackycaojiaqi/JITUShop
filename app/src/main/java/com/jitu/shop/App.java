@@ -1,6 +1,7 @@
 package com.jitu.shop;
 
 import android.app.Application;
+import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
 import com.jitu.shop.ui.MainActivity;
@@ -9,6 +10,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -24,9 +27,21 @@ import okhttp3.OkHttpClient;
  * Created by jacky on 2017/8/28.
  */
 public class App extends MultiDexApplication {
+    private RefWatcher refWatcher;
+    public static RefWatcher getRefWatcher(Context context) {
+        App application = (App) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        refWatcher = LeakCanary.install(this);
         //初始化 okgo
         initOkGo();
         //初始化工具类

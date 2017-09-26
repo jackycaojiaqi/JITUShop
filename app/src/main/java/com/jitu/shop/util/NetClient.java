@@ -61,8 +61,15 @@ public class NetClient<T> {
                                 RxToast.error( "不存在此数据");
                             } else if (orderListEntity.getErrorCode() == 400) {//token失效
                                 RxToast.error( "数据库异常");
+                            }else if (orderListEntity.getErrorCode() == 7) {//token失效
+                                RxToast.error( "父类ID错误");
+                            }else if (orderListEntity.getErrorCode() == 8) {//token失效
+                                RxToast.error( "数据库异常");
+                            }else if (orderListEntity.getErrorCode() == 9) {//token失效
+                                RxToast.error( "未获取验证码或已过期或错误");
+                            }else if (orderListEntity.getErrorCode() == 10) {//token失效
+                                RxToast.error( "此号码已注册");
                             }
-
                             //当返回token不为空，则本地更新token值
                             if (!StringUtil.isEmptyandnull(orderListEntity.getToken())) {
                                 SPUtil.put(context, AppConstant.TOKEN, orderListEntity.getToken());
@@ -112,6 +119,14 @@ public class NetClient<T> {
                                 RxToast.error("不存在此数据");
                             } else if (orderListEntity.getErrorCode() == 400) {//token失效
                                 RxToast.error("数据库异常");
+                            }else if (orderListEntity.getErrorCode() == 7) {//token失效
+                                RxToast.error( "父类ID错误");
+                            }else if (orderListEntity.getErrorCode() == 8) {//token失效
+                                RxToast.error( "数据库异常");
+                            }else if (orderListEntity.getErrorCode() == 9) {//token失效
+                                RxToast.error( "未获取验证码或已过期或错误");
+                            }else if (orderListEntity.getErrorCode() == 10) {//token失效
+                                RxToast.error( "此号码已注册");
                             }
 
                             //当返回token不为空，则本地更新token值
@@ -167,6 +182,14 @@ public class NetClient<T> {
                                 RxToast.error( "不存在此数据");
                             } else if (orderListEntity.getErrorCode() == 400) {//token失效
                                 RxToast.error( "数据库异常");
+                            }else if (orderListEntity.getErrorCode() == 7) {//token失效
+                                RxToast.error( "父类ID错误");
+                            }else if (orderListEntity.getErrorCode() == 8) {//token失效
+                                RxToast.error( "数据库异常");
+                            }else if (orderListEntity.getErrorCode() == 9) {//token失效
+                                RxToast.error( "未获取验证码或已过期或错误");
+                            }else if (orderListEntity.getErrorCode() == 10) {//token失效
+                                RxToast.error( "此号码已注册");
                             }
 
                         } catch (Exception e) {
@@ -216,6 +239,14 @@ public class NetClient<T> {
                                 RxToast.error( "不存在此数据");
                             } else if (orderListEntity.getErrorCode() == 400) {//token失效
                                 RxToast.error( "数据库异常");
+                            }else if (orderListEntity.getErrorCode() == 7) {//token失效
+                                RxToast.error( "父类ID错误");
+                            }else if (orderListEntity.getErrorCode() == 8) {//token失效
+                                RxToast.error( "数据库异常");
+                            }else if (orderListEntity.getErrorCode() == 9) {//token失效
+                                RxToast.error( "未获取验证码或已过期或错误");
+                            }else if (orderListEntity.getErrorCode() == 10) {//token失效
+                                RxToast.error( "此号码已注册");
                             }
 
                         } catch (Exception e) {

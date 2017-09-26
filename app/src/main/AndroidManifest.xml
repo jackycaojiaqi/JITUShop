@@ -92,7 +92,8 @@
             android:launchMode="singleTask"/>
         <activity android:name=".ui.AddCardActivity"
             android:launchMode="singleTask"/>
-
+        <activity android:name=".ui.RegisterActivity"
+            android:launchMode="singleTask"/>
         <!-- Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"

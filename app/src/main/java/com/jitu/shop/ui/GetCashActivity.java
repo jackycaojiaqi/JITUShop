@@ -74,7 +74,6 @@ public class GetCashActivity extends BaseActivity {
                     cash_type = 0;
                     cbWeichat.setChecked(false, true);
                 }
-
             }
         });
         cbZhifubao.setOnCheckedChangeListener(new AnimCheckBox.OnCheckedChangeListener() {

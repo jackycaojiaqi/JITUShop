@@ -11,7 +11,14 @@ import android.widget.TextView;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
+import com.jitu.shop.entity.OnlyCodeEntity;
+import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.util.NetClient;
+import com.jitu.shop.util.StringUtil;
 import com.jitu.shop.widget.ClearableEditText;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
+import com.vondear.rxtools.view.RxToast;
 import com.white.countdownbutton.CountDownButton;
 
 import butterknife.BindView;
@@ -48,6 +55,7 @@ public class ForgetPassActivity extends BaseActivity {
         initview();
         initdate();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -61,7 +69,7 @@ public class ForgetPassActivity extends BaseActivity {
     }
 
     private void initview() {
-        setText(tvTitle,"重置密码");
+        setText(tvTitle, "重置密码");
     }
 
     private void initdate() {
@@ -75,13 +83,54 @@ public class ForgetPassActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.cdb_forget_time:
+                dogetCode();
                 break;
             case R.id.btn_forgetpass_next:
+                String phone = etForgetAccount.getText().toString();
+                if (StringUtil.isEmptyandnull(phone)) {
+                    RxToast.error("手机号不能为空");
+                    return;
+                }
+                String code = etForgetPass.getText().toString();
+                if (StringUtil.isEmptyandnull(code)) {
+                    RxToast.error("验证码不能为空");
+                    return;
+                }
+
                 intent = new Intent(context, ChangePassActivity.class);
+                intent.putExtra(AppConstant.CODE, code);
+                intent.putExtra(AppConstant.PHONE, phone);
                 intent.putExtra(AppConstant.OBJECT, type);
                 startActivity(intent);
                 finish();
                 break;
         }
     }
+
+    private void dogetCode() {
+        String phone = etForgetAccount.getText().toString();
+        if (StringUtil.isEmptyandnull(phone)) {
+            RxToast.error("手机号不能为空");
+            return;
+        }
+        HttpParams params = new HttpParams();
+        params.put("phone", phone);
+        params.put("type", "2");
+
+        NetClient.getInstance(OnlyCodeEntity.class).Get(context, AppConstant.URL_ADMINSENDCODE, params, new MyCallBack() {
+            @Override
+            public void onFailure(int code) {
+
+            }
+
+            @Override
+            public void onResponse(Response object) {
+                OnlyCodeEntity entity = (OnlyCodeEntity) object.body();
+                if (entity.getErrorCode() == 0) {
+                    RxToast.success("发送验证码成功");
+                }
+            }
+        });
+    }
+
 }
