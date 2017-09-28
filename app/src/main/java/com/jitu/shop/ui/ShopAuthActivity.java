@@ -16,7 +16,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.google.gson.Gson;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
@@ -88,17 +87,20 @@ public class ShopAuthActivity extends BaseActivity implements AMapLocationListen
     TextView tvAuthPickAddr;
     @BindView(R.id.rll_auth_pick_addr)
     RelativeLayout rllAuthPickAddr;
-
+    @BindView(R.id.tv_auth_state)
+    TextView tvAuthState;
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
     public AMapLocationClientOption mLocationOption = null;
 
+    private int auth_state = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopauth);
         ButterKnife.bind(this);
+        auth_state = getIntent().getIntExtra(AppConstant.TYPE, -1);
         initview();
         initlocation();
         initdate();
@@ -135,12 +137,14 @@ public class ShopAuthActivity extends BaseActivity implements AMapLocationListen
                     if (!StringUtil.isEmptyandnull(authInfoEntity.getResult().getCartimg())) {
                         img1 = authInfoEntity.getResult().getCartimg();
                         img1 = img1.substring(0, img1.length() - 1);
+                        KLog.e(AppConstant.IMAGPATH + img1);
                         ImagUtil.setnocache(context, AppConstant.IMAGPATH + img1, ivCashauthPic1);
                     }
                     //图片2
                     if (!StringUtil.isEmptyandnull(authInfoEntity.getResult().getOtherimg())) {
                         img2 = authInfoEntity.getResult().getOtherimg();
                         img2 = img2.substring(0, img2.length() - 1);
+                        KLog.e(AppConstant.IMAGPATH + img2);
                         ImagUtil.setnocache(context, AppConstant.IMAGPATH + img2, ivCashauthPic2);
                     }
                     //商家姓名
@@ -278,13 +282,27 @@ public class ShopAuthActivity extends BaseActivity implements AMapLocationListen
                                     RxImageUtils.showBigImageView(context, uri);
                                 }
                             });
-
                         }
                     });
                 }
                 return false;
             }
         });
+        if (auth_state == 0) {
+            tvAuthState.setVisibility(View.GONE);
+            btnCashauthSave.setClickable(true);
+            btnCashauthSave.setBackgroundResource(R.drawable.shap_rec_10dp_main_color);
+        } else if (auth_state == 1) {
+            tvAuthState.setVisibility(View.VISIBLE);
+            tvAuthState.setText("审核中");
+            btnCashauthSave.setClickable(false);
+            btnCashauthSave.setBackgroundResource(R.drawable.shape_gray_circle_bg);
+        } else if (auth_state == 2) {
+            tvAuthState.setVisibility(View.VISIBLE);
+            tvAuthState.setText("认证通过");
+            btnCashauthSave.setClickable(false);
+            btnCashauthSave.setBackgroundResource(R.drawable.shape_gray_circle_bg);
+        }
     }
 
     private int pic_type = 0;

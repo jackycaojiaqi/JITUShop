@@ -50,7 +50,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.srl_main)
     SwipeRefreshLayout srlMain;
     private List<String> images = new ArrayList<>();
-    private List<MainMenuEntity.ResultBean.TableBean> list = new ArrayList<>();
+    private List<MainMenuEntity.ResultBean.MenusBean> list = new ArrayList<>();
+    private List<MainMenuEntity.ResultBean.LoopsBean> list_loop = new ArrayList<>();
     private BaseQuickAdapter adapter;
 
     @Override
@@ -81,15 +82,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initview() {
-        images.add("http://imgsrc.baidu.com/imgad/pic/item/267f9e2f07082838b5168c32b299a9014c08f1f9.jpg");
-        images.add("http://pic62.nipic.com/file/20150319/12632424_132215178296_2.jpg");
-        images.add("http://pic49.nipic.com/file/20140927/19617624_230415502002_2.jpg");
-        //设置图片加载器
-        banner.setImageLoader(new GlideImageLoader());
-        //设置图片集合
-        banner.setImages(images);
-        //banner设置方法全部调用完毕时最后调用
-        banner.start();
+
+
         srlMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -109,49 +103,57 @@ public class MainActivity extends BaseActivity {
                         srlMain.setRefreshing(false);
                         if (response.body().getErrorCode() == 0) {
                             if (response.body().getResult() != null)
-                                if (response.body().getResult().getTable().size() > 0) {
-                                    list = response.body().getResult().getTable();
-                                    if (auth_state_unpass) {
-                                        response.body().getResult().getTable().get(3).setIs_show_spot(true);
-                                    }
-                                    if (order_state_show) {
-                                        response.body().getResult().getTable().get(0).setIs_show_spot(true);
-                                    }
-                                    adapter = new MainMenuAdapter(R.layout.item_main_menu, list);
-                                    //设置布局管理器
-                                    rvMain.setLayoutManager(new GridLayoutManager(context, 3));
-                                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                            switch (position) {
-                                                case 0:
-                                                    startActivity(new Intent(context, OrderManageListActivity.class));
-                                                    break;
-                                                case 1:
-                                                    startActivity(new Intent(context, CommodityManageListActivity.class));
-                                                    break;
-                                                case 2:
-                                                    startActivity(new Intent(context, CashManageActivity.class));
-                                                    break;
-                                                case 3:
-                                                    startActivity(new Intent(context, ShopCenterActivity.class));
-                                                    break;
-                                                case 4:
-                                                    startActivity(new Intent(context, ShopInfoActivity.class));
-                                                    break;
-                                                case 5:
-                                                    startActivity(new Intent(context, MessageActivity.class));
-                                                    break;
-                                            }
+                                if (response.body().getResult().getMenus() != null)
+                                    if (response.body().getResult().getMenus().size() > 0) {
+                                        list = response.body().getResult().getMenus();
+                                        list_loop = response.body().getResult().getLoops();
+                                        if (auth_state_unpass) {
+                                            response.body().getResult().getMenus().get(3).setIs_show_spot(true);
                                         }
-                                    });
-                                    adapter.bindToRecyclerView(rvMain);
-                                    adapter.setEmptyView(R.layout.empty_view);
-                                    rvMain.setAdapter(adapter);
-                                    //水平分割线
-                                    rvMain.addItemDecoration(new DividerItemDecoration(
-                                            context, DividerItemDecoration.VERTICAL_LIST, 10, getResources().getColor(R.color.white)));
-                                }
+                                        //===================设置轮播图
+                                        for (int i = 0; i < list_loop.size(); i++) {
+                                            images.add(AppConstant.IMAGPATH+list_loop.get(i).getCM_ImgPath());
+                                        }
+                                        banner.setImageLoader(new GlideImageLoader());
+                                        banner.setImages(images);
+                                        //banner设置方法全部调用完毕时最后调用
+                                        banner.start();
+                                        //=================轮播图结束
+                                        adapter = new MainMenuAdapter(R.layout.item_main_menu, list);
+                                        //设置布局管理器
+                                        rvMain.setLayoutManager(new GridLayoutManager(context, 3));
+                                        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                                switch (position) {
+                                                    case 0:
+                                                        startActivity(new Intent(context, OrderManageListActivity.class));
+                                                        break;
+                                                    case 1:
+                                                        startActivity(new Intent(context, CommodityManageListActivity.class));
+                                                        break;
+                                                    case 2:
+                                                        startActivity(new Intent(context, CashManageActivity.class));
+                                                        break;
+                                                    case 3:
+                                                        startActivity(new Intent(context, ShopCenterActivity.class));
+                                                        break;
+                                                    case 4:
+                                                        startActivity(new Intent(context, ShopInfoActivity.class));
+                                                        break;
+                                                    case 5:
+                                                        startActivity(new Intent(context, MessageActivity.class));
+                                                        break;
+                                                }
+                                            }
+                                        });
+                                        adapter.bindToRecyclerView(rvMain);
+                                        adapter.setEmptyView(R.layout.empty_view);
+                                        rvMain.setAdapter(adapter);
+                                        //水平分割线
+                                        rvMain.addItemDecoration(new DividerItemDecoration(
+                                                context, DividerItemDecoration.VERTICAL_LIST, 10, getResources().getColor(R.color.white)));
+                                    }
                         } else {
                             ToastUtil.show(context, "账号密码错误");
                         }
@@ -171,7 +173,7 @@ public class MainActivity extends BaseActivity {
     private void initOtherDate() {
         HttpParams params = new HttpParams();
         params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
-        NetClient.getInstance(StateEntity.class).Get(context,AppConstant.URL_QUERYMYSTATE, params, new MyCallBack() {
+        NetClient.getInstance(StateEntity.class).Get(context, AppConstant.URL_QUERYMYSTATE, params, new MyCallBack() {
             @Override
             public void onFailure(int code) {
 
@@ -190,11 +192,6 @@ public class MainActivity extends BaseActivity {
                         auth_state_unpass = true;
                     } else {
                         auth_state_unpass = false;
-                    }
-                    if (result.getResult().getCompleted() + result.getResult().getUnpaid() + result.getResult().getPiad() + result.getResult().getShipped() > 0) {
-                        order_state_show = true;
-                    } else {
-                        order_state_show = false;
                     }
                 }
             }

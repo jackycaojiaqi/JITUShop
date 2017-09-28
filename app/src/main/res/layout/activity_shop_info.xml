@@ -23,7 +23,6 @@
                 android:id="@+id/tv_shop_info_sale_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2000"
                 android:textColor="@color/white_f6"
                 android:textSize="36dp" />
 
@@ -59,7 +58,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="今日访客"
+                    android:text="月订单"
                     android:textColor="@color/white_f6"
                     android:textSize="14dp" />
             </LinearLayout>
@@ -193,25 +192,6 @@
         android:layout_height="50dp"
         android:background="@color/white"
         android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_shop_info_waitfor_evaluate"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="待评价：0"
-            android:textColor="@color/black_3a3a3a"
-            android:textSize="14dp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/gray_c" />
 
         <TextView
             android:id="@+id/tv_shop_info_waitfor_reply"

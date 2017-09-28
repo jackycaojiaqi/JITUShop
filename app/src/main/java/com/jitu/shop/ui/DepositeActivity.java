@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
 
@@ -28,14 +29,20 @@ public class DepositeActivity extends BaseActivity {
     TextView tvSubmit;
     @BindView(R.id.rll_deposite_goto)
     RelativeLayout rllDepositeGoto;
+    @BindView(R.id.tv_deposit_state)
+    TextView tvDepositState;
+    private int pay_state = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposite);
         ButterKnife.bind(this);
+        pay_state = getIntent().getIntExtra(AppConstant.TYPE, -1);
         initview();
-    } @Override
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(getApplicationContext());
@@ -49,18 +56,23 @@ public class DepositeActivity extends BaseActivity {
 
 
     private void initview() {
-        setText(tvTitle,"交纳保证金");
+        setText(tvTitle, "交纳保证金");
+        if (pay_state == 1) {
+            tvDepositState.setText("已交纳");
+        } else {
+            tvDepositState.setText("未交纳");
+        }
     }
 
     @OnClick({R.id.iv_back, R.id.rll_deposite_goto})
     public void onViewClicked(View view) {
-        Intent intent ;
+        Intent intent;
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.rll_deposite_goto:
-                intent = new Intent(context,PayDepositeActivity.class);
+                intent = new Intent(context, PayDepositeActivity.class);
                 startActivity(intent);
                 break;
         }

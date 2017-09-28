@@ -34,8 +34,8 @@ import java.util.List;
  * ━━━━━━神兽出没━━━━━━
  * Created by jacky on 17/3/10.
  */
-public class MainMenuAdapter extends BaseQuickAdapter<MainMenuEntity.ResultBean.TableBean, BaseViewHolder> {
-    private List<MainMenuEntity.ResultBean.TableBean> list;
+public class MainMenuAdapter extends BaseQuickAdapter<MainMenuEntity.ResultBean.MenusBean, BaseViewHolder> {
+    private List<MainMenuEntity.ResultBean.MenusBean> list;
 
     public MainMenuAdapter(int layoutResId, List data) {
         super(layoutResId, data);
@@ -43,7 +43,7 @@ public class MainMenuAdapter extends BaseQuickAdapter<MainMenuEntity.ResultBean.
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MainMenuEntity.ResultBean.TableBean item) {
+    protected void convert(BaseViewHolder helper, MainMenuEntity.ResultBean.MenusBean item) {
         if (item.getCM_MenuId() == 1) {
             helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_order_management);
         } else if (item.getCM_MenuId() == 2) {

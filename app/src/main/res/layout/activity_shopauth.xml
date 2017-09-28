@@ -18,6 +18,16 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_auth_state"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="30dp"
+                android:background="@color/yellow_dan"
+                android:gravity="center"
+                android:text="审核中"
+                android:textColor="@color/red" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
@@ -139,8 +149,8 @@
                     android:layout_marginLeft="70dp"
                     android:background="@null"
                     android:hint="必填"
-                    android:maxLength="11"
                     android:inputType="number"
+                    android:maxLength="11"
                     android:textColorHint="@color/gray_deep"
                     android:textSize="14dp" />
             </RelativeLayout>

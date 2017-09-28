@@ -97,6 +97,12 @@ public class AppConstant {
     public static final String URL_DELCARD= BASE_URL+"/api/Admin/DelCard"; //删除银行卡
 
 
-    //
+    //经营状况
+    public static final String URL_QUERYOPERATIONSTATUS= BASE_URL+"/api/Admin/QueryOperationStatus"; //查询经营状况
+
+
+
+    //商家管理
+    public static final String URL_QUERYSHOPINFO= BASE_URL+"/api/Admin/QueryShopInfo"; //商家信息
 
 }

@@ -8,13 +8,23 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
+import com.jitu.shop.entity.ShopCenterEntity;
+import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.util.ImagUtil;
+import com.jitu.shop.util.NetClient;
+import com.jitu.shop.util.SPUtil;
+import com.jitu.shop.util.StringUtil;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by jacky on 2017/8/29.
@@ -34,6 +44,12 @@ public class ShopCenterActivity extends BaseActivity {
     RelativeLayout rllShopCenterAboutUs;
     @BindView(R.id.rll_shop_center_help_feedback)
     RelativeLayout rllShopCenterHelpFeedback;
+    @BindView(R.id.iv_shop_center_logo)
+    CircleImageView ivShopCenterLogo;
+    @BindView(R.id.tv_shop_center_name)
+    TextView tvShopCenterName;
+    @BindView(R.id.tv_shop_center_detail)
+    TextView tvShopCenterDetail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +57,9 @@ public class ShopCenterActivity extends BaseActivity {
         setContentView(R.layout.activity_shopcenter);
         ButterKnife.bind(this);
         initview();
+        initdate();
     }
+
 
     @Override
     protected void onResume() {
@@ -57,17 +75,65 @@ public class ShopCenterActivity extends BaseActivity {
 
     private void initview() {
         back(ivBack);
-        back(ivBack);
+    }
+
+    private int auth_state = -1;
+    private int pay_state = -1;
+
+    private void initdate() {
+        HttpParams params = new HttpParams();
+        params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
+        NetClient.getInstance(ShopCenterEntity.class).Get(context, AppConstant.URL_QUERYSHOPINFO, params, new MyCallBack() {
+            @Override
+            public void onFailure(int code) {
+
+            }
+
+            @Override
+            public void onResponse(Response object) {
+                ShopCenterEntity shop_entity = (ShopCenterEntity) object.body();
+                if (shop_entity.getErrorCode() == 0) {
+                    ImagUtil.setnocache(context, AppConstant.IMAGPATH + shop_entity.getResult().getLogo(), ivShopCenterLogo);
+                    tvShopCenterName.setText(shop_entity.getResult().getShopName() + " ");
+                    tvShopCenterDetail.setText(StringUtil.isEmptyandnull(shop_entity.getResult().getOpeningtime()) ? "未知" :
+                            shop_entity.getResult().getOpeningtime() + "--" + shop_entity.getResult().getClosingtime());
+                    if (shop_entity.getResult().getIspay() == 0) {
+                        pay_state = 0;
+                        tvShopCenterCashDeposit.setText("未交纳");
+                    } else if (shop_entity.getResult().getIspay() == 1) {
+                        tvShopCenterCashDeposit.setText("已交纳");
+                        pay_state = 1;
+                    }
+
+                    if (shop_entity.getResult().getIspass() == 0) {
+                        auth_state = 0;
+                        tvShopCenterAuth.setText("未认证");
+                    } else if (shop_entity.getResult().getIspass() == 1) {
+                        auth_state = 1;
+                        tvShopCenterAuth.setText("审核中");
+                    } else if (shop_entity.getResult().getIspass() == 2) {
+                        auth_state = 2;
+                        tvShopCenterAuth.setText("认证通过");
+                    }
+                }
+            }
+        });
+
     }
 
     @OnClick({R.id.rll_shop_center_cash_deposit, R.id.rll_shop_center_auth, R.id.rll_shop_center_about_us, R.id.rll_shop_center_help_feedback})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.rll_shop_center_cash_deposit:
-                startActivity(new Intent(context, DepositeActivity.class));
+                intent = new Intent(context, DepositeActivity.class);
+                intent.putExtra(AppConstant.TYPE, pay_state);
+                startActivity(intent);
                 break;
             case R.id.rll_shop_center_auth:
-                startActivity(new Intent(context, ShopAuthActivity.class));
+                intent = new Intent(context, ShopAuthActivity.class);
+                intent.putExtra(AppConstant.TYPE, auth_state);
+                startActivity(intent);
                 break;
             case R.id.rll_shop_center_about_us:
                 break;
