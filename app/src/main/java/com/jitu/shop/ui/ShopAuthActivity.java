@@ -550,4 +550,10 @@ public class ShopAuthActivity extends BaseActivity implements AMapLocationListen
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLocationClient.stopLocation();
+        mLocationClient.onDestroy();
+    }
 }

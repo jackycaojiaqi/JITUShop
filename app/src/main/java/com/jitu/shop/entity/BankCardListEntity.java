@@ -1,4 +1,5 @@
 package com.jitu.shop.entity;
+import com.jitu.shop.entity.BasePaserEntity;
 
 import java.util.List;
 
@@ -56,6 +57,15 @@ public class BankCardListEntity extends BasePaserEntity {
         private String CM_CreateTime;
         private int CM_AddAdminId;
         private EntityKeyBean EntityKey;
+        private boolean is_checked = false;
+
+        public boolean is_checked() {
+            return is_checked;
+        }
+
+        public void setIs_checked(boolean is_checked) {
+            this.is_checked = is_checked;
+        }
 
         public String get$id() {
             return $id;

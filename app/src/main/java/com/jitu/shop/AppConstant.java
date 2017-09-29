@@ -6,7 +6,7 @@ package com.jitu.shop;
  */
 public class AppConstant {
 
-//      "1": "手机号码或密码错误",
+    //      "1": "手机号码或密码错误",
 //      "2": "传入参数异常",
 //      "3": "两次密码不同",
 //      "4": "不存在此数据",
@@ -39,11 +39,11 @@ public class AppConstant {
     public static final String LON = "lon";
     public static final String GENDER = "gender";
 
-    public static final String AUTH_STATE ="auth_state" ;
-    public static final String UNPAY_STATE ="unpay_state" ;
-    public static final String UNDELIVER_STATE ="undeliver_state" ;
-    public static final String DELIVERED_STATE ="delivered_state" ;
-    public static final String AFTERSALE_STATE ="aftersale_state" ;
+    public static final String AUTH_STATE = "auth_state";
+    public static final String UNPAY_STATE = "unpay_state";
+    public static final String UNDELIVER_STATE = "undeliver_state";
+    public static final String DELIVERED_STATE = "delivered_state";
+    public static final String AFTERSALE_STATE = "aftersale_state";
     public static final String CALLFROM = "callfrom";
     public static final String CALLTO = "callto";
     public static final String CODE = "code";
@@ -68,11 +68,10 @@ public class AppConstant {
     //Home
     public static final String URL_USERREVICEPASSWORD = "/api/Home/UserRevicePassword";//用户修改密码
     public static final String URL_ADMINLOGIN = "/api/Home/AdminLogin";//商家登录
-    public static final String URL_ADMINREVICEPASSWORD =BASE_URL+"/api/Home/AdminRevicePassword";//用户修改密码
-    public static final String URL_ADMINSELLERREGISTER = BASE_URL+"/api/Home/SellerRegister";//用户注册
-    public static final String URL_ADMINSENDCODE =BASE_URL+ "/api/Tool/SendCode";//用户验证码
-    public static final String URL_ADMINREVICEPASSWORD_ =BASE_URL+ "/api/Home/AdminRevicePassword_";//商家修改密码（找回密码）
-
+    public static final String URL_ADMINREVICEPASSWORD = BASE_URL + "/api/Home/AdminRevicePassword";//用户修改密码
+    public static final String URL_ADMINSELLERREGISTER = BASE_URL + "/api/Home/SellerRegister";//用户注册
+    public static final String URL_ADMINSENDCODE = BASE_URL + "/api/Tool/SendCode";//用户验证码
+    public static final String URL_ADMINREVICEPASSWORD_ = BASE_URL + "/api/Home/AdminRevicePassword_";//商家修改密码（找回密码）
 
 
     //认证
@@ -83,26 +82,27 @@ public class AppConstant {
     public static final String URL_ADMINQUERYALLPATH = "/api/Admin/QueryAllpath";//获取地区信息
 
     //行业分类
-    public static final String URL_ADMINQUERYINDUSTRIES= "/api/Admin/QueryIndustries";//获取地区信息
+    public static final String URL_ADMINQUERYINDUSTRIES = "/api/Admin/QueryIndustries";//获取地区信息
 
 
     //获取图片前缀地址
-    public static final String IMAGPATH= BASE_URL+"/api/Tool/GetImg/?path=";//获取地区信息
+    public static final String IMAGPATH = BASE_URL + "/api/Tool/GetImg/?path=";//获取地区信息
 
-    public static final String URL_QUERYMYSTATE= BASE_URL+"/api/Admin/QueryMyState"; //首页获取我的状态
+    public static final String URL_QUERYMYSTATE = BASE_URL + "/api/Admin/QueryMyState"; //首页获取我的状态
 
     //提现模块
-    public static final String URL_BINDCARD= BASE_URL+"/api/Admin/BindCard"; //添加银行卡
-    public static final String URL_QUERYMYCARD= BASE_URL+"/api/Admin/QueryMyCard"; //查询我的银行卡
-    public static final String URL_DELCARD= BASE_URL+"/api/Admin/DelCard"; //删除银行卡
+    public static final String URL_BINDCARD = BASE_URL + "/api/Admin/BindCard"; //添加银行卡
+    public static final String URL_QUERYMYCARD = BASE_URL + "/api/Admin/QueryMyCard"; //查询我的银行卡
+    public static final String URL_DELCARD = BASE_URL + "/api/Admin/DelCard"; //删除银行卡
+    public static final String URL_QUERYPRESENTAPPLICATION = BASE_URL + "/api/Admin/QueryPresentApplication"; //查询申请列表
+    public static final String URL_PRESENTAPPLICATION = BASE_URL + "/api/Admin/PresentApplication"; //删除银行卡
 
 
     //经营状况
-    public static final String URL_QUERYOPERATIONSTATUS= BASE_URL+"/api/Admin/QueryOperationStatus"; //查询经营状况
-
+    public static final String URL_QUERYOPERATIONSTATUS = BASE_URL + "/api/Admin/QueryOperationStatus"; //查询经营状况
 
 
     //商家管理
-    public static final String URL_QUERYSHOPINFO= BASE_URL+"/api/Admin/QueryShopInfo"; //商家信息
+    public static final String URL_QUERYSHOPINFO = BASE_URL + "/api/Admin/QueryShopInfo"; //商家信息
 
 }

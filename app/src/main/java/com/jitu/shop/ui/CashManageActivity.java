@@ -179,7 +179,7 @@ public class CashManageActivity extends BaseActivity {
                 startActivity(new Intent(context, GetCashActivity.class));
                 break;
             case R.id.rll_cash_manage_detail:
-//                startActivity(new Intent(context, AddCardActivity.class));
+                startActivity(new Intent(context, GetCashHistoryActivity.class));
                 break;
             case R.id.rll_cash_manage_card:
                 startActivity(new Intent(context, AddCardActivity.class));

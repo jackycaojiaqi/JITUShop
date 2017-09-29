@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_get_cash_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="2017-09-12"
+        android:textColor="@color/main_color"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/tv_get_cash_time_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="14:09"
+        android:textColor="@color/main_color"
+        android:textSize="12dp" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="80dp"
+        android:background="@drawable/shap_rec_80dp_main_color"
+        android:gravity="center"
+        android:text="银"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/tv_get_cash_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="140dp"
+        android:text="+154"
+        android:textColor="@color/green_626262"
+        android:textSize="18dp" />
+
+    <com.vondear.rxtools.view.RxTextAutoZoom
+        android:id="@+id/tv_get_cash_name_and_last_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="23dp"
+        android:singleLine="true"
+        android:text="建设银行尾号0008"
+        android:textColor="@color/black_3a3a3a"
+        android:textSize="14dp" />
+</RelativeLayout>

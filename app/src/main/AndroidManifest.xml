@@ -94,6 +94,8 @@
             android:launchMode="singleTask"/>
         <activity android:name=".ui.RegisterActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".ui.GetCashHistoryActivity"
+            android:launchMode="singleTask"/>
         <!-- Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"

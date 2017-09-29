@@ -60,10 +60,7 @@ public class ClearableEditText extends AppCompatEditText implements View.OnTouch
         super.setOnTouchListener(this);
         super.setOnFocusChangeListener(this);
         addTextChangedListener(this);
-
-
     }
-
 
     @Override
     public void onFocusChange(final View view, final boolean hasFocus) {
@@ -104,7 +101,6 @@ public class ClearableEditText extends AppCompatEditText implements View.OnTouch
     @Override
     public void afterTextChanged(Editable s) {
     }
-
 
     private void setClearIconVisible(final boolean visible) {
         mClearTextIcon.setVisible(visible, false);

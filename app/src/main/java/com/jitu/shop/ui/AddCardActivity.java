@@ -14,6 +14,7 @@ import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.entity.BasePaserEntity;
 import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.StringUtil;
@@ -80,6 +81,7 @@ public class AddCardActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_binding:
+                DialogFactory.showRequestDialog(context);
                 String card_num = etCardNum.getText().toString().trim();
                 if (StringUtil.isEmptyandnull(card_num) || card_num.length() < 17) {
                     RxToast.error("银行卡错误");
@@ -108,10 +110,12 @@ public class AddCardActivity extends BaseActivity {
                 NetClient.getInstance(BasePaserEntity.class).Get(context, AppConstant.URL_BINDCARD, params, new MyCallBack() {
                     @Override
                     public void onFailure(int code) {
+                        DialogFactory.hideRequestDialog();
                     }
 
                     @Override
                     public void onResponse(Response object) {
+                        DialogFactory.hideRequestDialog();
                         BasePaserEntity entity = (BasePaserEntity) object.body();
                         if (entity.getErrorCode() == 0) {
                             RxToast.success("添加成功");
@@ -119,7 +123,6 @@ public class AddCardActivity extends BaseActivity {
                         }
                     }
                 });
-
                 break;
         }
     }
