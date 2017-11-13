@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.util.ImagUtil;
@@ -65,15 +66,16 @@ public class OrderListGoodsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         //商品图片
-        if (!StringUtil.isEmptyandnull(list.get(position).getMainImg()))
-            ImagUtil.setnoerror(context, list.get(position).getMainImg(), holder.good_img);
+        if (list.get(position).getMainImg().size() > 0)
+            if (!StringUtil.isEmptyandnull(list.get(position).getMainImg().get(0).getImgserver()))
+                ImagUtil.setRound(context, AppConstant.IMAGPATH + list.get(position).getMainImg().get(0).getImgserver(), holder.good_img, 5);
         //名称
         holder.good_name.setText(StringUtil.isEmptyandnull(list.get(position).getProductName()) ? "未知" : list.get(position).getProductName());
         //价格
-        holder.good_price.setText("¥ " + list.get(position).getPrice());
+        holder.good_price.setText("¥ " + list.get(position).getPcice());
         holder.good_num.setText("x" + list.get(position).getNumber());
         //类别
-        holder.good_type.setText(" " + list.get(position).getPname());
+        holder.good_type.setText(" " + list.get(position).getSkuUserName());
         return convertView;
     }
 

@@ -7,6 +7,7 @@ import android.support.multidex.MultiDexApplication;
 import com.jitu.shop.ui.MainActivity;
 import com.jitu.shop.util.LiteOrmDBUtil;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import cn.jpush.android.api.JPushInterface;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 
 /**
@@ -28,6 +30,7 @@ import okhttp3.OkHttpClient;
  */
 public class App extends MultiDexApplication {
     private RefWatcher refWatcher;
+
     public static RefWatcher getRefWatcher(Context context) {
         App application = (App) context.getApplicationContext();
         return application.refWatcher;
@@ -51,8 +54,14 @@ public class App extends MultiDexApplication {
         Beta.showInterruptedStrategy = false;
         Beta.canShowUpgradeActs.add(MainActivity.class);
         Bugly.init(getApplicationContext(), "4ab93d8a42", true);
-        JPushInterface.init(getApplicationContext());//初始化极光推送
+
+        //初始化极光推送
+        JPushInterface.init(getApplicationContext());
+        //通知栏留存5条消息
+        JPushInterface.setLatestNotificationNumber(getApplicationContext(), 5);
         JPushInterface.setDebugMode(true);
+        JPushInterface.stopCrashHandler(getApplicationContext());
+
 //        JPushInterface.initCrashHandler(getApplicationContext());
         LiteOrmDBUtil.createDb(getApplicationContext(), "jitushop");
     }
@@ -85,6 +94,7 @@ public class App extends MultiDexApplication {
         //-------------------------------------------------------------------------------------//
         OkGo.getInstance().init(this)                       //必须调用初始化
                 .setOkHttpClient(builder.build())               //必须设置OkHttpClient
-                .setRetryCount(3);                          //全局统一超时重连次数，默认为三次，那么最差的情况会请求4次(一次原始请求，三次重连请求)，不需要可以设置为0
+                .setRetryCount(0)   //全局统一超时重连次数，默认为三次，那么最差的情况会请求4次(一次原始请求，三次重连请求)，不需要可以设置为0
+                .setCacheMode(CacheMode.NO_CACHE);
     }
 }

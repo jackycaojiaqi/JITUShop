@@ -12,9 +12,11 @@ public class AppConstant {
 //      "4": "不存在此数据",
 //      "101": "秘钥错误",
 //      "400": "数据库异常"
-    public static final String BASE_URL = "http://112.74.172.152:999";//富邦直播
+    public static final String BASE_URL = "http://47.104.7.37:998";//测试服务器
 
-    public static final String DOWNLOAD_URL = "121.43.153.125:92/download/yaoyao.apk";//下载最新app地址
+    //微信appid
+    public static final String WEICHAT_ID = "wxafd514cc1609951b";
+
 
     public static final String USERNAME = "username";
     public static final String USERPIC = "userpic";
@@ -86,7 +88,7 @@ public class AppConstant {
 
 
     //获取图片前缀地址
-    public static final String IMAGPATH = BASE_URL + "/api/Tool/GetImg/?path=";//获取地区信息
+    public static final String IMAGPATH = BASE_URL + "/api/Tool/GetImg/?path=";//展示图片
 
     public static final String URL_QUERYMYSTATE = BASE_URL + "/api/Admin/QueryMyState"; //首页获取我的状态
 

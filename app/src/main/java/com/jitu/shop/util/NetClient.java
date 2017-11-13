@@ -42,33 +42,31 @@ public class NetClient<T> {
                     @Override
                     public void onSuccess(Response<T> response) {
                         try {
-
                             BasePaserEntity orderListEntity = (BasePaserEntity) response.body();
                             if (orderListEntity.getErrorCode() == 0) {
-
                             } else if (orderListEntity.getErrorCode() == 101) {//token失效
                                 Intent intent = new Intent(context, LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 context.startActivity(intent);
-                                RxToast.error( "token失效，请重新登录");
-                            } else if (orderListEntity.getErrorCode() == 1) {//token失效
-                                RxToast.error( "手机号码或密码错误");
-                            } else if (orderListEntity.getErrorCode() == 2) {//token失效
-                                RxToast.error( "传入参数异常");
-                            } else if (orderListEntity.getErrorCode() == 3) {//token失效
-                                RxToast.error( "两次密码不同");
-                            } else if (orderListEntity.getErrorCode() == 4) {//token失效
-                                RxToast.error( "不存在此数据");
-                            } else if (orderListEntity.getErrorCode() == 400) {//token失效
-                                RxToast.error( "数据库异常");
-                            }else if (orderListEntity.getErrorCode() == 7) {//token失效
-                                RxToast.error( "父类ID错误");
-                            }else if (orderListEntity.getErrorCode() == 8) {//token失效
-                                RxToast.error( "数据库异常");
-                            }else if (orderListEntity.getErrorCode() == 9) {//token失效
-                                RxToast.error( "未获取验证码或已过期或错误");
-                            }else if (orderListEntity.getErrorCode() == 10) {//token失效
-                                RxToast.error( "此号码已注册");
+                                RxToast.error("token失效，请重新登录");
+                            } else if (orderListEntity.getErrorCode() == 1) {
+                                RxToast.error("手机号码或密码错误");
+                            } else if (orderListEntity.getErrorCode() == 2) {
+                                RxToast.error("传入参数异常");
+                            } else if (orderListEntity.getErrorCode() == 3) {
+                                RxToast.error("两次密码不同");
+                            } else if (orderListEntity.getErrorCode() == 4) {
+                                RxToast.error("不存在此数据");
+                            } else if (orderListEntity.getErrorCode() == 400) {
+                                RxToast.error("数据库异常");
+                            } else if (orderListEntity.getErrorCode() == 7) {
+                                RxToast.error("父类ID错误");
+                            } else if (orderListEntity.getErrorCode() == 8) {
+                                RxToast.error("数据库异常");
+                            } else if (orderListEntity.getErrorCode() == 9) {
+                                RxToast.error("未获取验证码或已过期或错误");
+                            } else if (orderListEntity.getErrorCode() == 10) {
+                                RxToast.error("此号码已注册");
                             }
                             //当返回token不为空，则本地更新token值
                             if (!StringUtil.isEmptyandnull(orderListEntity.getToken())) {
@@ -79,7 +77,6 @@ public class NetClient<T> {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override
@@ -99,36 +96,32 @@ public class NetClient<T> {
                     @Override
                     public void onSuccess(Response<T> response) {
                         try {
-
-
                             BasePaserEntity orderListEntity = (BasePaserEntity) response.body();
                             if (orderListEntity.getErrorCode() == 0) {
-
                             } else if (orderListEntity.getErrorCode() == 101) {//token失效
                                 Intent intent = new Intent(context, LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 context.startActivity(intent);
                                 RxToast.error("token失效，请重新登录");
-                            } else if (orderListEntity.getErrorCode() == 1) {//token失效
+                            } else if (orderListEntity.getErrorCode() == 1) {
                                 RxToast.error("手机号码或密码错误");
-                            } else if (orderListEntity.getErrorCode() == 2) {//token失效
+                            } else if (orderListEntity.getErrorCode() == 2) {
                                 RxToast.error("传入参数异常");
-                            } else if (orderListEntity.getErrorCode() == 3) {//token失效
+                            } else if (orderListEntity.getErrorCode() == 3) {
                                 RxToast.error("两次密码不同");
-                            } else if (orderListEntity.getErrorCode() == 4) {//token失效
+                            } else if (orderListEntity.getErrorCode() == 4) {
                                 RxToast.error("不存在此数据");
-                            } else if (orderListEntity.getErrorCode() == 400) {//token失效
+                            } else if (orderListEntity.getErrorCode() == 400) {
                                 RxToast.error("数据库异常");
-                            }else if (orderListEntity.getErrorCode() == 7) {//token失效
-                                RxToast.error( "父类ID错误");
-                            }else if (orderListEntity.getErrorCode() == 8) {//token失效
-                                RxToast.error( "数据库异常");
-                            }else if (orderListEntity.getErrorCode() == 9) {//token失效
-                                RxToast.error( "未获取验证码或已过期或错误");
-                            }else if (orderListEntity.getErrorCode() == 10) {//token失效
-                                RxToast.error( "此号码已注册");
+                            } else if (orderListEntity.getErrorCode() == 7) {
+                                RxToast.error("父类ID错误");
+                            } else if (orderListEntity.getErrorCode() == 8) {
+                                RxToast.error("数据库异常");
+                            } else if (orderListEntity.getErrorCode() == 9) {
+                                RxToast.error("未获取验证码或已过期或错误");
+                            } else if (orderListEntity.getErrorCode() == 10) {
+                                RxToast.error("此号码已注册");
                             }
-
                             //当返回token不为空，则本地更新token值
                             if (!StringUtil.isEmptyandnull(orderListEntity.getToken())) {
                                 SPUtil.put(context, AppConstant.TOKEN, orderListEntity.getToken());
@@ -155,43 +148,43 @@ public class NetClient<T> {
         OkGo.<T>post(url)
                 .tag(this)
                 .params(params)
-
                 .execute(new JsonCallBack<T>(clazz) {
                     @Override
                     public void onSuccess(Response<T> response) {
-
                         try {
                             BasePaserEntity orderListEntity = (BasePaserEntity) response.body();
-                            if (!StringUtil.isEmptyandnull(orderListEntity.getToken())) {
-                                SPUtil.put(context, AppConstant.TOKEN, orderListEntity.getToken());
-                            }
                             if (orderListEntity.getErrorCode() == 0) {
-                                mCallback.onResponse(response);
                             } else if (orderListEntity.getErrorCode() == 101) {//token失效
+                                ConfigUtils.clearAlias(context);
                                 Intent intent = new Intent(context, LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 context.startActivity(intent);
-                                RxToast.error( "token失效，请重新登录");
-                            } else if (orderListEntity.getErrorCode() == 1) {//token失效
-                                RxToast.error( "手机号码或密码错误");
-                            } else if (orderListEntity.getErrorCode() == 2) {//token失效
-                                RxToast.error( "传入参数异常");
-                            } else if (orderListEntity.getErrorCode() == 3) {//token失效
-                                RxToast.error( "两次密码不同");
-                            } else if (orderListEntity.getErrorCode() == 4) {//token失效
-                                RxToast.error( "不存在此数据");
-                            } else if (orderListEntity.getErrorCode() == 400) {//token失效
-                                RxToast.error( "数据库异常");
-                            }else if (orderListEntity.getErrorCode() == 7) {//token失效
-                                RxToast.error( "父类ID错误");
-                            }else if (orderListEntity.getErrorCode() == 8) {//token失效
-                                RxToast.error( "数据库异常");
-                            }else if (orderListEntity.getErrorCode() == 9) {//token失效
-                                RxToast.error( "未获取验证码或已过期或错误");
-                            }else if (orderListEntity.getErrorCode() == 10) {//token失效
-                                RxToast.error( "此号码已注册");
+                                RxToast.error("token失效，请重新登录");
+                            } else if (orderListEntity.getErrorCode() == 1) {
+                                RxToast.error("手机号码或密码错误");
+                            } else if (orderListEntity.getErrorCode() == 2) {
+                                RxToast.error("传入参数异常");
+                            } else if (orderListEntity.getErrorCode() == 3) {
+                                RxToast.error("两次密码不同");
+                            } else if (orderListEntity.getErrorCode() == 4) {
+                                RxToast.error("不存在此数据");
+                            } else if (orderListEntity.getErrorCode() == 400) {
+                                RxToast.error("数据库异常");
+                            } else if (orderListEntity.getErrorCode() == 7) {
+                                RxToast.error("父类ID错误");
+                            } else if (orderListEntity.getErrorCode() == 8) {
+                                RxToast.error("数据库异常");
+                            } else if (orderListEntity.getErrorCode() == 9) {
+                                RxToast.error("未获取验证码或已过期或错误");
+                            } else if (orderListEntity.getErrorCode() == 10) {
+                                RxToast.error("此号码已注册");
                             }
-
+                            //当返回token不为空，则本地更新token值
+                            if (!StringUtil.isEmptyandnull(orderListEntity.getToken())) {
+                                SPUtil.put(context, AppConstant.TOKEN, orderListEntity.getToken());
+                            }
+                            //无论code是几  都返回给回调，处理等待弹窗
+                            mCallback.onResponse(response);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -219,36 +212,37 @@ public class NetClient<T> {
 
                         try {
                             BasePaserEntity orderListEntity = (BasePaserEntity) response.body();
-                            if (!StringUtil.isEmptyandnull(orderListEntity.getToken())) {
-                                SPUtil.put(context, AppConstant.TOKEN, orderListEntity.getToken());
-                            }
                             if (orderListEntity.getErrorCode() == 0) {
-                                mCallback.onResponse(response);
                             } else if (orderListEntity.getErrorCode() == 101) {//token失效
                                 Intent intent = new Intent(context, LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 context.startActivity(intent);
-                                RxToast.error( "token失效，请重新登录");
-                            } else if (orderListEntity.getErrorCode() == 1) {//token失效
-                                RxToast.error( "手机号码或密码错误");
-                            } else if (orderListEntity.getErrorCode() == 2) {//token失效
-                                ToastUtil.show(context, "传入参数异常");
-                            } else if (orderListEntity.getErrorCode() == 3) {//token失效
-                                ToastUtil.show(context, "两次密码不同");
-                            } else if (orderListEntity.getErrorCode() == 4) {//token失效
-                                RxToast.error( "不存在此数据");
-                            } else if (orderListEntity.getErrorCode() == 400) {//token失效
-                                RxToast.error( "数据库异常");
-                            }else if (orderListEntity.getErrorCode() == 7) {//token失效
-                                RxToast.error( "父类ID错误");
-                            }else if (orderListEntity.getErrorCode() == 8) {//token失效
-                                RxToast.error( "数据库异常");
-                            }else if (orderListEntity.getErrorCode() == 9) {//token失效
-                                RxToast.error( "未获取验证码或已过期或错误");
-                            }else if (orderListEntity.getErrorCode() == 10) {//token失效
-                                RxToast.error( "此号码已注册");
+                                RxToast.error("token失效，请重新登录");
+                            } else if (orderListEntity.getErrorCode() == 1) {
+                                RxToast.error("手机号码或密码错误");
+                            } else if (orderListEntity.getErrorCode() == 2) {
+                                RxToast.error("传入参数异常");
+                            } else if (orderListEntity.getErrorCode() == 3) {
+                                RxToast.error("两次密码不同");
+                            } else if (orderListEntity.getErrorCode() == 4) {
+                                RxToast.error("不存在此数据");
+                            } else if (orderListEntity.getErrorCode() == 400) {
+                                RxToast.error("数据库异常");
+                            } else if (orderListEntity.getErrorCode() == 7) {
+                                RxToast.error("父类ID错误");
+                            } else if (orderListEntity.getErrorCode() == 8) {
+                                RxToast.error("数据库异常");
+                            } else if (orderListEntity.getErrorCode() == 9) {
+                                RxToast.error("未获取验证码或已过期或错误");
+                            } else if (orderListEntity.getErrorCode() == 10) {
+                                RxToast.error("此号码已注册");
                             }
-
+                            //当返回token不为空，则本地更新token值
+                            if (!StringUtil.isEmptyandnull(orderListEntity.getToken())) {
+                                SPUtil.put(context, AppConstant.TOKEN, orderListEntity.getToken());
+                            }
+                            //无论code是几  都返回给回调，处理等待弹窗
+                            mCallback.onResponse(response);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

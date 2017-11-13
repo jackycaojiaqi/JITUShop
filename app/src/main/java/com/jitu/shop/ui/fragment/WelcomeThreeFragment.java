@@ -17,6 +17,7 @@ import com.jitu.shop.entity.LoginEntity;
 import com.jitu.shop.ui.ForgetPassActivity;
 import com.jitu.shop.ui.MainActivity;
 import com.jitu.shop.ui.RegisterActivity;
+import com.jitu.shop.util.ConfigUtils;
 import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.StringUtil;
@@ -30,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -75,14 +77,14 @@ public class WelcomeThreeFragment extends BaseFragment {
         Intent intent;
         switch (view.getId()) {
             case R.id.btn_login:
-                String et_phone = etLoginAccount.getText().toString().trim();
+                final String et_phone = etLoginAccount.getText().toString().trim();
                 String et_pass = etLoginPass.getText().toString().trim();
                 if (StringUtil.isEmptyandnull(et_phone)) {
-                    RxToast.error( "账号不能为空");
+                    RxToast.error("账号不能为空");
                     return;
                 }
                 if (StringUtil.isEmptyandnull(et_pass)) {
-                    RxToast.error(  "密码不能为空");
+                    RxToast.error("密码不能为空");
                     return;
                 }
                 DialogFactory.showRequestDialog(getActivity());
@@ -94,17 +96,21 @@ public class WelcomeThreeFragment extends BaseFragment {
                             @Override
                             public void onSuccess(Response<LoginEntity> response) {
                                 DialogFactory.hideRequestDialog();
+
                                 if (response.body().getErrorCode() == 0) {
                                     if (StringUtil.isEmptyandnull(response.body().getToken())) {
-                                        RxToast.error( "登录失败，请重试");
+                                        RxToast.error("登录失败，请重试");
                                         return;
                                     }
                                     SPUtil.put(getActivity(), AppConstant.TOKEN, response.body().getToken());
+                                    SPUtil.put(getActivity(), AppConstant.PHONE, et_phone);
+                                    //设置推送别名
+                                    ConfigUtils.setAlias(getActivity());
                                     Intent intent = new Intent(getActivity(), MainActivity.class);
                                     startActivity(intent);
                                     getActivity().finish();
                                 } else {
-                                    RxToast.error( "账号密码错误");
+                                    RxToast.error("账号密码错误");
                                 }
                             }
 

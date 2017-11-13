@@ -302,6 +302,11 @@ public class ShopAuthActivity extends BaseActivity implements AMapLocationListen
             tvAuthState.setText("认证通过");
             btnCashauthSave.setClickable(false);
             btnCashauthSave.setBackgroundResource(R.drawable.shape_gray_circle_bg);
+        } else if (auth_state == 3) {
+            tvAuthState.setVisibility(View.VISIBLE);
+            tvAuthState.setText("审核驳回");
+            btnCashauthSave.setClickable(true);
+            btnCashauthSave.setBackgroundResource(R.drawable.shap_rec_10dp_main_color);
         }
     }
 
@@ -371,6 +376,7 @@ public class ShopAuthActivity extends BaseActivity implements AMapLocationListen
                 map.put("regionname", region_name);
                 map.put("x", String.valueOf(lat));
                 map.put("y", String.valueOf(lon));
+                KLog.e(lat + " " + lon);
                 map.put("classid", String.valueOf(classid));//类目ID
                 map.put("classname", class_name);//类目名称
                 HttpParams httpParams = new HttpParams();
@@ -434,47 +440,44 @@ public class ShopAuthActivity extends BaseActivity implements AMapLocationListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case RxPhotoUtils.GET_IMAGE_FROM_PHONE://选择相册之后的处理
-                if (resultCode == RESULT_OK) {
-                    initUCrop(data.getData());
-                }
-
-                break;
-            case RxPhotoUtils.GET_IMAGE_BY_CAMERA://选择照相机之后的处理
-                if (resultCode == RESULT_OK) {
-                    initUCrop(RxPhotoUtils.imageUriFromCamera);
-                }
-
-                break;
-
-            case UCrop.REQUEST_CROP://UCrop裁剪之后的处理
-                if (resultCode == RESULT_OK) {
-
-                    if (pic_type == 1) {
-                        resultUri1 = UCrop.getOutput(data);
-                        roadImageView(resultUri1, ivCashauthPic1);
-                    } else if (pic_type == 2) {
-                        resultUri2 = UCrop.getOutput(data);
-                        roadImageView(resultUri2, ivCashauthPic2);
+        if (data != null)
+            switch (requestCode) {
+                case RxPhotoUtils.GET_IMAGE_FROM_PHONE://选择相册之后的处理
+                    if (resultCode == RESULT_OK) {
+                        initUCrop(data.getData());
                     }
-                } else if (resultCode == UCrop.RESULT_ERROR) {
+                    break;
+                case RxPhotoUtils.GET_IMAGE_BY_CAMERA://选择照相机之后的处理
+                    if (resultCode == RESULT_OK) {
+                        initUCrop(RxPhotoUtils.imageUriFromCamera);
+                    }
+                    break;
+                case UCrop.REQUEST_CROP://UCrop裁剪之后的处理
+                    if (resultCode == RESULT_OK) {
+                        if (pic_type == 1) {
+                            resultUri1 = UCrop.getOutput(data);
+                            roadImageView(resultUri1, ivCashauthPic1);
+                        } else if (pic_type == 2) {
+                            resultUri2 = UCrop.getOutput(data);
+                            roadImageView(resultUri2, ivCashauthPic2);
+                        }
+                    } else if (resultCode == UCrop.RESULT_ERROR) {
+                        final Throwable cropError = UCrop.getError(data);
+                        cropError.printStackTrace();
+                    }
+                    break;
+                case UCrop.RESULT_ERROR://UCrop裁剪错误之后的处理
                     final Throwable cropError = UCrop.getError(data);
                     cropError.printStackTrace();
-                }
-                break;
-            case UCrop.RESULT_ERROR://UCrop裁剪错误之后的处理
-                final Throwable cropError = UCrop.getError(data);
-                cropError.printStackTrace();
-                break;
-            case REQUEST_SHOP_TYPE:
-                classid = data.getIntExtra(AppConstant.TYPE, 0);
-                class_name = data.getStringExtra(AppConstant.USERNAME);
-                tvCashauthCategory.setText(class_name);
-                break;
-            default:
-                break;
-        }
+                    break;
+                case REQUEST_SHOP_TYPE:
+                    classid = data.getIntExtra(AppConstant.TYPE, 0);
+                    class_name = data.getStringExtra(AppConstant.USERNAME);
+                    tvCashauthCategory.setText(class_name);
+                    break;
+                default:
+                    break;
+            }
         super.onActivityResult(requestCode, resultCode, data);
     }
 

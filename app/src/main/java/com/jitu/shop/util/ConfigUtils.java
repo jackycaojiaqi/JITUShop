@@ -11,6 +11,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout.LayoutParams;
 
+import com.jitu.shop.AppConstant;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by you on 16/8/31.
  * 配置辅助类  Resources.getSystem()
@@ -83,12 +90,14 @@ public class ConfigUtils {
             }
         }
     }
+
     /**
      * 计算出来的位置，y方向就在anchorView的上面和下面对齐显示，x方向就是与屏幕右边对齐显示
      * 如果anchorView的位置有变化，就可以适当自己额外加入偏移来修正
+     *
      * @param anchorView  呼出window的view
-     * @param contentView   window的内容布局
-     * @return window显示的左上角的xOff,yOff坐标
+     * @param contentView window的内容布局
+     * @return window显示的左上角的xOff, yOff坐标
      */
     public static int[] calculatePopWindowPos(final View anchorView, final View contentView) {
         final int windowPos[] = new int[2];
@@ -114,4 +123,23 @@ public class ConfigUtils {
         }
         return windowPos;
     }
+
+    /**
+     * 设置极光推送的alias和tags
+     * 登录的时候 设置
+     */
+    public static void setAlias(Context context) {
+        String alias = (String) SPUtil.get(context, AppConstant.PHONE, "");
+        JPushInterface.setAlias(context, 0, alias);
+    }
+
+
+    /**
+     * 删除极光推送的alias和tags
+     * 退出登录和token101失效的时候设置
+     */
+    public static void clearAlias(Context context) {
+        JPushInterface.deleteAlias(context, 0);
+    }
+
 }

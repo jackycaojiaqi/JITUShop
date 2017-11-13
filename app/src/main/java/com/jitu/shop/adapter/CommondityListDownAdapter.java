@@ -1,22 +1,14 @@
 package com.jitu.shop.adapter;
 
-import android.content.Intent;
-import android.provider.SyncStateContract;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.lguipeng.library.animcheckbox.AnimCheckBox;
-import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.entity.CommondityListEntity;
-import com.jitu.shop.entity.OrderListEntity;
-import com.jitu.shop.ui.OrdrInfoActivity;
 import com.jitu.shop.util.ImagUtil;
 import com.jitu.shop.util.StringUtil;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +38,12 @@ import java.util.List;
  * ━━━━━━神兽出没━━━━━━
  * Created by jacky on 17/3/10.
  */
-public class CommondityListAdapter extends BaseQuickAdapter<CommondityListEntity.ResultBean, BaseViewHolder> {
+public class CommondityListDownAdapter extends BaseQuickAdapter<CommondityListEntity.ResultBean, BaseViewHolder> {
     private List<CommondityListEntity.ResultBean> list = new ArrayList<>();
     private OrderListGoodsAdapter adapter;
     private boolean is_show_checkbox = false;
 
-    public CommondityListAdapter(int layoutResId, List data) {
+    public CommondityListDownAdapter(int layoutResId, List data) {
         super(layoutResId, data);
         list = data;
     }
@@ -66,16 +58,13 @@ public class CommondityListAdapter extends BaseQuickAdapter<CommondityListEntity
         //图片
         if (item.getMainImg().size() > 0)
             if (!StringUtil.isEmptyandnull(item.getMainImg().get(0).getMainImg())) {
-                KLog.e();
-                ImagUtil.setRound(mContext, AppConstant.IMAGPATH + item.getMainImg().get(0).getMainImg(), helper.getView(R.id.iv_commondity_list_pic), 5);
-            } else {
-                helper.setBackgroundRes(R.id.iv_commondity_list_pic, R.drawable.ic_no_pic);
+                ImagUtil.setnoerror(mContext, item.getMainImg().get(0).getMainImg(), helper.getView(R.id.iv_commondity_list_pic));
             }
         helper.setText(R.id.tv_commondity_list_good_detail, StringUtil.isEmptyandnull(item.getProductName()) ? "未知" : item.getProductName())
-                .setText(R.id.tv_commondity_list_goods_sku, item.getSkuOAname() + "-" + item.getSkuOname() + " " + item.getSkuTAname() + "-" + item.getSkuTname())
-                .setText(R.id.tv_commondity_list_warehouse_num, "库存:" + (item.getSkuid() == 0 ? item.getInventory() : item.getSkuinventory()))
-                .setText(R.id.tv_commondity_list_goods_price, "¥" + (item.getSkuid() == 0 ? item.getSales() : item.getPrice()))
-                .setText(R.id.tv_commondity_list_goods_num, "货号：" + item.getPCode());//
+                .setText(R.id.tv_commondity_list_goods_price, "¥ " + String.valueOf(item.getSales()))
+                .setText(R.id.tv_commondity_list_warehouse_num, "库存" + item.getInventory() + " ")
+                .setText(R.id.tv_commondity_list_sale_num, "货号：" + item.getPCode())
+                .setText(R.id.tv_commondity_list_goods_num, "货号:" + item.getPCode());//
         if (is_show_checkbox) {
             helper.getView(R.id.cb_commondity).setVisibility(View.VISIBLE);
         } else {
@@ -92,5 +81,6 @@ public class CommondityListAdapter extends BaseQuickAdapter<CommondityListEntity
         } else {
             ((AnimCheckBox) helper.getView(R.id.cb_commondity)).setChecked(false, false);
         }
+
     }
 }

@@ -12,15 +12,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.util.ToastUtil;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.vondear.rxtools.interfaces.onRequestListener;
 import com.vondear.rxtools.model.alipay.AliPayModel;
 import com.vondear.rxtools.model.alipay.AliPayTools;
 import com.vondear.rxtools.model.alipay.PayResult;
 import com.vondear.rxtools.model.wechat.pay.WechatPayTools;
 import com.vondear.rxtools.view.RxToast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -57,6 +64,7 @@ public class PayDepositeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_deposite);
         ButterKnife.bind(this);
+        api = WXAPIFactory.createWXAPI(this, AppConstant.WEICHAT_ID);
     }
 
     @Override
@@ -73,6 +81,7 @@ public class PayDepositeActivity extends BaseActivity {
 
     final String orderInfo = " 123";   // 订单信息
     final int SDK_PAY_FLAG = 123;
+    private IWXAPI api;
 
     @OnClick({R.id.iv_back, R.id.btn_pay_wechat, R.id.btn_pay_zhifubao})
     public void onViewClicked(View view) {
@@ -81,24 +90,23 @@ public class PayDepositeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_pay_wechat:
-                WechatPayTools.wechatPayApp(context,
-                        " ", //微信分配的APP_ID
-                        " ", //微信分配的 PARTNER_ID (商户ID)
-                        " ", //微信分配的 PRIVATE_KEY (私钥)
-                        " ", //订单ID (唯一)
-                        new onRequestListener() {
-                            @Override
-                            public void onSuccess(String s) {
-                                ToastUtil.show(context,
-                                        "成功");
-                            }
+                PayReq req = new PayReq();
+                JSONObject json = null;
+                try {
+                    json = new JSONObject("12");
+                    req.appId = json.getString("appid");
+                    req.partnerId = json.getString("partnerid");
+                    req.prepayId = json.getString("prepayid");
+                    req.nonceStr = json.getString("noncestr");
+                    req.timeStamp = json.getString("timestamp");
+                    req.packageValue = json.getString("package");
+                    req.sign = json.getString("sign");
+                    req.extData = "app data"; // optional
+                    api.sendReq(req);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                            @Override
-                            public void onError(String s) {
-                                ToastUtil.show(context,
-                                        "失败");
-                            }
-                        });
                 break;
             case R.id.btn_pay_zhifubao:
                 Runnable payRunnable = new Runnable() {

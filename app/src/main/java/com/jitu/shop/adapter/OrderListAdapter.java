@@ -62,7 +62,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListEntity.ResultBea
     @Override
     protected void convert(final BaseViewHolder helper, final OrderListEntity.ResultBean item) {
         //（0全部,1刚下单，10已付款，15已发货，20已收货，30申请退款，33已经退货，35没有退货）
-        helper.setText(R.id.tv_order_list_order_num, "订单编号：" + item.getOrderCode());
+        helper.setText(R.id.tv_order_list_order_num, "订单编号：" + item.getId());
         if (item.getStates() == 1) {
             helper.setText(R.id.tv_order_list_order_state, "刚下单");
         } else if (item.getStates() == 10) {
@@ -94,7 +94,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListEntity.ResultBea
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(mContext, OrdrInfoActivity.class);
-                    intent.putExtra(AppConstant.OBJECT, item.getOrderCode());
+                    intent.putExtra(AppConstant.OBJECT, item.getId());
                     mContext.startActivity(intent);
                 }
             });

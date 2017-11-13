@@ -21,6 +21,7 @@ import com.jitu.shop.entity.MainMenuEntity;
 import com.jitu.shop.entity.StateEntity;
 import com.jitu.shop.interfaces.MyCallBack;
 import com.jitu.shop.util.GlideImageLoader;
+import com.jitu.shop.util.LogUtil;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.ToastUtil;
@@ -63,8 +64,8 @@ public class MainActivity extends BaseActivity {
         initdate();
         initOtherDate();
         JPushInterface.requestPermission(context);//请求权限
-        String id = JPushInterface.getRegistrationID(context);
-        KLog.e(id + " " + SPUtil.get(context, AppConstant.TOKEN, ""));
+        JPushInterface.getAlias(context, 0);
+        KLog.e("token:" + SPUtil.get(context, AppConstant.TOKEN, ""));
         Beta.checkUpgrade(false, false);
     }
 
@@ -82,16 +83,14 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initview() {
-
-
         srlMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 initdate();
+                initOtherDate();
             }
         });
         srlMain.setProgressViewOffset(true, 10, 100);
-
     }
 
     private void initdate() {
@@ -100,6 +99,7 @@ public class MainActivity extends BaseActivity {
                 .execute(new JsonCallBack<MainMenuEntity>(MainMenuEntity.class) {
                     @Override
                     public void onSuccess(Response<MainMenuEntity> response) {
+
                         srlMain.setRefreshing(false);
                         if (response.body().getErrorCode() == 0) {
                             if (response.body().getResult() != null)
@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity {
                                         }
                                         //===================设置轮播图
                                         for (int i = 0; i < list_loop.size(); i++) {
-                                            images.add(AppConstant.IMAGPATH+list_loop.get(i).getCM_ImgPath());
+                                            images.add(AppConstant.IMAGPATH + list_loop.get(i).getCM_ImgPath());
                                         }
                                         banner.setImageLoader(new GlideImageLoader());
                                         banner.setImages(images);
@@ -196,19 +196,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-        OkGo.<MainMenuEntity>get(AppConstant.BASE_URL + AppConstant.URL_QUERYMYSTATE)
-                .tag(this)
-                .execute(new JsonCallBack<MainMenuEntity>(MainMenuEntity.class) {
-                    @Override
-                    public void onSuccess(Response<MainMenuEntity> response) {
-
-                    }
-
-                    @Override
-                    public void onError(Response<MainMenuEntity> response) {
-                        super.onError(response);
-                    }
-                });
     }
 
     @OnClick({R.id.iv_setting, R.id.rv_main})

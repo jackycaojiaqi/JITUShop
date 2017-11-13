@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
@@ -19,6 +20,7 @@ import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.StringUtil;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.socks.library.KLog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,13 +59,14 @@ public class ShopCenterActivity extends BaseActivity {
         setContentView(R.layout.activity_shopcenter);
         ButterKnife.bind(this);
         initview();
-        initdate();
+
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
+        initdate();
         JPushInterface.onResume(getApplicationContext());
     }
 
@@ -93,10 +96,12 @@ public class ShopCenterActivity extends BaseActivity {
             public void onResponse(Response object) {
                 ShopCenterEntity shop_entity = (ShopCenterEntity) object.body();
                 if (shop_entity.getErrorCode() == 0) {
-                    ImagUtil.setnocache(context, AppConstant.IMAGPATH + shop_entity.getResult().getLogo(), ivShopCenterLogo);
+                    KLog.e(AppConstant.IMAGPATH + shop_entity.getResult().getLogo());
+                    Glide.with(context).load(AppConstant.IMAGPATH + shop_entity.getResult().getLogo()).into(ivShopCenterLogo);
                     tvShopCenterName.setText(shop_entity.getResult().getShopName() + " ");
-                    tvShopCenterDetail.setText(StringUtil.isEmptyandnull(shop_entity.getResult().getOpeningtime()) ? "未知" :
-                            shop_entity.getResult().getOpeningtime() + "--" + shop_entity.getResult().getClosingtime());
+                    tvShopCenterDetail.setText((StringUtil.isEmptyandnull(shop_entity.getResult().getWorktimeBegin()) ? "未知" :
+                            shop_entity.getResult().getWorktimeBegin()) + "--" + (StringUtil.isEmptyandnull(shop_entity.getResult().getWorktimeEnd()) ? "未知" :
+                            shop_entity.getResult().getWorktimeEnd()));
                     if (shop_entity.getResult().getIspay() == 0) {
                         pay_state = 0;
                         tvShopCenterCashDeposit.setText("未交纳");
@@ -104,7 +109,6 @@ public class ShopCenterActivity extends BaseActivity {
                         tvShopCenterCashDeposit.setText("已交纳");
                         pay_state = 1;
                     }
-
                     if (shop_entity.getResult().getIspass() == 0) {
                         auth_state = 0;
                         tvShopCenterAuth.setText("未认证");
@@ -114,11 +118,13 @@ public class ShopCenterActivity extends BaseActivity {
                     } else if (shop_entity.getResult().getIspass() == 2) {
                         auth_state = 2;
                         tvShopCenterAuth.setText("认证通过");
+                    } else if (shop_entity.getResult().getIspass() == 3) {
+                        auth_state = 3;
+                        tvShopCenterAuth.setText("审核驳回");
                     }
                 }
             }
         });
-
     }
 
     @OnClick({R.id.rll_shop_center_cash_deposit, R.id.rll_shop_center_auth, R.id.rll_shop_center_about_us, R.id.rll_shop_center_help_feedback})

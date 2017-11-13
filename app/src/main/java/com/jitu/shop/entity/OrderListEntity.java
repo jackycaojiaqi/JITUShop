@@ -10,8 +10,8 @@ public class OrderListEntity extends BasePaserEntity {
 
     /**
      * Token : null
-     * Result : [{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002001","States":33,"consignee":"","amount":25600,"TB_List":[{"number":10,"states":1,"price":0,"sales":88.89,"SKuONname":null,"skuOAname":null,"ProductName":"是大方的说法","pCode":"DSFDS5435435","mainImg":""},{"number":5,"states":1,"price":0,"sales":21,"SKuONname":null,"skuOAname":null,"ProductName":"水电费家大四都是附近的时刻","pCode":"3366666","mainImg":""}]},{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002002","States":15,"consignee":"","amount":25600,"TB_List":[]},{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002003","States":20,"consignee":"","amount":25600,"TB_List":[]},{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002004","States":30,"consignee":"","amount":25600,"TB_List":[]},{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002005","States":33,"consignee":"","amount":25600,"TB_List":[]},{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002006","States":33,"consignee":"","amount":25600,"TB_List":[]},{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002007","States":1,"consignee":"","amount":25600,"TB_List":[]},{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002008","States":1,"consignee":"","amount":25600,"TB_List":[]},{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002009","States":1,"consignee":"","amount":25600,"TB_List":[]},{"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002010","States":1,"consignee":"","amount":25600,"TB_List":[]}]
-     * Count : 264
+     * Result : [{"CreatTime":"2017-11-08T14:47:16","OrderCode":null,"States":10,"consignee":"123","amount":0,"TB_List":[{"number":1,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]}]},{"CreatTime":"2017-11-08T14:45:52","OrderCode":null,"States":10,"consignee":"123","amount":266.3,"TB_List":[{"number":2,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]},{"number":1,"pcice":266,"pname":"浙江大柚子","skuUserName":"_|尺码_19|","states":1,"ProductName":"浙江大柚子","pCode":"25352525","mainImg":[{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162904441777.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162920226693.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162936414193.jpg"}]}]},{"CreatTime":"2017-11-08T14:18:46","OrderCode":null,"States":10,"consignee":"阿强伯","amount":0,"TB_List":[{"number":1,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]}]},{"CreatTime":"2017-11-08T12:06:50","OrderCode":null,"States":10,"consignee":"123","amount":1.65,"TB_List":[{"number":1,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]}]},{"CreatTime":"2017-11-08T12:06:14","OrderCode":null,"States":10,"consignee":"123","amount":1.65,"TB_List":[{"number":1,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]}]},{"CreatTime":"2017-11-08T12:05:05","OrderCode":null,"States":1,"consignee":"123","amount":1.65,"TB_List":[{"number":1,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]}]},{"CreatTime":"2017-11-08T12:03:50","OrderCode":null,"States":1,"consignee":"123","amount":1.65,"TB_List":[{"number":1,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]}]},{"CreatTime":"2017-11-08T12:00:24","OrderCode":null,"States":1,"consignee":"123","amount":1.65,"TB_List":[{"number":1,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]}]},{"CreatTime":"2017-11-08T11:56:51","OrderCode":null,"States":1,"consignee":"123","amount":1.65,"TB_List":[{"number":1,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]}]},{"CreatTime":"2017-11-08T11:27:23","OrderCode":null,"States":10,"consignee":"阿强伯","amount":14.52,"TB_List":[{"number":1,"pcice":22,"pname":"大颗花椰菜","skuUserName":"颜色_粉红色|尺码_19|","states":1,"ProductName":"大颗花椰菜","pCode":"33221122","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162400890141.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162436305653.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162454222560.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162513022067.jpg"}]}]}]
+     * Count : 18
      */
 
     private int Count;
@@ -35,20 +35,28 @@ public class OrderListEntity extends BasePaserEntity {
 
     public static class ResultBean {
         /**
-         * CreatTime : 2017-02-25T00:00:00
-         * OrderCode : 33100201703221552002001
-         * States : 33
-         * consignee :
-         * amount : 25600
-         * TB_List : [{"number":10,"states":1,"price":0,"sales":88.89,"SKuONname":null,"skuOAname":null,"ProductName":"是大方的说法","pCode":"DSFDS5435435","mainImg":""},{"number":5,"states":1,"price":0,"sales":21,"SKuONname":null,"skuOAname":null,"ProductName":"水电费家大四都是附近的时刻","pCode":"3366666","mainImg":""}]
+         * CreatTime : 2017-11-08T14:47:16
+         * OrderCode : null
+         * States : 10
+         * consignee : 123
+         * amount : 0
+         * TB_List : [{"number":1,"pcice":15,"pname":"新疆无子葡萄","skuUserName":"","states":1,"ProductName":"新疆无子葡萄","pCode":"123456","mainImg":[{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]}]
          */
-
+        private String id;
         private String CreatTime;
         private String OrderCode;
         private int States;
         private String consignee;
-        private int amount;
+        private double amount;
         private List<TBListBean> TB_List;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getCreatTime() {
             return CreatTime;
@@ -82,11 +90,11 @@ public class OrderListEntity extends BasePaserEntity {
             this.consignee = consignee;
         }
 
-        public int getAmount() {
+        public double getAmount() {
             return amount;
         }
 
-        public void setAmount(int amount) {
+        public void setAmount(double amount) {
             this.amount = amount;
         }
 
@@ -100,42 +108,24 @@ public class OrderListEntity extends BasePaserEntity {
 
         public static class TBListBean {
             /**
-             * number : 10
+             * number : 1
+             * pcice : 15
+             * pname : 新疆无子葡萄
+             * skuUserName :
              * states : 1
-             * price : 0
-             * sales : 88.89
-             * SKuONname : null
-             * skuOAname : null
-             * ProductName : 是大方的说法
-             * pCode : DSFDS5435435
-             * mainImg :
+             * ProductName : 新疆无子葡萄
+             * pCode : 123456
+             * mainImg : [{"imgserver":"C://IMG/v1.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/4/20171107162319816953.jpg"}]
              */
-            private String pname;
+
             private int number;
+            private double pcice;
+            private String pname;
+            private String skuUserName;
             private int states;
-            private int price;
-            private double sales;
-            private Object SKuONname;
-            private Object skuOAname;
             private String ProductName;
             private String pCode;
-            private String mainImg;
-
-            public String getPname() {
-                return pname;
-            }
-
-            public void setPname(String pname) {
-                this.pname = pname;
-            }
-
-            public String getpCode() {
-                return pCode;
-            }
-
-            public void setpCode(String pCode) {
-                this.pCode = pCode;
-            }
+            private List<MainImgBean> mainImg;
 
             public int getNumber() {
                 return number;
@@ -145,44 +135,36 @@ public class OrderListEntity extends BasePaserEntity {
                 this.number = number;
             }
 
+            public double getPcice() {
+                return pcice;
+            }
+
+            public void setPcice(double pcice) {
+                this.pcice = pcice;
+            }
+
+            public String getPname() {
+                return pname;
+            }
+
+            public void setPname(String pname) {
+                this.pname = pname;
+            }
+
+            public String getSkuUserName() {
+                return skuUserName;
+            }
+
+            public void setSkuUserName(String skuUserName) {
+                this.skuUserName = skuUserName;
+            }
+
             public int getStates() {
                 return states;
             }
 
             public void setStates(int states) {
                 this.states = states;
-            }
-
-            public int getPrice() {
-                return price;
-            }
-
-            public void setPrice(int price) {
-                this.price = price;
-            }
-
-            public double getSales() {
-                return sales;
-            }
-
-            public void setSales(double sales) {
-                this.sales = sales;
-            }
-
-            public Object getSKuONname() {
-                return SKuONname;
-            }
-
-            public void setSKuONname(Object SKuONname) {
-                this.SKuONname = SKuONname;
-            }
-
-            public Object getSkuOAname() {
-                return skuOAname;
-            }
-
-            public void setSkuOAname(Object skuOAname) {
-                this.skuOAname = skuOAname;
             }
 
             public String getProductName() {
@@ -201,12 +183,28 @@ public class OrderListEntity extends BasePaserEntity {
                 this.pCode = pCode;
             }
 
-            public String getMainImg() {
+            public List<MainImgBean> getMainImg() {
                 return mainImg;
             }
 
-            public void setMainImg(String mainImg) {
+            public void setMainImg(List<MainImgBean> mainImg) {
                 this.mainImg = mainImg;
+            }
+
+            public static class MainImgBean {
+                /**
+                 * imgserver : C://IMG/v1.jpg
+                 */
+
+                private String imgserver;
+
+                public String getImgserver() {
+                    return imgserver;
+                }
+
+                public void setImgserver(String imgserver) {
+                    this.imgserver = imgserver;
+                }
             }
         }
     }

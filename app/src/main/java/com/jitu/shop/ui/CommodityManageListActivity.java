@@ -20,6 +20,7 @@ import com.jitu.shop.entity.CommondityMessage;
 import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.interfaces.MyCallBack;
 import com.jitu.shop.ui.fragment.CommodityListOneFragment;
+import com.jitu.shop.ui.fragment.CommodityListTwoFragment;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.lzy.okgo.model.Response;
@@ -106,7 +107,7 @@ public class CommodityManageListActivity extends BaseActivity {
         fragment1.setArguments(bundle);
 
 
-        CommodityListOneFragment fragment2 = new CommodityListOneFragment();
+        CommodityListTwoFragment fragment2 = new CommodityListTwoFragment();
         Bundle bundle2 = new Bundle();
         bundle2.putString(AppConstant.TYPE, "2");
         fragment2.setArguments(bundle2);
@@ -115,6 +116,7 @@ public class CommodityManageListActivity extends BaseActivity {
         fragments.add(fragment2);
         WelcomePagerAdapter adapter = new WelcomePagerAdapter(getSupportFragmentManager(), fragments, titles);
         vpOrderList.setAdapter(adapter);
+        vpOrderList.setOffscreenPageLimit(1);
         tlOrdermanageList.setupWithViewPager(vpOrderList);
         tlOrdermanageList.setTabMode(TabLayout.MODE_FIXED);
         vpOrderList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -200,7 +202,12 @@ public class CommodityManageListActivity extends BaseActivity {
 
                 break;
             case R.id.tv_commondity_goods_action:
-                EventBus.getDefault().post(select_page, "commondity_action_up_or_down");
+                if (select_page == 0) {
+                    EventBus.getDefault().post(select_page, "commondity_action_one_down");
+                } else {
+                    EventBus.getDefault().post(select_page, "commondity_action_two_up");
+                }
+
                 break;
             case R.id.tv_commondity_goods_delete:
                 if (is_1show_checkbox) {
@@ -244,6 +251,7 @@ public class CommodityManageListActivity extends BaseActivity {
 
     /**
      * 点击按钮，显示或隐藏checkbox，并记住状态
+     *
      * @param object
      */
     @Subscriber(tag = "invisible_view")
@@ -259,7 +267,8 @@ public class CommodityManageListActivity extends BaseActivity {
     }
 
     /**
-     * 下拉刷新后充值按钮状态
+     * 下拉刷新后重置按钮状态
+     *
      * @param object
      */
     @Subscriber(tag = "refresh_button")

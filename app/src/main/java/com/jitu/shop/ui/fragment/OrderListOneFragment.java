@@ -128,7 +128,7 @@ public class OrderListOneFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(context, OrdrInfoActivity.class);
-                intent.putExtra(AppConstant.OBJECT, list_order.get(position).getOrderCode());
+                intent.putExtra(AppConstant.OBJECT, list_order.get(position).getId());
                 startActivity(intent);
             }
         });
@@ -162,7 +162,6 @@ public class OrderListOneFragment extends BaseFragment {
         tv_paidan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(context, DeliveryPickPeopleActity.class);
                 startActivity(intent);
                 popupWindow.dismiss();
@@ -232,7 +231,6 @@ public class OrderListOneFragment extends BaseFragment {
                     }
                 }
             }
-
             @Override
             public void onFailure(int code) {
                 if (srlOrderList != null)

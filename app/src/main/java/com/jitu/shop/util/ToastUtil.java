@@ -46,7 +46,7 @@ public class ToastUtil {
 
     public static void show(Context context, String info) {
         if (mToast == null) {
-            mToast = Toast.makeText(context, info, Toast.LENGTH_LONG);
+            mToast = Toast.makeText(context.getApplicationContext(), info, Toast.LENGTH_LONG);
         } else {
             mToast.setText(info);
         }
@@ -57,7 +57,7 @@ public class ToastUtil {
 
     public static void show_short(Context context, String info) {
         if (mToast == null) {
-            mToast = Toast.makeText(context, info, Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(context.getApplicationContext(), info, Toast.LENGTH_SHORT);
         } else {
             mToast.setText(info);
         }

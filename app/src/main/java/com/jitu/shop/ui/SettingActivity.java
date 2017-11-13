@@ -8,10 +8,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.entity.ChangePassEntity;
 import com.jitu.shop.entity.FeedBackEntity;
+import com.jitu.shop.util.ConfigUtils;
 import com.jitu.shop.util.SPUtil;
 import com.tencent.bugly.beta.Beta;
 
@@ -78,6 +80,7 @@ public class SettingActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_setting_quit:
+                ConfigUtils.clearAlias(context);
                 intent = new Intent(context, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

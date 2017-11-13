@@ -96,7 +96,12 @@
             android:launchMode="singleTask"/>
         <activity android:name=".ui.GetCashHistoryActivity"
             android:launchMode="singleTask"/>
-        <!-- Required SDK核心功能-->
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:launchMode="singleTask"/>
+
+
+
+        <!-- 极光推送相关服务注册 Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -185,7 +190,9 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="cf415b5359876a2549ee1a20" /> <!--  </>值来自开发者平台取得的AppKey-->
+            android:value="cf415b5359876a2549ee1a20" />
+        <!--  极光推送结束配置-->
+
         <!--高德地图-->
         <meta-data
             android:name="com.amap.api.v2.apikey"

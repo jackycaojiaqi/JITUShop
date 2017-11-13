@@ -74,6 +74,7 @@
             android:id="@+id/vp_order_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="40dp"
             android:background="@color/white"></android.support.v4.view.ViewPager>
     </LinearLayout>
 
@@ -96,9 +97,8 @@
         android:layout_alignParentBottom="true"
         android:background="@color/main_color"
         android:gravity="center"
-        android:visibility="gone"
         android:orientation="horizontal"
-      >
+        android:visibility="gone">
 
 
         <TextView
@@ -112,15 +112,14 @@
             android:textSize="14dp" />
 
 
-
         <TextView
             android:id="@+id/tv_commondity_goods_action"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/blue_1b99d1"
             android:gravity="center"
             android:text="上架"
-            android:background="@color/blue_1b99d1"
             android:textColor="@color/white"
             android:textSize="14dp" />
     </LinearLayout>

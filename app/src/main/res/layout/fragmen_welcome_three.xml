@@ -37,8 +37,9 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:lines="1"
             android:hint="请输入帐号"
+            android:lines="1"
+            android:maxLength="11"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="16dp" />
@@ -74,8 +75,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:lines="1"
             android:hint="请输入密码"
+            android:lines="1"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="16dp" />
@@ -112,13 +113,14 @@
         android:gravity="center"
         android:text="忘记密码？"
         android:textColor="@color/white_f6" />
+
     <TextView
         android:id="@+id/tv_login_register"
         android:layout_width="80dp"
         android:layout_height="40dp"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:layout_marginTop="430dp"
-        android:layout_alignParentRight="true"
         android:gravity="center"
         android:text="立即注册"
         android:textColor="@color/white_f6" />
