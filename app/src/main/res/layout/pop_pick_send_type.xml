@@ -20,7 +20,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="快递"
+                android:text="快递发货"
                 android:textColor="@color/black_3a3a3a" />
 
             <View
@@ -36,7 +36,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="派单"
+                android:text="上门服务"
                 android:textColor="@color/main_color" />
         </LinearLayout>
     </LinearLayout>

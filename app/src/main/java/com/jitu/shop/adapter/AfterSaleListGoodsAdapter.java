@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
-import com.jitu.shop.entity.OrderInfoEntity;
+import com.jitu.shop.entity.AfterSaleEntity;
 import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.util.ImagUtil;
 import com.jitu.shop.util.StringUtil;
@@ -21,12 +21,12 @@ import java.util.List;
 /**
  * Created by jacky on 2017/8/30.
  */
-public class OrderInfoGoodsAdapter extends BaseAdapter {
-    private List<OrderInfoEntity.ResultBean.TBOrderDetailsBean> list = new ArrayList<>();
+public class AfterSaleListGoodsAdapter extends BaseAdapter {
+    private List<AfterSaleEntity.ResultBean.TBDetailsBean> list = new ArrayList<>();
     private Context context;
     private LayoutInflater mInflater = null;
 
-    public OrderInfoGoodsAdapter(Context context, List<OrderInfoEntity.ResultBean.TBOrderDetailsBean> list) {
+    public AfterSaleListGoodsAdapter(Context context, List<AfterSaleEntity.ResultBean.TBDetailsBean> list) {
         this.list = list;
         this.context = context;
         mInflater = LayoutInflater.from(context);
@@ -68,16 +68,14 @@ public class OrderInfoGoodsAdapter extends BaseAdapter {
         //商品图片
         if (list.get(position).getMainImg().size() > 0)
             if (!StringUtil.isEmptyandnull(list.get(position).getMainImg().get(0).getImgserver()))
-                ImagUtil.setnoerror(context, AppConstant.IMAGPATH+list.get(position).getMainImg().get(0).getImgserver(), holder.good_img);
+                ImagUtil.setRound(context, AppConstant.IMAGPATH + list.get(position).getMainImg().get(0).getImgserver(), holder.good_img, 5);
         //名称
         holder.good_name.setText(StringUtil.isEmptyandnull(list.get(position).getProductName()) ? "未知" : list.get(position).getProductName());
         //价格
-        double price =list.get(position).getPcice();
-        holder.good_price.setText("¥ " + price);
-        //数量
-        holder.good_num.setText("x " + list.get(position).getNumber());
+        holder.good_price.setText("¥ " + list.get(position).getPcice());
+        holder.good_num.setText("x" + list.get(position).getNumber());
         //类别
-        holder.good_type.setText(" " + list.get(position).getPname());
+        holder.good_type.setText(" " + list.get(position).getSkuUserName());
         return convertView;
     }
 

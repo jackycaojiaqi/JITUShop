@@ -3,6 +3,9 @@ package com.jitu.shop.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class WelcomePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         return fragments.get(position);
     }
+
 
     @Override
     public int getCount() {

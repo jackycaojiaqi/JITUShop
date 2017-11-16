@@ -7,8 +7,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
+import com.jitu.shop.entity.BasePaserEntity;
+import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.util.NetClient;
+import com.jitu.shop.util.SPUtil;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,13 +59,35 @@ public class AfterSaleActivity extends BaseActivity {
     TextView tvAfterSaleAction2;
     @BindView(R.id.ll_commondity_action)
     LinearLayout llCommondityAction;
+    private String service_id;
+    private String service_type = "0";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_sale);
         ButterKnife.bind(this);
+        service_id = getIntent().getStringExtra(AppConstant.OBJECT);
+        service_type = getIntent().getStringExtra(AppConstant.TYPE);
         initview();
+        initDate();
+    }
+
+    private void initDate() {
+        HttpParams params = new HttpParams();
+        params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
+        params.put("serviceid", service_id);
+        NetClient.getInstance(BasePaserEntity.class).Get(context, AppConstant.URL_QueryServiceDetails, params, new MyCallBack() {
+            @Override
+            public void onResponse(Response object) {
+
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
     }
 
     private void initview() {

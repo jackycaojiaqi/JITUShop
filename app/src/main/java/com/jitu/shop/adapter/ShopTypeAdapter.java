@@ -14,8 +14,6 @@ import com.jitu.shop.R;
 import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.entity.ShopTypeEntity;
 import com.jitu.shop.ui.OrdrInfoActivity;
-import com.vondear.rxtools.view.tooltips.RxToolTip;
-import com.vondear.rxtools.view.tooltips.RxToolTipsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +46,6 @@ import java.util.List;
 public class ShopTypeAdapter extends BaseQuickAdapter<ShopTypeEntity.ResultBean, BaseViewHolder> {
     private List<ShopTypeEntity.ResultBean> list = new ArrayList<>();
     private OrderListGoodsAdapter adapter;
-    RxToolTipsManager mRxToolTipsManager;
-    RxToolTip.Builder builder;
     View tipvView;
 
     public ShopTypeAdapter(int layoutResId, List data) {

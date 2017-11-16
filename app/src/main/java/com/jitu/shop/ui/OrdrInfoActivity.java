@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.adapter.OrderInfoGoodsAdapter;
@@ -88,45 +89,61 @@ public class OrdrInfoActivity extends BaseActivity {
         DialogFactory.showRequestDialog(context);
         Map<String, String> map = new HashMap<>();
         map.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
-        map.put("ordercode", order_code);
+        map.put("orderid", order_code);
         NetClient.getInstance(OrderInfoEntity.class).Get(context, AppConstant.BASE_URL + AppConstant.URL_QUERYORDERDETAILS, map, new MyCallBack() {
             @Override
             public void onFailure(int code) {
                 DialogFactory.hideRequestDialog();
             }
+
             @Override
             public void onResponse(Response object) {
                 DialogFactory.hideRequestDialog();
                 oderinfo = (OrderInfoEntity) object.body();
                 if (oderinfo.getErrorCode() == 0) {
                     //订单号
-                    tvOrderInfoOrdernum.setText("订单号：" + oderinfo.getResult().getOrderCode());
+                    tvOrderInfoOrdernum.setText("订单号：" + oderinfo.getResult().getOrderid());
                     //下单时间
                     String time = oderinfo.getResult().getCreatTime();
                     try {
-                        time = time.substring(0, 10);
+                        time = time.replace("T", " ");
                         tvOrderInfoTime.setText(time + "");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     //订单状态
                     if (oderinfo.getResult().getStates() == 1) {
-                        tvOrderInfoState.setText("刚下单");
+                        tvOrderInfoState.setText("未付款");
+                        tvOrderInfoAction.setText("未付款");
+                        tvOrderInfoAction.setClickable(false);
+                        tvOrderInfoAction.setBackgroundColor(getResources().getColor(R.color.gray_a));
                     } else if (oderinfo.getResult().getStates() == 10) {
                         tvOrderInfoState.setText("已付款");
+                        tvOrderInfoAction.setText("去发货");
+                        tvOrderInfoAction.setBackgroundColor(getResources().getColor(R.color.main_color));
                     } else if (oderinfo.getResult().getStates() == 15) {
                         tvOrderInfoState.setText("已发货");
+                        tvOrderInfoAction.setText("已发货");
+                        tvOrderInfoAction.setClickable(false);
+                        tvOrderInfoAction.setBackgroundColor(getResources().getColor(R.color.gray_a));
                     } else if (oderinfo.getResult().getStates() == 20) {
                         tvOrderInfoState.setText("已收货");
+                        tvOrderInfoAction.setText("已收货");
+                        tvOrderInfoAction.setClickable(false);
+                        tvOrderInfoAction.setBackgroundColor(getResources().getColor(R.color.gray_a));
                     } else if (oderinfo.getResult().getStates() == 30) {
                         tvOrderInfoState.setText("申请退款");
+                        tvOrderInfoAction.setText("退款操作");
+                        tvOrderInfoAction.setBackgroundColor(getResources().getColor(R.color.main_color));
                     } else if (oderinfo.getResult().getStates() == 33) {
                         tvOrderInfoState.setText("已经退货");
+                        tvOrderInfoAction.setText("退货操作");
                     } else if (oderinfo.getResult().getStates() == 35) {
                         tvOrderInfoState.setText("没有退货");
+                        tvOrderInfoAction.setText("没有退货");
                     }
                     //订单留言
-                    tvOrderInfoLeavemessage.setText(oderinfo.getResult().getMemNote() + " ");
+                    tvOrderInfoLeavemessage.setText(StringUtil.isEmptyandnull(oderinfo.getResult().getMemNote()) ? "无" : oderinfo.getResult().getMemNote());
                     //订单总额
                     tvOrderInfoPrice.setText("¥ " + oderinfo.getResult().getAmount());
                     //收货人名字
@@ -164,6 +181,26 @@ public class OrdrInfoActivity extends BaseActivity {
             case R.id.tv_order_info_phone:
                 break;
             case R.id.tv_order_info_action:
+                if (oderinfo.getResult().getStates() == 10) {//去发货
+                    new MaterialDialog.Builder(this)
+                            .title("选择发货方式")
+                            .items(new String[]{"快递发货", "上门服务"})
+                            .itemsCallback(new MaterialDialog.ListCallback() {//选中监听，同时dialog消失
+                                @Override
+                                public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                    if (position == 0) {
+                                        Intent intent = new Intent(context, DeliveryInfoActity.class);
+                                        intent.putExtra(AppConstant.OBJECT, oderinfo.getResult().getOrderid());
+                                        startActivity(intent);
+                                    } else {
+                                        Intent intent = new Intent(context, DeliveryPickPeopleActity.class);
+                                        intent.putExtra(AppConstant.OBJECT, oderinfo.getResult().getOrderid());
+                                        startActivity(intent);
+                                    }
+                                }
+                            })
+                            .show();
+                }
                 break;
         }
     }

@@ -46,6 +46,7 @@ public class AppConstant {
     public static final String UNDELIVER_STATE = "undeliver_state";
     public static final String DELIVERED_STATE = "delivered_state";
     public static final String AFTERSALE_STATE = "aftersale_state";
+    public static final String MESSAGE_UNREAD_NUM = "message_state";
     public static final String CALLFROM = "callfrom";
     public static final String CALLTO = "callto";
     public static final String CODE = "code";
@@ -64,8 +65,13 @@ public class AppConstant {
     public static final String URL_ADDSHOPCLASSPRODUCTS = "/api/Admin/AddShopClassProducts";//为分类添加商品
     public static final String URL_QUERYORDERS = "/api/Admin/QueryOrders";//查询订单
     public static final String URL_QUERYORDERDETAILS = "/api/Admin/QueryOrderDetails";//查询订单详情
-    public static final String URL_SUBMITNOTE = "/api/Admin/SubmitNote";//提交意见
+    public static final String URL_SUBMITNOTE = "/api/Admin/SubmitNote";//提交意见\
+
+
+    //消息
     public static final String URL_QUERYNOTICES = "/api/Admin/QueryNotices";//查询我的消息
+    public static final String URL_SetNoticeState = "/api/Admin/SetNoticeState";//设置消息已读
+    public static final String URL_DelNotice = "/api/Admin/DelNotice";//删除消息
 
     //Home
     public static final String URL_USERREVICEPASSWORD = "/api/Home/UserRevicePassword";//用户修改密码
@@ -106,5 +112,14 @@ public class AppConstant {
 
     //商家管理
     public static final String URL_QUERYSHOPINFO = BASE_URL + "/api/Admin/QueryShopInfo"; //商家信息
+
+    //订单流转相关
+    public static final String URL_QueryLogistics = BASE_URL + "/api/Admin/QueryLogistics"; //查询物流公司
+    public static final String URL_QueryCourier = BASE_URL + "/api/Admin/QueryCourier"; //查询送货人员
+    public static final String URL_DeliverGoods = BASE_URL + "/api/Admin/DeliverGoods"; //订单发货
+
+    //售后操作相关
+    public static final String URL_QueryService = BASE_URL + "/api/Admin/QueryService"; //查询售后申请
+    public static final String URL_QueryServiceDetails = BASE_URL + "/api/Admin/QueryServiceDetails"; //查询售后详情
 
 }

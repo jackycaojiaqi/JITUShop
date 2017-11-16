@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,14 +12,24 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
+import com.jitu.shop.entity.BasePaserEntity;
+import com.jitu.shop.entity.DeliverCompanyEntity;
+import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.util.DialogFactory;
+import com.jitu.shop.util.NetClient;
+import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.StringUtil;
-import com.jitu.shop.util.ToastUtil;
 import com.jitu.shop.widget.ClearableEditText;
-import com.vondear.rxtools.RxActivityUtils;
-import com.vondear.rxtools.activity.ActivityScanerCode;
+import com.lzy.okgo.model.HttpParams;
+import com.lzy.okgo.model.Response;
+import com.vondear.rxtools.view.RxToast;
+
+import org.simple.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,34 +52,61 @@ public class DeliveryInfoActity extends BaseActivity {
     ClearableEditText etDeliverCode;
     @BindView(R.id.iv_deliver_code_qr)
     ImageView ivDeliverCodeQr;
+    @BindView(R.id.btn_sure_to_deliver)
+    Button btnSureToDeliver;
     private List<String> list_type = new ArrayList<>();
+
+    private List<DeliverCompanyEntity.ResultBean> list_people = new ArrayList<>();
+    private int deliver_id = 0;
+    private String order_id = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deliveryinfo);
         ButterKnife.bind(this);
+        order_id = getIntent().getStringExtra(AppConstant.OBJECT);
         initview();
         initdate();
     }
 
     private void initdate() {
-        list_type.add("申通快递");
-        list_type.add("顺丰快递");
-        list_type.add("圆通快递");
-        list_type.add("韵达快递");
-        list_type.add("中通快递");
-        list_type.add("天天快递");
-        list_type.add("优速快递");
-        list_type.add("EMS");
-        list_type.add("其他");
-        spinner.setItems(list_type);
-        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+        DialogFactory.showRequestDialog(context);
+        Map<String, String> map = new HashMap<>();
+        map.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
+        NetClient.getInstance(DeliverCompanyEntity.class).Get(context, AppConstant.URL_QueryLogistics, map, new MyCallBack() {
             @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                ToastUtil.show(context, item);
+            public void onResponse(Response object) {
+                DialogFactory.hideRequestDialog();
+                DeliverCompanyEntity obj = (DeliverCompanyEntity) object.body();
+                if (obj.getErrorCode() == 0) {
+                    list_people = obj.getResult();
+                    for (DeliverCompanyEntity.ResultBean list_person : list_people) {
+                        list_type.add(list_person.getCM_Name());
+                        spinner.setItems(list_type);
+                        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+                            @Override
+                            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                                for (DeliverCompanyEntity.ResultBean list_person : list_people) {
+                                    if (list_person.getCM_Name().equals(item)) {
+                                        deliver_id = list_person.getCM_LogisticsId();
+                                    }
+                                }
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int code) {
+                DialogFactory.hideRequestDialog();
             }
         });
+
+
     }
 
     private void initview() {
@@ -79,7 +117,7 @@ public class DeliveryInfoActity extends BaseActivity {
 
     private int RESULT_QR = 0x13;
 
-    @OnClick({R.id.iv_back, R.id.iv_deliver_code_qr})
+    @OnClick({R.id.iv_back, R.id.iv_deliver_code_qr, R.id.btn_sure_to_deliver})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -90,7 +128,45 @@ public class DeliveryInfoActity extends BaseActivity {
                 intent = new Intent(context, CaptureActivity.class);
                 startActivityForResult(intent, RESULT_QR);
                 break;
+            case R.id.btn_sure_to_deliver:
+                String deliver_code = etDeliverCode.getText().toString().trim();
+                if (deliver_id == 0) {
+                    RxToast.info("请选择快递公司");
+                }
+                if (StringUtil.isEmptyandnull(deliver_code)) {
+                    RxToast.info("请输入快递单号");
+                }
+                SureToDeliver(deliver_code, deliver_id);
+                break;
         }
+    }
+
+    private void SureToDeliver(String deliver_code, int deliver_id) {
+
+        DialogFactory.showRequestDialog(context);
+        HttpParams params = new HttpParams();
+        params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
+        params.put("orderid", order_id);
+        params.put("type", "1");
+        params.put("logisticsnum", deliver_code);
+        params.put("logisticsid", deliver_id);
+        params.put("courierid", "0");
+        NetClient.getInstance(BasePaserEntity.class).Get(context, AppConstant.URL_DeliverGoods, params, new MyCallBack() {
+            @Override
+            public void onResponse(Response object) {
+                DialogFactory.hideRequestDialog();
+                BasePaserEntity obj = new BasePaserEntity();
+                if (obj.getErrorCode() == 0) {
+                    EventBus.getDefault().post("orderListFragment_Refresh", "orderListFragment_Refresh");
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(int code) {
+                DialogFactory.hideRequestDialog();
+            }
+        });
     }
 
     @Override
@@ -105,4 +181,5 @@ public class DeliveryInfoActity extends BaseActivity {
             }
         }
     }
+
 }

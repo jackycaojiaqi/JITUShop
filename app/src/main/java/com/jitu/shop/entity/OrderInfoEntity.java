@@ -1,7 +1,5 @@
 package com.jitu.shop.entity;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -12,13 +10,12 @@ public class OrderInfoEntity extends BasePaserEntity {
 
     /**
      * Token : null
-     * Result : {"CreatTime":"2017-02-25T00:00:00","OrderCode":"33100201703221552002001","States":33,"consignee":"","amount":25600,"memNote":"是的范德萨","Addr":"SDFDSF","phone":"","TB_OrderDetails":[{"number":10,"pcice":null,"pname":"是的范德萨","skuUserName":"发都是附近的时刻令肌肤","states":1,"ProductName":null,"pCode":null,"mainImg":null},{"number":5,"pcice":null,"pname":"水电费发生过","skuUserName":"多少分五个色鬼公司范德萨","states":1,"ProductName":null,"pCode":null,"mainImg":null}]}
+     * Result : {"CreatTime":"2017-11-13T10:58:39","OrderCode":null,"States":15,"consignee":"阿强伯","amount":0.5,"memNote":null,"Addr":"浙江台州市椒江区浙江省台州市啦啦啦","phone":"13777185820","TB_OrderDetails":[{"number":1,"pcice":0.5,"pname":"大白兔，白又白奶糖","skuUserName":"颜色:粉红色 尺码:3XL","states":1,"ProductName":"大白兔，白又白奶糖","mainImg":[{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171109163110193054.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134231998322.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134245676920.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134307484063.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134323509226.jpg"}]}]}
      * Count : 0
      */
 
     private ResultBean Result;
     private int Count;
-
 
     public ResultBean getResult() {
         return Result;
@@ -38,26 +35,35 @@ public class OrderInfoEntity extends BasePaserEntity {
 
     public static class ResultBean {
         /**
-         * CreatTime : 2017-02-25T00:00:00
-         * OrderCode : 33100201703221552002001
-         * States : 33
-         * consignee :
-         * amount : 25600
-         * memNote : 是的范德萨
-         * Addr : SDFDSF
-         * phone :
-         * TB_OrderDetails : [{"number":10,"pcice":null,"pname":"是的范德萨","skuUserName":"发都是附近的时刻令肌肤","states":1,"ProductName":null,"pCode":null,"mainImg":null},{"number":5,"pcice":null,"pname":"水电费发生过","skuUserName":"多少分五个色鬼公司范德萨","states":1,"ProductName":null,"pCode":null,"mainImg":null}]
+         * CreatTime : 2017-11-13T10:58:39
+         * OrderCode : null
+         * States : 15
+         * consignee : 阿强伯
+         * amount : 0.5
+         * memNote : null
+         * Addr : 浙江台州市椒江区浙江省台州市啦啦啦
+         * phone : 13777185820
+         * TB_OrderDetails : [{"number":1,"pcice":0.5,"pname":"大白兔，白又白奶糖","skuUserName":"颜色:粉红色 尺码:3XL","states":1,"ProductName":"大白兔，白又白奶糖","mainImg":[{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171109163110193054.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134231998322.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134245676920.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134307484063.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134323509226.jpg"}]}]
          */
 
         private String CreatTime;
         private String OrderCode;
+       private String orderid;
         private int States;
         private String consignee;
-        private int amount;
+        private double amount;
         private String memNote;
         private String Addr;
         private String phone;
         private List<TBOrderDetailsBean> TB_OrderDetails;
+
+        public String getOrderid() {
+            return orderid;
+        }
+
+        public void setOrderid(String orderid) {
+            this.orderid = orderid;
+        }
 
         public String getCreatTime() {
             return CreatTime;
@@ -91,11 +97,11 @@ public class OrderInfoEntity extends BasePaserEntity {
             this.consignee = consignee;
         }
 
-        public int getAmount() {
+        public double getAmount() {
             return amount;
         }
 
-        public void setAmount(int amount) {
+        public void setAmount(double amount) {
             this.amount = amount;
         }
 
@@ -133,24 +139,22 @@ public class OrderInfoEntity extends BasePaserEntity {
 
         public static class TBOrderDetailsBean {
             /**
-             * number : 10
-             * pcice : null
-             * pname : 是的范德萨
-             * skuUserName : 发都是附近的时刻令肌肤
+             * number : 1
+             * pcice : 0.5
+             * pname : 大白兔，白又白奶糖
+             * skuUserName : 颜色:粉红色 尺码:3XL
              * states : 1
-             * ProductName : null
-             * pCode : null
-             * mainImg : null
+             * ProductName : 大白兔，白又白奶糖
+             * mainImg : [{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171109163110193054.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134231998322.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134245676920.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134307484063.jpg"},{"imgserver":"C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171111134323509226.jpg"}]
              */
 
             private int number;
-            private String pcice;
+            private double pcice;
             private String pname;
             private String skuUserName;
             private int states;
             private String ProductName;
-            private String pCode;
-            private String mainImg;
+            private List<MainImgBean> mainImg;
 
             public int getNumber() {
                 return number;
@@ -160,11 +164,11 @@ public class OrderInfoEntity extends BasePaserEntity {
                 this.number = number;
             }
 
-            public String getPcice() {
+            public double getPcice() {
                 return pcice;
             }
 
-            public void setPcice(String pcice) {
+            public void setPcice(double pcice) {
                 this.pcice = pcice;
             }
 
@@ -200,20 +204,28 @@ public class OrderInfoEntity extends BasePaserEntity {
                 this.ProductName = ProductName;
             }
 
-            public String getPCode() {
-                return pCode;
-            }
-
-            public void setPCode(String pCode) {
-                this.pCode = pCode;
-            }
-
-            public String getMainImg() {
+            public List<MainImgBean> getMainImg() {
                 return mainImg;
             }
 
-            public void setMainImg(String mainImg) {
+            public void setMainImg(List<MainImgBean> mainImg) {
                 this.mainImg = mainImg;
+            }
+
+            public static class MainImgBean {
+                /**
+                 * imgserver : C://web/HT/eShop.jjsqwg.com/images/eShop/ShopProductPics/7/20171109163110193054.jpg
+                 */
+
+                private String imgserver;
+
+                public String getImgserver() {
+                    return imgserver;
+                }
+
+                public void setImgserver(String imgserver) {
+                    this.imgserver = imgserver;
+                }
             }
         }
     }

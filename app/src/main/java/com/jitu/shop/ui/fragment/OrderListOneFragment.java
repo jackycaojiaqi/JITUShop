@@ -30,8 +30,12 @@ import com.jitu.shop.ui.OrdrInfoActivity;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.widget.DividerItemDecoration;
+import com.jitu.shop.widget.ViewPagerFragment;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
+
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +49,7 @@ import butterknife.Unbinder;
 /**
  * Created by jacky on 2017/7/11.
  */
-public class OrderListOneFragment extends BaseFragment {
+public class OrderListOneFragment extends ViewPagerFragment {
 
     @BindView(R.id.rv_order_list)
     RecyclerView rvOrderList;
@@ -64,6 +68,7 @@ public class OrderListOneFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragmen_order_list_one, container, false);
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -91,7 +96,9 @@ public class OrderListOneFragment extends BaseFragment {
         initdate();
     }
 
+
     private PopupWindow popupWindow;
+    private int pos = -1;
 
     private void initview() {
         //设置下拉刷新
@@ -132,7 +139,7 @@ public class OrderListOneFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -155,6 +162,7 @@ public class OrderListOneFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DeliveryInfoActity.class);
+                intent.putExtra(AppConstant.OBJECT, list_order.get(pos).getId());
                 startActivity(intent);
                 popupWindow.dismiss();
             }
@@ -163,6 +171,7 @@ public class OrderListOneFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DeliveryPickPeopleActity.class);
+                intent.putExtra(AppConstant.OBJECT, list_order.get(pos).getId());
                 startActivity(intent);
                 popupWindow.dismiss();
             }
@@ -170,25 +179,26 @@ public class OrderListOneFragment extends BaseFragment {
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (type_code.equals("0")) {//全部
-                    popupWindow.showAsDropDown(view);
-                } else if (type_code.equals("1")) {//代付款
-
-                } else if (type_code.equals("10")) {//待发货
-                    popupWindow.showAsDropDown(view);
-                } else if (type_code.equals("15")) {//已发货
-
-                } else if (type_code.equals("20")) {//售后
+                pos = position;
+                //没有售后
+                if (list_order.get(position).getCM_OrderServiceState() == 0) {
+                    if (list_order.get(position).getStates() == 10) {
+                        popupWindow.showAsDropDown(view);
+                    }
+                } else {//有售后
                     Intent intent = new Intent(context, AfterSaleActivity.class);
-                    intent.putExtra(AppConstant.OBJECT, "");
+                    if (list_order.get(position).getCM_OrderServiceTpye() == 1) {
+                        intent.putExtra(AppConstant.TYPE, "1");
+                    } else if (list_order.get(position).getCM_OrderServiceTpye() == 2) {
+                        intent.putExtra(AppConstant.TYPE, "2");
+                    } else if (list_order.get(position).getCM_OrderServiceTpye() == 3) {
+                        intent.putExtra(AppConstant.TYPE, "3");
+                    }
+                    intent.putExtra(AppConstant.OBJECT, list_order.get(position).getCM_ServiceId());
                     startActivity(intent);
                 }
-
-
             }
         });
-
-
     }
 
     private int pagenum = 1;
@@ -197,7 +207,7 @@ public class OrderListOneFragment extends BaseFragment {
     private void initdate() {
 
         Map<String, String> map = new HashMap<>();
-        map.put("token", (String) SPUtil.get(getActivity(), AppConstant.TOKEN, ""));
+        map.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
         map.put("pagenum", String.valueOf(pagenum));
         map.put("pagesize", String.valueOf(pagesize));
         map.put("state", type_code);
@@ -208,15 +218,19 @@ public class OrderListOneFragment extends BaseFragment {
                 OrderListEntity orderListEntity = (OrderListEntity) object.body();
                 if (orderListEntity.getErrorCode() == 0) {
                     if (date_type == 0) {
-                        adapter.setEnableLoadMore(true);
                         list_order.clear();
                         list_order = orderListEntity.getResult();
                         adapter.setNewData(list_order);
+                        if (orderListEntity.getResult().size() < 10) {
+                            adapter.setEnableLoadMore(false);
+                        }
                     } else if (date_type == 1) {
                         list_order.clear();
-                        adapter.setEnableLoadMore(true);
                         list_order = orderListEntity.getResult();
                         adapter.setNewData(list_order);
+                        if (orderListEntity.getResult().size() < 10) {
+                            adapter.setEnableLoadMore(false);
+                        }
                     } else if (date_type == 2) {
                         if (orderListEntity.getResult().size() < 10) {//最后一页
                             list_order.addAll(orderListEntity.getResult());
@@ -231,6 +245,7 @@ public class OrderListOneFragment extends BaseFragment {
                     }
                 }
             }
+
             @Override
             public void onFailure(int code) {
                 if (srlOrderList != null)
@@ -239,9 +254,15 @@ public class OrderListOneFragment extends BaseFragment {
         });
     }
 
+    @Subscriber(tag = "orderListFragment_Refresh")
+    private void RefreshEvent(String obj) {
+        initdate();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
         unbinder.unbind();
     }
 }

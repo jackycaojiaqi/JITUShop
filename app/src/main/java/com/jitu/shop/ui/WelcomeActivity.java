@@ -44,17 +44,22 @@ public class WelcomeActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        ButterKnife.bind((Activity) context);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!StringUtil.isEmptyandnull((String) SPUtil.get(context, AppConstant.TOKEN, ""))) {
-                    Intent intent = new Intent(context, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    ButterKnife.bind((Activity) context);
-                    initview();
-                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!StringUtil.isEmptyandnull((String) SPUtil.get(context, AppConstant.TOKEN, ""))) {
+                            Intent intent = new Intent(context, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            initview();
+                        }
+                    }
+                });
             }
         }, 2000);
     }

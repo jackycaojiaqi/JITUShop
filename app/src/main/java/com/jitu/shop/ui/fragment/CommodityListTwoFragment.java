@@ -76,6 +76,12 @@ public class CommodityListTwoFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         initview();
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -305,9 +311,8 @@ public class CommodityListTwoFragment extends BaseFragment {
     @Subscriber(tag = "commondity_action_del_select")
     private void commondity_action_del_select(int object) {
         if (object == 1) {
-            doGoodsAction("3");
+            doGoodsAction("4");
         }
-
     }
 
     @Override

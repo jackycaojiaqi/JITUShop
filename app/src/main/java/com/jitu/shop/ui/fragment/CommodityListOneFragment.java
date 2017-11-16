@@ -82,6 +82,12 @@ public class CommodityListOneFragment extends BaseFragment {
         initdate();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initdate();
+    }
+
     private void initview() {
         //设置下拉刷新
         srlOrderList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -138,7 +144,6 @@ public class CommodityListOneFragment extends BaseFragment {
     }
 
     private void initdate() {
-        KLog.e("===========");
         DialogFactory.showRequestDialog(context);
         Map<String, String> map = new HashMap<>();
         map.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));

@@ -1,5 +1,6 @@
 package com.jitu.shop.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,8 +27,10 @@ import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.socks.library.KLog;
 
 import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,11 +57,13 @@ public class MessageActivity extends BaseActivity {
     private BaseQuickAdapter adapter;
     private List<MessageEntity.ResultBean> list_order = new ArrayList<>();
     private int date_type = 0;//0 首次加载数据  1、下拉刷新  2、上拉加载
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         initview();
         initdate();
     }
@@ -100,15 +105,22 @@ public class MessageActivity extends BaseActivity {
         rvMessage.setAdapter(adapter);
 //        rvMessage.addItemDecoration(new DividerGridItemDecoration(context));
         //水平分割线
-        rvMessage.addItemDecoration(new DividerItemDecoration(
-                context, DividerItemDecoration.HORIZONTAL_LIST, 1, getResources().getColor(R.color.gray_c)));
         rvMessage.smoothScrollToPosition(0);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                Intent intent = new Intent(context, OrdrInfoActivity.class);
-//                intent.putExtra(AppConstant.OBJECT, list_order.get(position).get());
-//                startActivity(intent);
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.content:
+                        setMessageRead(list_order.get(position).getCM_NoticeId(), position);
+
+                        Intent intent = new Intent(context, MessageInfoActivity.class);
+                        intent.putExtra(AppConstant.OBJECT, list_order.get(position));
+                        startActivity(intent);
+                        break;
+                    case R.id.right_menu_1:
+                        del_message_by_id(list_order.get(position).getCM_NoticeId(), position);
+                        break;
+                }
             }
         });
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -121,9 +133,39 @@ public class MessageActivity extends BaseActivity {
         }); //=========================recycleview配置结束
     }
 
+
+    /**
+     * 设置消息已读
+     *
+     * @param cm_noticeId
+     */
+    private void setMessageRead(int cm_noticeId, final int pos) {
+        String url = AppConstant.BASE_URL + AppConstant.URL_SetNoticeState;
+        HttpParams params = new HttpParams();
+        params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
+        params.put("noticeid", cm_noticeId);
+        NetClient.getInstance(BasePaserEntity.class).Get(context, url, params, new MyCallBack() {
+
+            @Override
+            public void onResponse(Response object) {
+                BasePaserEntity obj = (BasePaserEntity) object.body();
+                if (obj.getErrorCode() == 0) {
+                    list_order.get(pos).setCM_IsCheck(1);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
+
+    }
+
     private int page_num = 1;
     private int pagesize = 10;
-    
+
     private void initdate() {
         String url = AppConstant.BASE_URL + AppConstant.URL_QUERYNOTICES;
         HttpParams params = new HttpParams();
@@ -142,17 +184,22 @@ public class MessageActivity extends BaseActivity {
                 srlMessage.setRefreshing(false);
                 MessageEntity entity = (MessageEntity) object.body();
                 if (entity.getErrorCode() == 0) {
-
                     if (entity.getErrorCode() == 0) {
                         if (date_type == 0) {
-                            adapter.setEnableLoadMore(true);
+
                             list_order.clear();
                             list_order = entity.getResult();
                             adapter.setNewData(list_order);
+                            if (entity.getResult().size() < 10) {
+                                adapter.setEnableLoadMore(false);
+                            }
                         } else if (date_type == 1) {
                             list_order.clear();
                             adapter.setEnableLoadMore(true);
                             list_order = entity.getResult();
+                            if (entity.getResult().size() < 10) {
+                                adapter.setEnableLoadMore(false);
+                            }
                             adapter.setNewData(list_order);
                         } else if (date_type == 2) {
                             if (entity.getResult().size() < 10) {//最后一页
@@ -171,6 +218,40 @@ public class MessageActivity extends BaseActivity {
 
             }
         });
+    }
 
+    /**
+     * 删除消息
+     *
+     * @param id
+     * @param pos
+     */
+    private void del_message_by_id(int id, final int pos) {
+        String url = AppConstant.BASE_URL + AppConstant.URL_DelNotice;
+        HttpParams params = new HttpParams();
+        params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
+        params.put("noticeids", id);
+        NetClient.getInstance(BasePaserEntity.class).Get(context, url, params, new MyCallBack() {
+
+            @Override
+            public void onResponse(Response object) {
+                BasePaserEntity obj = (BasePaserEntity) object.body();
+                if (obj.getErrorCode() == 0) {
+                    list_order.remove(pos);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(int code) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

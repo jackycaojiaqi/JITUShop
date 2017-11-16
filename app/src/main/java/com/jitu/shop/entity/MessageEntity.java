@@ -1,5 +1,8 @@
 package com.jitu.shop.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -32,7 +35,7 @@ public class MessageEntity extends BasePaserEntity {
         this.Result = Result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Parcelable {
         /**
          * CM_Content : 大青蛙多多群无多群
          * CM_CreateTime : 2017-08-20T00:00:00
@@ -96,5 +99,44 @@ public class MessageEntity extends BasePaserEntity {
         public void setCM_NoticeId(int CM_NoticeId) {
             this.CM_NoticeId = CM_NoticeId;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.CM_Content);
+            dest.writeString(this.CM_CreateTime);
+            dest.writeString(this.CM_Title);
+            dest.writeInt(this.CM_Type);
+            dest.writeInt(this.CM_IsCheck);
+            dest.writeInt(this.CM_NoticeId);
+        }
+
+        public ResultBean() {
+        }
+
+        protected ResultBean(Parcel in) {
+            this.CM_Content = in.readString();
+            this.CM_CreateTime = in.readString();
+            this.CM_Title = in.readString();
+            this.CM_Type = in.readInt();
+            this.CM_IsCheck = in.readInt();
+            this.CM_NoticeId = in.readInt();
+        }
+
+        public static final Parcelable.Creator<ResultBean> CREATOR = new Parcelable.Creator<ResultBean>() {
+            @Override
+            public ResultBean createFromParcel(Parcel source) {
+                return new ResultBean(source);
+            }
+
+            @Override
+            public ResultBean[] newArray(int size) {
+                return new ResultBean[size];
+            }
+        };
     }
 }

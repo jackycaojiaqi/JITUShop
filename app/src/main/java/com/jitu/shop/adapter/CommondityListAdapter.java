@@ -66,7 +66,6 @@ public class CommondityListAdapter extends BaseQuickAdapter<CommondityListEntity
         //图片
         if (item.getMainImg().size() > 0)
             if (!StringUtil.isEmptyandnull(item.getMainImg().get(0).getMainImg())) {
-                KLog.e();
                 ImagUtil.setRound(mContext, AppConstant.IMAGPATH + item.getMainImg().get(0).getMainImg(), helper.getView(R.id.iv_commondity_list_pic), 5);
             } else {
                 helper.setBackgroundRes(R.id.iv_commondity_list_pic, R.drawable.ic_no_pic);

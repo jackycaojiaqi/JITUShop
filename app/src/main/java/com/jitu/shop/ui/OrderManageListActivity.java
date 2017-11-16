@@ -74,41 +74,47 @@ public class OrderManageListActivity extends BaseActivity {
         titles.add("待付款");
         titles.add("待发货");
         titles.add("已发货");
+        titles.add("已收货");
         titles.add("待售后");
         OrderListOneFragment fragment1 = new OrderListOneFragment();
         Bundle bundle = new Bundle();
         bundle.putString(AppConstant.TYPE, "1");
         fragment1.setArguments(bundle);
 
-        OrderListOneFragment fragment2 = new OrderListOneFragment();
+        OrderListTwoFragment fragment2 = new OrderListTwoFragment();
         Bundle bundle2 = new Bundle();
         bundle2.putString(AppConstant.TYPE, "2");
         fragment2.setArguments(bundle2);
 
-        OrderListOneFragment fragment3 = new OrderListOneFragment();
+        OrderListThreeFragment fragment3 = new OrderListThreeFragment();
         Bundle bundle3 = new Bundle();
         bundle3.putString(AppConstant.TYPE, "3");
         fragment3.setArguments(bundle3);
 
-        OrderListOneFragment fragment4 = new OrderListOneFragment();
+        OrderListFourFragment fragment4 = new OrderListFourFragment();
         Bundle bundle4 = new Bundle();
         bundle4.putString(AppConstant.TYPE, "4");
         fragment4.setArguments(bundle4);
 
-        OrderListOneFragment fragment5 = new OrderListOneFragment();
+        OrderListFiveFragment fragment5 = new OrderListFiveFragment();
         Bundle bundle5 = new Bundle();
         bundle5.putString(AppConstant.TYPE, "5");
         fragment5.setArguments(bundle5);
 
+        OrderListSixFragment fragment6 = new OrderListSixFragment();
+        Bundle bundle6 = new Bundle();
+        bundle6.putString(AppConstant.TYPE, "6");
+        fragment6.setArguments(bundle6);
 
         fragments.add(fragment1);
         fragments.add(fragment2);
         fragments.add(fragment3);
         fragments.add(fragment4);
         fragments.add(fragment5);
+        fragments.add(fragment6);
         WelcomePagerAdapter adapter = new WelcomePagerAdapter(getSupportFragmentManager(), fragments, titles);
         vpOrderList.setAdapter(adapter);
-        vpOrderList.setOffscreenPageLimit(1);
+        vpOrderList.setOffscreenPageLimit(5);
         tlOrdermanageList.setupWithViewPager(vpOrderList);
         tlOrdermanageList.setTabMode(TabLayout.MODE_FIXED);
     }

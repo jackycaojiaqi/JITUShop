@@ -86,11 +86,45 @@ public class MainActivity extends BaseActivity {
         srlMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initdate();
                 initOtherDate();
+                initdate();
             }
         });
         srlMain.setProgressViewOffset(true, 10, 100);
+        //设置adapter
+        adapter = new MainMenuAdapter(R.layout.item_main_menu, list);
+        //设置布局管理器
+        rvMain.setLayoutManager(new GridLayoutManager(context, 3));
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (position) {
+                    case 0:
+                        startActivity(new Intent(context, OrderManageListActivity.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(context, CommodityManageListActivity.class));
+                        break;
+                    case 2:
+                        startActivity(new Intent(context, CashManageActivity.class));
+                        break;
+                    case 3:
+                        startActivity(new Intent(context, ShopCenterActivity.class));
+                        break;
+                    case 4:
+                        startActivity(new Intent(context, ShopInfoActivity.class));
+                        break;
+                    case 5:
+                        startActivity(new Intent(context, MessageActivity.class));
+                        break;
+                }
+            }
+        });
+        adapter.bindToRecyclerView(rvMain);
+        rvMain.setAdapter(adapter);
+        //水平分割线
+        rvMain.addItemDecoration(new DividerItemDecoration(
+                context, DividerItemDecoration.VERTICAL_LIST, 10, getResources().getColor(R.color.white)));
     }
 
     private void initdate() {
@@ -106,10 +140,9 @@ public class MainActivity extends BaseActivity {
                                 if (response.body().getResult().getMenus() != null)
                                     if (response.body().getResult().getMenus().size() > 0) {
                                         list = response.body().getResult().getMenus();
+
+                                        adapter.setNewData(list);
                                         list_loop = response.body().getResult().getLoops();
-                                        if (auth_state_unpass) {
-                                            response.body().getResult().getMenus().get(3).setIs_show_spot(true);
-                                        }
                                         //===================设置轮播图
                                         for (int i = 0; i < list_loop.size(); i++) {
                                             images.add(AppConstant.IMAGPATH + list_loop.get(i).getCM_ImgPath());
@@ -119,40 +152,7 @@ public class MainActivity extends BaseActivity {
                                         //banner设置方法全部调用完毕时最后调用
                                         banner.start();
                                         //=================轮播图结束
-                                        adapter = new MainMenuAdapter(R.layout.item_main_menu, list);
-                                        //设置布局管理器
-                                        rvMain.setLayoutManager(new GridLayoutManager(context, 3));
-                                        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                                            @Override
-                                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                                switch (position) {
-                                                    case 0:
-                                                        startActivity(new Intent(context, OrderManageListActivity.class));
-                                                        break;
-                                                    case 1:
-                                                        startActivity(new Intent(context, CommodityManageListActivity.class));
-                                                        break;
-                                                    case 2:
-                                                        startActivity(new Intent(context, CashManageActivity.class));
-                                                        break;
-                                                    case 3:
-                                                        startActivity(new Intent(context, ShopCenterActivity.class));
-                                                        break;
-                                                    case 4:
-                                                        startActivity(new Intent(context, ShopInfoActivity.class));
-                                                        break;
-                                                    case 5:
-                                                        startActivity(new Intent(context, MessageActivity.class));
-                                                        break;
-                                                }
-                                            }
-                                        });
-                                        adapter.bindToRecyclerView(rvMain);
-                                        adapter.setEmptyView(R.layout.empty_view);
-                                        rvMain.setAdapter(adapter);
-                                        //水平分割线
-                                        rvMain.addItemDecoration(new DividerItemDecoration(
-                                                context, DividerItemDecoration.VERTICAL_LIST, 10, getResources().getColor(R.color.white)));
+
                                     }
                         } else {
                             ToastUtil.show(context, "账号密码错误");
@@ -167,8 +167,6 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
-    private boolean auth_state_unpass = true;
-    private boolean order_state_show = true;
 
     private void initOtherDate() {
         HttpParams params = new HttpParams();
@@ -188,11 +186,13 @@ public class MainActivity extends BaseActivity {
                     SPUtil.put(context, AppConstant.UNDELIVER_STATE, result.getResult().getPiad());
                     SPUtil.put(context, AppConstant.DELIVERED_STATE, result.getResult().getShipped());
                     SPUtil.put(context, AppConstant.AFTERSALE_STATE, result.getResult().getCompleted());
-                    if (result.getResult().getIspass() == 0) {
-                        auth_state_unpass = true;
-                    } else {
-                        auth_state_unpass = false;
-                    }
+                    SPUtil.put(context, AppConstant.MESSAGE_UNREAD_NUM, result.getResult().getNotice());
+                    //未读消息大于0
+                    if (list.size() > 5)
+                        if ((int) SPUtil.get(context, AppConstant.MESSAGE_UNREAD_NUM, 0) > 0) {
+                            list.get(5).setIs_show_spot(true);
+                            adapter.setNewData(list);
+                        }
                 }
             }
         });

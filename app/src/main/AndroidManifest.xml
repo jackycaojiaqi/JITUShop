@@ -88,17 +88,24 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.AfterSaleActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.AddCardActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.RegisterActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.GetCashHistoryActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".wxapi.WXPayEntryActivity"
-            android:launchMode="singleTask"/>
-
+        <activity
+            android:name=".ui.AfterSaleActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.AddCardActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.GetCashHistoryActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.MessageInfoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:launchMode="singleTask" />
 
 
         <!-- 极光推送相关服务注册 Required SDK核心功能-->
@@ -203,7 +210,7 @@
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:theme="@android:style/Theme.Translucent" />
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name=".widget.MyProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -211,20 +218,19 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
     </application>
     <!-- Required  一些系统要求的权限，如访问网络等-->
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />

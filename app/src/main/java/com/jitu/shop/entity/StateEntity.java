@@ -44,6 +44,15 @@ public class StateEntity extends BasePaserEntity {
         private int shipped;
         private int completed;
         private int ispass;
+        private int notice;
+
+        public int getNotice() {
+            return notice;
+        }
+
+        public void setNotice(int notice) {
+            this.notice = notice;
+        }
 
         public int getUnpaid() {
             return unpaid;

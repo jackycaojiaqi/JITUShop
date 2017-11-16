@@ -48,7 +48,34 @@ public class OrderListEntity extends BasePaserEntity {
         private int States;
         private String consignee;
         private double amount;
+        private int CM_OrderServiceState;
+        private int CM_OrderServiceTpye;
+        private String CM_ServiceId;
         private List<TBListBean> TB_List;
+
+        public String getCM_ServiceId() {
+            return CM_ServiceId;
+        }
+
+        public void setCM_ServiceId(String CM_ServiceId) {
+            this.CM_ServiceId = CM_ServiceId;
+        }
+
+        public int getCM_OrderServiceState() {
+            return CM_OrderServiceState;
+        }
+
+        public void setCM_OrderServiceState(int CM_OrderServiceState) {
+            this.CM_OrderServiceState = CM_OrderServiceState;
+        }
+
+        public int getCM_OrderServiceTpye() {
+            return CM_OrderServiceTpye;
+        }
+
+        public void setCM_OrderServiceTpye(int CM_OrderServiceTpye) {
+            this.CM_OrderServiceTpye = CM_OrderServiceTpye;
+        }
 
         public String getId() {
             return id;

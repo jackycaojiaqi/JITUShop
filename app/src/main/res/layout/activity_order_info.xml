@@ -11,13 +11,13 @@
         android:id="@+id/sv_order_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp">
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="40dp">
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -109,6 +109,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="70dp"
+                    android:lines="2"
                     android:textColor="@color/gray_deep"
                     android:textSize="14dp" />
 
@@ -160,9 +162,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="发货信息"
+                    android:text="买家信息"
                     android:textColor="@color/black_3a3a3a"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -247,7 +249,7 @@
                     android:layout_centerVertical="true"
                     android:text="商品信息"
                     android:textColor="@color/black_3a3a3a"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:textStyle="bold" />
             </RelativeLayout>
 

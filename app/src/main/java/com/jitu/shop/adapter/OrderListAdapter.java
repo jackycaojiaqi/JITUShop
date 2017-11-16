@@ -13,12 +13,11 @@ import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.entity.MainMenuEntity;
 import com.jitu.shop.entity.OrderListEntity;
+import com.jitu.shop.ui.AfterSaleActivity;
 import com.jitu.shop.ui.OrdrInfoActivity;
 import com.jitu.shop.util.ImagUtil;
 import com.jitu.shop.util.StringUtil;
 import com.socks.library.KLog;
-import com.vondear.rxtools.view.tooltips.RxToolTip;
-import com.vondear.rxtools.view.tooltips.RxToolTipsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +50,8 @@ import java.util.List;
 public class OrderListAdapter extends BaseQuickAdapter<OrderListEntity.ResultBean, BaseViewHolder> {
     private List<OrderListEntity.ResultBean> list = new ArrayList<>();
     private OrderListGoodsAdapter adapter;
-    RxToolTipsManager mRxToolTipsManager;
-    RxToolTip.Builder builder;
     View tipvView;
+
     public OrderListAdapter(int layoutResId, List data) {
         super(layoutResId, data);
         list = data;
@@ -65,19 +63,23 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListEntity.ResultBea
         helper.setText(R.id.tv_order_list_order_num, "订单编号：" + item.getId());
         if (item.getStates() == 1) {
             helper.setText(R.id.tv_order_list_order_state, "刚下单");
+            helper.getView(R.id.tv_order_list_action).setVisibility(View.GONE);
+            helper.getView(R.id.tv_order_list_action2).setVisibility(View.GONE);
         } else if (item.getStates() == 10) {
             helper.setText(R.id.tv_order_list_order_state, "已付款");
+            helper.getView(R.id.tv_order_list_action).setVisibility(View.VISIBLE);
+            ((TextView) helper.getView(R.id.tv_order_list_action)).setText("发货");
+            helper.getView(R.id.tv_order_list_action2).setVisibility(View.GONE);
         } else if (item.getStates() == 15) {
             helper.setText(R.id.tv_order_list_order_state, "已发货");
+            helper.getView(R.id.tv_order_list_action).setVisibility(View.GONE);
+            helper.getView(R.id.tv_order_list_action2).setVisibility(View.GONE);
         } else if (item.getStates() == 20) {
             helper.setText(R.id.tv_order_list_order_state, "已收货");
-        } else if (item.getStates() == 30) {
-            helper.setText(R.id.tv_order_list_order_state, "申请退款");
-        } else if (item.getStates() == 33) {
-            helper.setText(R.id.tv_order_list_order_state, "已经退货");
-        } else if (item.getStates() == 35) {
-            helper.setText(R.id.tv_order_list_order_state, "没有退货");
+            helper.getView(R.id.tv_order_list_action).setVisibility(View.GONE);
+            helper.getView(R.id.tv_order_list_action2).setVisibility(View.GONE);
         }
+
         final LinearLayout linearLayout = helper.getView(R.id.ll_order_parent);
         //添加按钮监听
         helper.addOnClickListener(R.id.tv_order_list_action);
@@ -98,6 +100,19 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListEntity.ResultBea
                     mContext.startActivity(intent);
                 }
             });
+        }
+        //处理售后
+        if (item.getCM_OrderServiceState() != 0) {
+            helper.getView(R.id.tv_order_list_action).setVisibility(View.VISIBLE);
+            helper.getView(R.id.tv_order_list_action2).setVisibility(View.GONE);
+            //type:1退款，2退货退款,3换货
+            if (item.getCM_OrderServiceTpye() == 1) {
+                ((TextView) helper.getView(R.id.tv_order_list_action)).setText("退款");
+            } else if (item.getCM_OrderServiceTpye() == 2) {
+                ((TextView) helper.getView(R.id.tv_order_list_action)).setText("退货退款");
+            } else if (item.getCM_OrderServiceTpye() == 3) {
+                ((TextView) helper.getView(R.id.tv_order_list_action)).setText("换货");
+            }
         }
     }
 }

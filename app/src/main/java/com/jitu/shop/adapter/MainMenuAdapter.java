@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jitu.shop.R;
 import com.jitu.shop.entity.MainMenuEntity;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -45,23 +46,32 @@ public class MainMenuAdapter extends BaseQuickAdapter<MainMenuEntity.ResultBean.
     @Override
     protected void convert(BaseViewHolder helper, MainMenuEntity.ResultBean.MenusBean item) {
         if (item.getCM_MenuId() == 1) {
+            helper.getView(R.id.iv_red_spot).setVisibility(View.GONE);
             helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_order_management);
         } else if (item.getCM_MenuId() == 2) {
+            helper.getView(R.id.iv_red_spot).setVisibility(View.GONE);
             helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_commodity_management);
         } else if (item.getCM_MenuId() == 3) {
+            helper.getView(R.id.iv_red_spot).setVisibility(View.GONE);
             helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_cash_withdrawal_management);
         } else if (item.getCM_MenuId() == 4) {
+            helper.getView(R.id.iv_red_spot).setVisibility(View.GONE);
             helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_merchant_management);
         } else if (item.getCM_MenuId() == 5) {
+            helper.getView(R.id.iv_red_spot).setVisibility(View.GONE);
             helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_management_profile);
         } else if (item.getCM_MenuId() == 6) {
+            KLog.e("11111");
+            if (item.is_show_spot()) {
+                KLog.e("-----");
+                helper.getView(R.id.iv_red_spot).setVisibility(View.VISIBLE);
+            } else {
+                KLog.e("====");
+                helper.getView(R.id.iv_red_spot).setVisibility(View.GONE);
+            }
             helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_message_management);
         }
         helper.setText(R.id.tv_main_menu_name, item.getCM_MenuName());
-        if (item.is_show_spot()) {
-            helper.getView(R.id.iv_red_spot).setVisibility(View.VISIBLE);
-        } else {
-            helper.getView(R.id.iv_red_spot).setVisibility(View.GONE);
-        }
+
     }
 }
