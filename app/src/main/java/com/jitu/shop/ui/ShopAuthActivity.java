@@ -374,8 +374,8 @@ public class ShopAuthActivity extends BaseActivity implements AMapLocationListen
                 map.put("cityname", city_name);
                 map.put("regionid", String.valueOf(region_id));
                 map.put("regionname", region_name);
-                map.put("x", String.valueOf(lat));
-                map.put("y", String.valueOf(lon));
+                map.put("x", String.valueOf(lon));
+                map.put("y", String.valueOf(lat));
                 KLog.e(lat + " " + lon);
                 map.put("classid", String.valueOf(classid));//类目ID
                 map.put("classname", class_name);//类目名称

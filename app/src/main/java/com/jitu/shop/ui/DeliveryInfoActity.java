@@ -93,9 +93,12 @@ public class DeliveryInfoActity extends BaseActivity {
                                         deliver_id = list_person.getCM_LogisticsId();
                                     }
                                 }
-
                             }
                         });
+
+                    }
+                    if (list_people.size() > 0) {
+                        deliver_id = list_people.get(0).getCM_LogisticsId();
                     }
                 }
             }
@@ -132,9 +135,11 @@ public class DeliveryInfoActity extends BaseActivity {
                 String deliver_code = etDeliverCode.getText().toString().trim();
                 if (deliver_id == 0) {
                     RxToast.info("请选择快递公司");
+                    return;
                 }
                 if (StringUtil.isEmptyandnull(deliver_code)) {
                     RxToast.info("请输入快递单号");
+                    return;
                 }
                 SureToDeliver(deliver_code, deliver_id);
                 break;

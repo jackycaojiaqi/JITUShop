@@ -48,7 +48,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:text="买      家:"
                     android:textColor="@color/black_3a3a3a"
                     android:textSize="14dp" />
             </RelativeLayout>
@@ -72,8 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:text="18888888888"
-                    android:textColor="@color/red_dan"
+                    android:textColor="@color/blue_1b99d1"
                     android:textSize="14dp" />
             </RelativeLayout>
 
@@ -96,8 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:text="21099782123"
-                    android:textColor="@color/blue_1b99d1"
+                    android:textColor="@color/black_3a3a3a"
                     android:textSize="14dp" />
             </RelativeLayout>
 
@@ -111,17 +108,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="单        价:"
+                    android:text="地        址:"
                     android:textColor="@color/gray_deep"
                     android:textSize="14dp" />
 
                 <TextView
-                    android:id="@+id/tv_after_sale_price"
+                    android:id="@+id/tv_after_sale_addr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:text="¥19"
-                    android:textColor="@color/green"
+                    android:textColor="@color/black_3a3a3a"
                     android:textSize="14dp" />
             </RelativeLayout>
 
@@ -144,7 +140,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:text="¥9"
 
                     android:textColor="@color/green"
                     android:textSize="14dp" />
@@ -176,7 +171,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:text="889997777"
                     android:textColor="@color/black_3a3a3a"
                     android:textSize="14dp" />
             </RelativeLayout>
@@ -200,7 +194,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:text="¥19"
                     android:textColor="@color/green"
                     android:textSize="14dp" />
             </RelativeLayout>
@@ -209,6 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
@@ -248,14 +242,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:text="仅退款"
                     android:textColor="@color/black_3a3a3a"
                     android:textSize="14dp" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rll_after_sale_state"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
@@ -296,7 +291,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
-                    android:text="没有理想中那么好"
                     android:textColor="@color/black_3a3a3a"
                     android:textSize="14dp" />
             </RelativeLayout>

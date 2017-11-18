@@ -13,21 +13,15 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.adapter.AfterSaleListAdapter;
-import com.jitu.shop.adapter.OrderListAdapter;
-import com.jitu.shop.base.BaseFragment;
 import com.jitu.shop.entity.AfterSaleEntity;
-import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.interfaces.MyCallBack;
 import com.jitu.shop.ui.AfterSaleActivity;
-import com.jitu.shop.ui.DeliveryInfoActity;
-import com.jitu.shop.ui.DeliveryPickPeopleActity;
-import com.jitu.shop.ui.OrdrInfoActivity;
+import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.widget.DividerItemDecoration;
@@ -62,6 +56,7 @@ public class OrderListSixFragment extends ViewPagerFragment {
     private BaseQuickAdapter adapter;
     private List<AfterSaleEntity.ResultBean> list_order = new ArrayList<>();
     private int date_type = 0;//0 首次加载数据  1、下拉刷新  2、上拉加载
+    private boolean hasDate = false;
 
     @Nullable
     @Override
@@ -95,7 +90,19 @@ public class OrderListSixFragment extends ViewPagerFragment {
         }
         KLog.e(type_code);
         initview();
-        initdate();
+        if (getUserVisibleHint())
+            initdate();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //界面可见 并且控件已经找到 并且没有获取数据
+        if (isVisibleToUser && isVisible()
+                && rvOrderList != null && srlOrderList != null && adapter != null
+                && !hasDate) {
+            initdate();
+        }
     }
 
     private PopupWindow popupWindow;
@@ -137,7 +144,7 @@ public class OrderListSixFragment extends ViewPagerFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(context, AfterSaleActivity.class);
                 intent.putExtra(AppConstant.OBJECT, list_order.get(position).getCM_ServiceId());
-                intent.putExtra(AppConstant.TYPE,list_order.get(position).getCM_Type());
+                intent.putExtra(AppConstant.TYPE, String.valueOf(list_order.get(position).getCM_Type()));
                 startActivity(intent);
             }
         });
@@ -157,7 +164,7 @@ public class OrderListSixFragment extends ViewPagerFragment {
                 pos = position;
                 Intent intent = new Intent(context, AfterSaleActivity.class);
                 intent.putExtra(AppConstant.OBJECT, list_order.get(position).getCM_ServiceId());
-                intent.putExtra(AppConstant.TYPE,list_order.get(position).getCM_Type());
+                intent.putExtra(AppConstant.TYPE, String.valueOf(list_order.get(position).getCM_Type()));
                 startActivity(intent);
             }
         });
@@ -167,18 +174,20 @@ public class OrderListSixFragment extends ViewPagerFragment {
     private int pagesize = 10;
 
     private synchronized void initdate() {
-
+        DialogFactory.showRequestDialog(context);
         Map<String, String> map = new HashMap<>();
         map.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
         map.put("pagenum", String.valueOf(pagenum));
         map.put("pagesize", String.valueOf(pagesize));
-        map.put("type", "0");
+        map.put("type", "1");
         NetClient.getInstance(AfterSaleEntity.class).Get(context, AppConstant.URL_QueryService, map, new MyCallBack() {
             @Override
             public void onResponse(Response object) {
+                DialogFactory.hideRequestDialog();
                 srlOrderList.setRefreshing(false);
                 AfterSaleEntity orderListEntity = (AfterSaleEntity) object.body();
                 if (orderListEntity.getErrorCode() == 0) {
+                    hasDate = true;
                     if (date_type == 0) {
                         list_order.clear();
                         list_order = orderListEntity.getResult();
@@ -210,6 +219,7 @@ public class OrderListSixFragment extends ViewPagerFragment {
 
             @Override
             public void onFailure(int code) {
+                DialogFactory.hideRequestDialog();
                 if (srlOrderList != null)
                     srlOrderList.setRefreshing(false);
             }

@@ -62,7 +62,6 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         initview();
         initdate();
-        initOtherDate();
         JPushInterface.requestPermission(context);//请求权限
         JPushInterface.getAlias(context, 0);
         KLog.e("token:" + SPUtil.get(context, AppConstant.TOKEN, ""));
@@ -86,7 +85,6 @@ public class MainActivity extends BaseActivity {
         srlMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initOtherDate();
                 initdate();
             }
         });
@@ -133,7 +131,7 @@ public class MainActivity extends BaseActivity {
                 .execute(new JsonCallBack<MainMenuEntity>(MainMenuEntity.class) {
                     @Override
                     public void onSuccess(Response<MainMenuEntity> response) {
-
+                        initOtherDate();
                         srlMain.setRefreshing(false);
                         if (response.body().getErrorCode() == 0) {
                             if (response.body().getResult() != null)
@@ -142,6 +140,8 @@ public class MainActivity extends BaseActivity {
                                         list = response.body().getResult().getMenus();
 
                                         adapter.setNewData(list);
+                                        list_loop.clear();
+                                        images.clear();
                                         list_loop = response.body().getResult().getLoops();
                                         //===================设置轮播图
                                         for (int i = 0; i < list_loop.size(); i++) {
@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity {
                     if (list.size() > 5)
                         if ((int) SPUtil.get(context, AppConstant.MESSAGE_UNREAD_NUM, 0) > 0) {
                             list.get(5).setIs_show_spot(true);
-                            adapter.setNewData(list);
+                            adapter.notifyDataSetChanged();
                         }
                 }
             }

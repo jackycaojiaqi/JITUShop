@@ -1,10 +1,6 @@
 package com.jitu.shop.adapter;
 
-import android.content.Intent;
-import android.provider.SyncStateContract;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -12,11 +8,8 @@ import com.github.lguipeng.library.animcheckbox.AnimCheckBox;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.entity.CommondityListEntity;
-import com.jitu.shop.entity.OrderListEntity;
-import com.jitu.shop.ui.OrdrInfoActivity;
 import com.jitu.shop.util.ImagUtil;
 import com.jitu.shop.util.StringUtil;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +60,6 @@ public class CommondityListAdapter extends BaseQuickAdapter<CommondityListEntity
         if (item.getMainImg().size() > 0)
             if (!StringUtil.isEmptyandnull(item.getMainImg().get(0).getMainImg())) {
                 ImagUtil.setRound(mContext, AppConstant.IMAGPATH + item.getMainImg().get(0).getMainImg(), helper.getView(R.id.iv_commondity_list_pic), 5);
-            } else {
-                helper.setBackgroundRes(R.id.iv_commondity_list_pic, R.drawable.ic_no_pic);
             }
         helper.setText(R.id.tv_commondity_list_good_detail, StringUtil.isEmptyandnull(item.getProductName()) ? "未知" : item.getProductName())
                 .setText(R.id.tv_commondity_list_goods_sku, item.getSkuOAname() + "-" + item.getSkuOname() + " " + item.getSkuTAname() + "-" + item.getSkuTname())

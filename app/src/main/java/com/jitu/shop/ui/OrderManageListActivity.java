@@ -45,12 +45,14 @@ public class OrderManageListActivity extends BaseActivity {
     ViewPager vpOrderList;
     private List<String> titles = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
+    private int show_page = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordermanage_list);
         ButterKnife.bind(this);
+        show_page = getIntent().getIntExtra(AppConstant.PAGE, 0);
         initview();
         initdate();
     }
@@ -105,7 +107,7 @@ public class OrderManageListActivity extends BaseActivity {
         Bundle bundle6 = new Bundle();
         bundle6.putString(AppConstant.TYPE, "6");
         fragment6.setArguments(bundle6);
-
+        vpOrderList.setOffscreenPageLimit(5);
         fragments.add(fragment1);
         fragments.add(fragment2);
         fragments.add(fragment3);
@@ -114,9 +116,9 @@ public class OrderManageListActivity extends BaseActivity {
         fragments.add(fragment6);
         WelcomePagerAdapter adapter = new WelcomePagerAdapter(getSupportFragmentManager(), fragments, titles);
         vpOrderList.setAdapter(adapter);
-        vpOrderList.setOffscreenPageLimit(5);
         tlOrdermanageList.setupWithViewPager(vpOrderList);
         tlOrdermanageList.setTabMode(TabLayout.MODE_FIXED);
+        vpOrderList.setCurrentItem(show_page);
     }
 
     private void initdate() {

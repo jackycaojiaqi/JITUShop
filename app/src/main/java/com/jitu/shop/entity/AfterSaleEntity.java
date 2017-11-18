@@ -53,7 +53,7 @@ public class AfterSaleEntity extends BasePaserEntity {
         private String CM_Json;
         private int CM_OrderDetailsId;
         private String CM_Reason;
-        private int CM_ServiceId;
+        private String CM_ServiceId;
         private int CM_State;
         private int CM_Type;
         private String UserName;
@@ -100,11 +100,11 @@ public class AfterSaleEntity extends BasePaserEntity {
             this.CM_Reason = CM_Reason;
         }
 
-        public int getCM_ServiceId() {
+        public String getCM_ServiceId() {
             return CM_ServiceId;
         }
 
-        public void setCM_ServiceId(int CM_ServiceId) {
+        public void setCM_ServiceId(String CM_ServiceId) {
             this.CM_ServiceId = CM_ServiceId;
         }
 

@@ -11,13 +11,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
-import com.jitu.shop.entity.MainMenuEntity;
 import com.jitu.shop.entity.OrderListEntity;
-import com.jitu.shop.ui.AfterSaleActivity;
-import com.jitu.shop.ui.OrdrInfoActivity;
-import com.jitu.shop.util.ImagUtil;
-import com.jitu.shop.util.StringUtil;
-import com.socks.library.KLog;
+import com.jitu.shop.ui.OrderInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +90,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListEntity.ResultBea
             ((ListView) helper.getView(R.id.lv_order_list)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(mContext, OrdrInfoActivity.class);
+                    Intent intent = new Intent(mContext, OrderInfoActivity.class);
                     intent.putExtra(AppConstant.OBJECT, item.getId());
                     mContext.startActivity(intent);
                 }

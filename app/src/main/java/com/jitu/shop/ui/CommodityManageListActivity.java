@@ -72,12 +72,14 @@ public class CommodityManageListActivity extends BaseActivity {
     public static boolean is_1show_checkbox = false;
     public static boolean is_2show_checkbox = false;
     private int select_page = 0;
+    private int show_page = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commonditymanage_list);
         ButterKnife.bind(this);
+        show_page = getIntent().getIntExtra(AppConstant.TYPE, 0);
         EventBus.getDefault().register(this);
         initview();
         initdate();
@@ -148,6 +150,11 @@ public class CommodityManageListActivity extends BaseActivity {
 
             }
         });
+        if (show_page == 0) {
+            vpOrderList.setCurrentItem(0);
+        } else if (show_page == 1) {
+            vpOrderList.setCurrentItem(1);
+        }
     }
 
     private void initdate() {

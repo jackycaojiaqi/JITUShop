@@ -1,7 +1,6 @@
 package com.jitu.shop.ui.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,21 +16,16 @@ import com.google.gson.Gson;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.adapter.CommondityListAdapter;
-import com.jitu.shop.adapter.OrderListAdapter;
 import com.jitu.shop.base.BaseFragment;
 import com.jitu.shop.entity.BasePaserEntity;
 import com.jitu.shop.entity.BatchReleaseEntity;
 import com.jitu.shop.entity.CommondityListEntity;
-import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.interfaces.MyCallBack;
 import com.jitu.shop.ui.CommodityManageListActivity;
-import com.jitu.shop.ui.OrdrInfoActivity;
 import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
-import com.jitu.shop.util.StringUtil;
 import com.jitu.shop.util.ToastUtil;
-import com.jitu.shop.widget.DividerGridItemDecoration;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
@@ -41,6 +35,7 @@ import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -128,7 +123,7 @@ public class CommodityListOneFragment extends BaseFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                Intent intent = new Intent(context, OrdrInfoActivity.class);
+//                Intent intent = new Intent(context, OrderInfoActivity.class);
 //                intent.putExtra(AppConstant.OBJECT, list_order.get(position).get());
 //                startActivity(intent);
             }
@@ -168,26 +163,87 @@ public class CommodityListOneFragment extends BaseFragment {
                         adapter.setEnableLoadMore(true);
                         list_order.clear();
                         list_order = entity.getResult();
-                        adapter.setNewData(list_order);
+
                         if (entity.getResult().size() < 10) {
                             adapter.setEnableLoadMore(false);
                         }
+                        Iterator<CommondityListEntity.ResultBean> iter = list_order.iterator();
+                        while (iter.hasNext()) {
+                            CommondityListEntity.ResultBean obj = iter.next();
+                            if (obj.getIsSku() == 1) {
+                                if (!obj.isIsSale())
+                                    iter.remove();
+                                else if (obj.isIsSale()) {
+                                    if (!obj.isSkuIsSale())
+                                        iter.remove();
+                                }
+                            } else if (obj.getIsSku() == 0) {
+                                if (!obj.isIsSale())
+                                    iter.remove();
+                            }
+                        }
+                        adapter.setNewData(list_order);
                     } else if (date_type == 1) {
                         list_order.clear();
                         adapter.setEnableLoadMore(true);
                         list_order = entity.getResult();
-                        adapter.setNewData(list_order);
                         if (entity.getResult().size() < 10) {
                             adapter.setEnableLoadMore(false);
                         }
+                        Iterator<CommondityListEntity.ResultBean> iter = list_order.iterator();
+                        while (iter.hasNext()) {
+                            CommondityListEntity.ResultBean obj = iter.next();
+                            if (obj.getIsSku() == 1) {
+                                if (!obj.isIsSale())
+                                    iter.remove();
+                                else if (obj.isIsSale()) {
+                                    if (!obj.isSkuIsSale())
+                                        iter.remove();
+                                }
+                            } else if (obj.getIsSku() == 0) {
+                                if (!obj.isIsSale())
+                                    iter.remove();
+                            }
+                        }
+                        adapter.setNewData(list_order);
                     } else if (date_type == 2) {
                         if (entity.getResult().size() < 10) {//最后一页
                             adapter.setEnableLoadMore(false);
                             list_order.addAll(entity.getResult());
+                            Iterator<CommondityListEntity.ResultBean> iter = list_order.iterator();
+                            while (iter.hasNext()) {
+                                CommondityListEntity.ResultBean obj = iter.next();
+                                if (obj.getIsSku() == 1) {
+                                    if (!obj.isIsSale())
+                                        iter.remove();
+                                    else if (obj.isIsSale()) {
+                                        if (!obj.isSkuIsSale())
+                                            iter.remove();
+                                    }
+                                } else if (obj.getIsSku() == 0) {
+                                    if (!obj.isIsSale())
+                                        iter.remove();
+                                }
+                            }
                             adapter.notifyDataSetChanged();
                             adapter.loadMoreComplete();
                         } else if (entity.getResult().size() >= 10) {//不是最后一页
                             list_order.addAll(entity.getResult());
+                            Iterator<CommondityListEntity.ResultBean> iter = list_order.iterator();
+                            while (iter.hasNext()) {
+                                CommondityListEntity.ResultBean obj = iter.next();
+                                if (obj.getIsSku() == 1) {
+                                    if (!obj.isIsSale())
+                                        iter.remove();
+                                    else if (obj.isIsSale()) {
+                                        if (!obj.isSkuIsSale())
+                                            iter.remove();
+                                    }
+                                } else if (obj.getIsSku() == 0) {
+                                    if (!obj.isIsSale())
+                                        iter.remove();
+                                }
+                            }
                             adapter.notifyDataSetChanged();
                             adapter.loadMoreComplete();
                         }
@@ -231,7 +287,7 @@ public class CommodityListOneFragment extends BaseFragment {
                         }
                     } else {//有sku
                         obj.setProductid(resultBean.getId());
-                        obj.setCount("0");
+                        obj.setCount("1");
                         obj_sku.setSkuid(String.valueOf(resultBean.getSkuid()));
                         obj_sku.setInventory(String.valueOf(resultBean.getSkuinventory()));
                         list_sku.add(obj_sku);

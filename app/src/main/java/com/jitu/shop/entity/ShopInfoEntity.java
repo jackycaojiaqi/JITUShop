@@ -42,9 +42,9 @@ public class ShopInfoEntity extends BasePaserEntity {
          */
 
         private int mouthordersun;
-        private Object monthturnover;
+        private String monthturnover;
         private int dayordernum;
-        private Object dayturnover;
+        private String dayturnover;
         private int sellersun;
         private int unsellersun;
         private int notshipped;
@@ -57,11 +57,11 @@ public class ShopInfoEntity extends BasePaserEntity {
             this.mouthordersun = mouthordersun;
         }
 
-        public Object getMonthturnover() {
+        public String getMonthturnover() {
             return monthturnover;
         }
 
-        public void setMonthturnover(Object monthturnover) {
+        public void setMonthturnover(String monthturnover) {
             this.monthturnover = monthturnover;
         }
 
@@ -77,7 +77,7 @@ public class ShopInfoEntity extends BasePaserEntity {
             return dayturnover;
         }
 
-        public void setDayturnover(Object dayturnover) {
+        public void setDayturnover(String dayturnover) {
             this.dayturnover = dayturnover;
         }
 

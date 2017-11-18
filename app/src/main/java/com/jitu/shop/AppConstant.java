@@ -120,6 +120,10 @@ public class AppConstant {
 
     //售后操作相关
     public static final String URL_QueryService = BASE_URL + "/api/Admin/QueryService"; //查询售后申请
-    public static final String URL_QueryServiceDetails = BASE_URL + "/api/Admin/QueryServiceDetails"; //查询售后详情
+    public static final String URL_QueryAfterSalesProcess = BASE_URL + "/api/Admin/QueryAfterSalesProcess"; //查询售后详情
+    public static final String URL_AgreeService = BASE_URL + "/api/Admin/AgreeService"; //同意售后申请(仅限退货退款和换货）
+    public static final String URL_Refund = BASE_URL + "/api/Admin/Refund"; //退款
+    public static final String URL_CloseService = BASE_URL + "/api/Admin/CloseService"; //关闭售后申请
+
 
 }

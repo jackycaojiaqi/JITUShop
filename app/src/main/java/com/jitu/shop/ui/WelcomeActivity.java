@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -45,24 +46,22 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind((Activity) context);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!StringUtil.isEmptyandnull((String) SPUtil.get(context, AppConstant.TOKEN, ""))) {
-                            Intent intent = new Intent(context, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            initview();
-                        }
-                    }
-                });
-            }
-        }, 2000);
+        handler.sendEmptyMessageDelayed(1, 2000);
     }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (!StringUtil.isEmptyandnull((String) SPUtil.get(context, AppConstant.TOKEN, ""))) {
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                initview();
+            }
+        }
+    };
 
     private void initview() {
         fragments.add(new WelcomeOneFragment());
@@ -97,5 +96,11 @@ public class WelcomeActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 }

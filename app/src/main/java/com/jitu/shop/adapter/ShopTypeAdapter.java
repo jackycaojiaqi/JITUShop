@@ -1,19 +1,11 @@
 package com.jitu.shop.adapter;
 
-import android.content.Intent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
-import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.entity.ShopTypeEntity;
-import com.jitu.shop.ui.OrdrInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;

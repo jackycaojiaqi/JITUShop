@@ -99,7 +99,7 @@ public class ClassifyManageActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                Intent intent = new Intent(context, OrdrInfoActivity.class);
+//                Intent intent = new Intent(context, OrderInfoActivity.class);
 //                intent.putExtra(AppConstant.OBJECT, list_order.get(position).get());
 //                startActivity(intent);
             }

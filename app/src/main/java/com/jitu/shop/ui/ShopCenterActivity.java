@@ -14,6 +14,7 @@ import com.jitu.shop.R;
 import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.entity.ShopCenterEntity;
 import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.ImagUtil;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
@@ -84,16 +85,19 @@ public class ShopCenterActivity extends BaseActivity {
     private int pay_state = -1;
 
     private void initdate() {
+        DialogFactory.showRequestDialog(context);
         HttpParams params = new HttpParams();
         params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
         NetClient.getInstance(ShopCenterEntity.class).Get(context, AppConstant.URL_QUERYSHOPINFO, params, new MyCallBack() {
             @Override
             public void onFailure(int code) {
+                DialogFactory.hideRequestDialog();
 
             }
 
             @Override
             public void onResponse(Response object) {
+                DialogFactory.hideRequestDialog();
                 ShopCenterEntity shop_entity = (ShopCenterEntity) object.body();
                 if (shop_entity.getErrorCode() == 0) {
                     KLog.e(AppConstant.IMAGPATH + shop_entity.getResult().getLogo());

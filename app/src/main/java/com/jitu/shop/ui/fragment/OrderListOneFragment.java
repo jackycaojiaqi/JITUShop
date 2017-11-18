@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,13 +19,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jitu.shop.AppConstant;
 import com.jitu.shop.R;
 import com.jitu.shop.adapter.OrderListAdapter;
-import com.jitu.shop.base.BaseFragment;
 import com.jitu.shop.entity.OrderListEntity;
 import com.jitu.shop.interfaces.MyCallBack;
 import com.jitu.shop.ui.AfterSaleActivity;
 import com.jitu.shop.ui.DeliveryInfoActity;
 import com.jitu.shop.ui.DeliveryPickPeopleActity;
-import com.jitu.shop.ui.OrdrInfoActivity;
+import com.jitu.shop.ui.OrderInfoActivity;
+import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.widget.DividerItemDecoration;
@@ -62,7 +61,7 @@ public class OrderListOneFragment extends ViewPagerFragment {
     private BaseQuickAdapter adapter;
     private List<OrderListEntity.ResultBean> list_order = new ArrayList<>();
     private int date_type = 0;//0 首次加载数据  1、下拉刷新  2、上拉加载
-
+    private boolean hasDate = false;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,9 +92,19 @@ public class OrderListOneFragment extends ViewPagerFragment {
         }
         KLog.e(type_code);
         initview();
-        initdate();
+        if (getUserVisibleHint())
+            initdate();
     }
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //界面可见 并且控件已经找到 并且没有获取数据
+        if (isVisibleToUser && isVisible()
+                && rvOrderList != null && srlOrderList != null && adapter != null
+                &&!hasDate) {
+            initdate();
+        }
+    }
 
     private PopupWindow popupWindow;
     private int pos = -1;
@@ -134,7 +143,7 @@ public class OrderListOneFragment extends ViewPagerFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(context, OrdrInfoActivity.class);
+                Intent intent = new Intent(context, OrderInfoActivity.class);
                 intent.putExtra(AppConstant.OBJECT, list_order.get(position).getId());
                 startActivity(intent);
             }
@@ -205,7 +214,7 @@ public class OrderListOneFragment extends ViewPagerFragment {
     private int pagesize = 10;
 
     private void initdate() {
-
+        DialogFactory.showRequestDialog(context);
         Map<String, String> map = new HashMap<>();
         map.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
         map.put("pagenum", String.valueOf(pagenum));
@@ -214,9 +223,11 @@ public class OrderListOneFragment extends ViewPagerFragment {
         NetClient.getInstance(OrderListEntity.class).Get(context, AppConstant.BASE_URL + AppConstant.URL_QUERYORDERS, map, new MyCallBack() {
             @Override
             public void onResponse(Response object) {
+                DialogFactory.hideRequestDialog();
                 srlOrderList.setRefreshing(false);
                 OrderListEntity orderListEntity = (OrderListEntity) object.body();
                 if (orderListEntity.getErrorCode() == 0) {
+                    hasDate = true;
                     if (date_type == 0) {
                         list_order.clear();
                         list_order = orderListEntity.getResult();
@@ -248,6 +259,7 @@ public class OrderListOneFragment extends ViewPagerFragment {
 
             @Override
             public void onFailure(int code) {
+                DialogFactory.hideRequestDialog();
                 if (srlOrderList != null)
                     srlOrderList.setRefreshing(false);
             }

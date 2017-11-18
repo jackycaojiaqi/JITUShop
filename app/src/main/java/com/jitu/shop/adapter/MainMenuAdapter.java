@@ -72,6 +72,5 @@ public class MainMenuAdapter extends BaseQuickAdapter<MainMenuEntity.ResultBean.
             helper.setImageResource(R.id.iv_main_menu_pic, R.drawable.home_btn_message_management);
         }
         helper.setText(R.id.tv_main_menu_name, item.getCM_MenuName());
-
     }
 }

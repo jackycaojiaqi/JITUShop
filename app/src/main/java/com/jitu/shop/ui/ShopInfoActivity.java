@@ -13,6 +13,7 @@ import com.jitu.shop.base.BaseActivity;
 import com.jitu.shop.entity.OnlyCodeEntity;
 import com.jitu.shop.entity.ShopInfoEntity;
 import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.StringUtil;
@@ -64,16 +65,18 @@ public class ShopInfoActivity extends BaseActivity {
     }
 
     private void initdate() {
+        DialogFactory.showRequestDialog(context);
         HttpParams params = new HttpParams();
         params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
         NetClient.getInstance(ShopInfoEntity.class).Get(context, AppConstant.URL_QUERYOPERATIONSTATUS, params, new MyCallBack() {
             @Override
             public void onFailure(int code) {
-
+                DialogFactory.hideRequestDialog();
             }
 
             @Override
             public void onResponse(Response object) {
+                DialogFactory.hideRequestDialog();
                 ShopInfoEntity shopInfoEntity = (ShopInfoEntity) object.body();
                 if (shopInfoEntity.getErrorCode() == 0) {
                     tvShopInfoVisitToday.setText(shopInfoEntity.getResult().getMouthordersun() + " ");//月订单
@@ -93,6 +96,7 @@ public class ShopInfoActivity extends BaseActivity {
 
     @OnClick({R.id.iv_back, R.id.tv_submit, R.id.tv_shop_info_on_sales, R.id.tv_shop_info_wait_for_sales, R.id.tv_shop_info_order_undo, R.id.tv_shop_info_waitfor_reply})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
@@ -100,15 +104,21 @@ public class ShopInfoActivity extends BaseActivity {
             case R.id.tv_submit://交易明细
                 break;
             case R.id.tv_shop_info_on_sales:
-                startActivity(new Intent(context,CommodityManageListActivity.class));
+                intent = new Intent(context, CommodityManageListActivity.class);
+                intent.putExtra(AppConstant.TYPE, 0);
+                startActivity(intent);
                 finish();
                 break;
             case R.id.tv_shop_info_wait_for_sales:
-                startActivity(new Intent(context,CommodityManageListActivity.class));
+                intent = new Intent(context, CommodityManageListActivity.class);
+                intent.putExtra(AppConstant.TYPE, 1);
+                startActivity(intent);
                 finish();
                 break;
             case R.id.tv_shop_info_order_undo:
-                startActivity(new Intent(context,OrderManageListActivity.class));
+                intent = new Intent(context, OrderManageListActivity.class);
+                intent.putExtra(AppConstant.PAGE, 2);
+                startActivity(intent);
                 finish();
                 break;
             case R.id.tv_shop_info_waitfor_reply:

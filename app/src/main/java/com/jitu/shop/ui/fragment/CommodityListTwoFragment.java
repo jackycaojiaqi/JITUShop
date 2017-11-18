@@ -37,6 +37,7 @@ import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -131,7 +132,7 @@ public class CommodityListTwoFragment extends BaseFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                Intent intent = new Intent(context, OrdrInfoActivity.class);
+//                Intent intent = new Intent(context, OrderInfoActivity.class);
 //                intent.putExtra(AppConstant.OBJECT, list_order_two.get(position).get());
 //                startActivity(intent);
             }
@@ -171,26 +172,72 @@ public class CommodityListTwoFragment extends BaseFragment {
                         adapter.setEnableLoadMore(true);
                         list_order_two.clear();
                         list_order_two = entity.getResult();
-                        adapter.setNewData(list_order_two);
+
                         if (entity.getResult().size() < 10) {
                             adapter.setEnableLoadMore(false);
                         }
+                        Iterator<CommondityListEntity.ResultBean> iter = list_order_two.iterator();
+                        while (iter.hasNext()) {
+                            CommondityListEntity.ResultBean obj = iter.next();
+                            if (obj.getIsSku() == 1) {
+                                if (obj.isSkuIsSale())
+                                    iter.remove();
+                            } else if (obj.getIsSku() == 0) {
+                                if (obj.isIsSale())
+                                    iter.remove();
+                            }
+
+                        }
+                        adapter.setNewData(list_order_two);
                     } else if (date_type == 1) {
                         list_order_two.clear();
                         adapter.setEnableLoadMore(true);
                         list_order_two = entity.getResult();
-                        adapter.setNewData(list_order_two);
                         if (entity.getResult().size() < 10) {
                             adapter.setEnableLoadMore(false);
                         }
+                        Iterator<CommondityListEntity.ResultBean> iter = list_order_two.iterator();
+                        while (iter.hasNext()) {
+                            CommondityListEntity.ResultBean obj = iter.next();
+                            if (obj.getIsSku() == 1) {
+                                if (obj.isSkuIsSale())
+                                    iter.remove();
+                            } else if (obj.getIsSku() == 0) {
+                                if (obj.isIsSale())
+                                    iter.remove();
+                            }
+                        }
+                        adapter.setNewData(list_order_two);
                     } else if (date_type == 2) {
                         if (entity.getResult().size() < 10) {//最后一页
                             list_order_two.addAll(entity.getResult());
+                            Iterator<CommondityListEntity.ResultBean> iter = list_order_two.iterator();
+                            while (iter.hasNext()) {
+                                CommondityListEntity.ResultBean obj = iter.next();
+                                if (obj.getIsSku() == 1) {
+                                    if (obj.isSkuIsSale())
+                                        iter.remove();
+                                } else if (obj.getIsSku() == 0) {
+                                    if (obj.isIsSale())
+                                        iter.remove();
+                                }
+                            }
                             adapter.notifyDataSetChanged();
                             adapter.loadMoreComplete();
                             adapter.setEnableLoadMore(false);
                         } else if (entity.getResult().size() >= 10) {//不是最后一页
                             list_order_two.addAll(entity.getResult());
+                            Iterator<CommondityListEntity.ResultBean> iter = list_order_two.iterator();
+                            while (iter.hasNext()) {
+                                CommondityListEntity.ResultBean obj = iter.next();
+                                if (obj.getIsSku() == 1) {
+                                    if (obj.isSkuIsSale())
+                                        iter.remove();
+                                } else if (obj.getIsSku() == 0) {
+                                    if (obj.isIsSale())
+                                        iter.remove();
+                                }
+                            }
                             adapter.notifyDataSetChanged();
                             adapter.loadMoreComplete();
                         }
@@ -206,7 +253,6 @@ public class CommodityListTwoFragment extends BaseFragment {
         ids = " ";
         BatchReleaseEntity batchReleaseEntity = new BatchReleaseEntity();
         List<BatchReleaseEntity.ProductidsBean> list_date = new ArrayList<>();
-
         DialogFactory.showRequestDialog(context);
         //不是全店下架都要拼接ids
         if (!action_type.equals("2")) {
@@ -236,7 +282,7 @@ public class CommodityListTwoFragment extends BaseFragment {
                             }
                         } else {//有sku
                             obj.setProductid(resultBean.getId());
-                            obj.setCount("0");
+                            obj.setCount("1");
                             obj_sku.setSkuid(String.valueOf(resultBean.getSkuid()));
                             obj_sku.setInventory(String.valueOf(resultBean.getSkuinventory()));
                             list_sku.add(obj_sku);

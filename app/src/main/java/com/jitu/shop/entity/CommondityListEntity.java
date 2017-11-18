@@ -66,6 +66,8 @@ public class CommondityListEntity extends BasePaserEntity {
         private int inventory;
         private double sales;
         private boolean IsSale;
+        private int isSku;
+
         private String ProductName;
         private String CreatTime;
         private String pCode;
@@ -85,6 +87,14 @@ public class CommondityListEntity extends BasePaserEntity {
         private boolean skuIsSale;
         private List<ImagBean> mainImg;
         private boolean is_check;
+
+        public int getIsSku() {
+            return isSku;
+        }
+
+        public void setIsSku(int isSku) {
+            this.isSku = isSku;
+        }
 
         public boolean isIs_check() {
             return is_check;

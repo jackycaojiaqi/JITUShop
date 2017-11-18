@@ -35,7 +35,7 @@ import butterknife.OnClick;
 /**
  * Created by jacky on 2017/9/1.
  */
-public class OrdrInfoActivity extends BaseActivity {
+public class OrderInfoActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
@@ -166,10 +166,10 @@ public class OrdrInfoActivity extends BaseActivity {
                             }
                         }
                     });
+                    svOrderInfo.smoothScrollTo(0, 0);
                 }
             }
         });
-        svOrderInfo.smoothScrollTo(0, 0);
     }
 
     @OnClick({R.id.iv_back, R.id.tv_order_info_phone, R.id.tv_order_info_action})

@@ -68,7 +68,7 @@
             android:name=".ui.ClassifyManageActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.OrdrInfoActivity"
+            android:name=".ui.OrderInfoActivity"
             android:launchMode="singleTask" />
         <activity
             android:name=".ui.ShopInfoActivity"
