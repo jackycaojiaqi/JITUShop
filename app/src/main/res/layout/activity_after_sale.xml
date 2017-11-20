@@ -202,9 +202,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:visibility="gone"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -250,10 +250,10 @@
                 android:id="@+id/rll_after_sale_state"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -301,6 +301,12 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/gray_c" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="图片:" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -28,6 +28,7 @@ import com.jitu.shop.entity.BasePaserEntity;
 import com.jitu.shop.entity.CommondityListEntity;
 import com.jitu.shop.entity.OnlyCodeEntity;
 import com.jitu.shop.interfaces.MyCallBack;
+import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
 import com.jitu.shop.util.ScreenUtils;
@@ -121,16 +122,18 @@ public class CashManageActivity extends BaseActivity {
 
 
     private void initdate() {
+        DialogFactory.showRequestDialog(context);
         HttpParams params = new HttpParams();
         params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
         NetClient.getInstance(BankCardListEntity.class).Get(context, AppConstant.URL_QUERYMYCARD, params, new MyCallBack() {
             @Override
             public void onFailure(int code) {
-
+                DialogFactory.hideRequestDialog();
             }
 
             @Override
             public void onResponse(Response object) {
+                DialogFactory.hideRequestDialog();
                 BankCardListEntity bankCardListEntity = (BankCardListEntity) object.body();
                 if (bankCardListEntity.getErrorCode() == 0) {
                     list = bankCardListEntity.getResult();
@@ -149,17 +152,19 @@ public class CashManageActivity extends BaseActivity {
     }
 
     private void deleteList(int card_id) {
+        DialogFactory.showRequestDialog(context);
         HttpParams params = new HttpParams();
         params.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
         params.put("cardid", card_id);
         NetClient.getInstance(OnlyCodeEntity.class).Get(context, AppConstant.URL_DELCARD, params, new MyCallBack() {
             @Override
             public void onFailure(int code) {
-
+                DialogFactory.hideRequestDialog();
             }
 
             @Override
             public void onResponse(Response object) {
+                DialogFactory.hideRequestDialog();
                 OnlyCodeEntity bankCardListEntity = (OnlyCodeEntity) object.body();
                 if (bankCardListEntity.getErrorCode() == 0) {
                     initdate();

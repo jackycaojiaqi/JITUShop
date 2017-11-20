@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.jitu.shop.ui.OrderInfoActivity;
 import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
+import com.jitu.shop.util.ScreenUtils;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.jitu.shop.widget.ViewPagerFragment;
 import com.lzy.okgo.model.Response;
@@ -44,6 +46,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static android.view.Gravity.NO_GRAVITY;
 
 /**
  * Created by jacky on 2017/7/11.
@@ -158,7 +162,7 @@ public class OrderListOneFragment extends ViewPagerFragment {
             }
         }); //=========================recycleview配置结束
         popupWindow = new PopupWindow(context);
-        View contentView = LayoutInflater.from(context).inflate(
+        final View contentView = LayoutInflater.from(context).inflate(
                 R.layout.pop_pick_send_type, null);
         final PopupWindow popupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -192,7 +196,8 @@ public class OrderListOneFragment extends ViewPagerFragment {
                 //没有售后
                 if (list_order.get(position).getCM_OrderServiceState() == 0) {
                     if (list_order.get(position).getStates() == 10) {
-                        popupWindow.showAsDropDown(view);
+                        int windowPos[] = ScreenUtils.calculatePopWindowPos(view, contentView);
+                        popupWindow.showAtLocation(view, NO_GRAVITY, windowPos[0], windowPos[1]);
                     }
                 } else {//有售后
                     Intent intent = new Intent(context, AfterSaleActivity.class);

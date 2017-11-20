@@ -272,7 +272,7 @@ public class CommodityListOneFragment extends BaseFragment {
                     //没有sku
                     if (resultBean.getSkuid() == 0) {
                         obj.setProductid(resultBean.getId());
-                        obj.setCount(String.valueOf(resultBean.getInventory()));
+                        obj.setCount("0");
                         obj_sku.setInventory("0");
                         obj_sku.setSkuid("0");
                         list_sku.add(obj_sku);

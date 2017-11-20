@@ -1,5 +1,6 @@
 package com.jitu.shop.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import com.jitu.shop.ui.OrderInfoActivity;
 import com.jitu.shop.util.DialogFactory;
 import com.jitu.shop.util.NetClient;
 import com.jitu.shop.util.SPUtil;
+import com.jitu.shop.util.ScreenUtils;
 import com.jitu.shop.widget.DividerItemDecoration;
 import com.jitu.shop.widget.ViewPagerFragment;
 import com.lzy.okgo.model.Response;
@@ -43,6 +47,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static android.view.Gravity.NO_GRAVITY;
 
 /**
  * Created by jacky on 2017/7/11.
@@ -61,6 +67,7 @@ public class OrderListThreeFragment extends ViewPagerFragment {
     private List<OrderListEntity.ResultBean> list_order = new ArrayList<>();
     private int date_type = 0;//0 首次加载数据  1、下拉刷新  2、上拉加载
     private boolean hasDate = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,13 +100,15 @@ public class OrderListThreeFragment extends ViewPagerFragment {
         initview();
         if (getUserVisibleHint())
             initdate();
-    } @Override
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         //界面可见 并且控件已经找到 并且没有获取数据
         if (isVisibleToUser && isVisible()
                 && rvOrderList != null && srlOrderList != null && adapter != null
-                &&!hasDate) {
+                && !hasDate) {
             initdate();
         }
     }
@@ -156,7 +165,7 @@ public class OrderListThreeFragment extends ViewPagerFragment {
             }
         }); //=========================recycleview配置结束
         popupWindow = new PopupWindow(context);
-        View contentView = LayoutInflater.from(context).inflate(
+        final View contentView = LayoutInflater.from(context).inflate(
                 R.layout.pop_pick_send_type, null);
         final PopupWindow popupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -187,7 +196,8 @@ public class OrderListThreeFragment extends ViewPagerFragment {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 pos = position;
-                popupWindow.showAsDropDown(view);
+                int windowPos[] = ScreenUtils.calculatePopWindowPos(view, contentView);
+                popupWindow.showAtLocation(view, NO_GRAVITY, windowPos[0], windowPos[1]);
             }
         });
     }
@@ -259,4 +269,6 @@ public class OrderListThreeFragment extends ViewPagerFragment {
         EventBus.getDefault().unregister(this);
         unbinder.unbind();
     }
+
+
 }

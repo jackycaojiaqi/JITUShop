@@ -57,10 +57,13 @@ public class CommondityListAdapter extends BaseQuickAdapter<CommondityListEntity
     @Override
     protected void convert(BaseViewHolder helper, final CommondityListEntity.ResultBean item) {
         //图片
-        if (item.getMainImg().size() > 0)
+        if (item.getMainImg().size() > 0) {
             if (!StringUtil.isEmptyandnull(item.getMainImg().get(0).getMainImg())) {
                 ImagUtil.setRound(mContext, AppConstant.IMAGPATH + item.getMainImg().get(0).getMainImg(), helper.getView(R.id.iv_commondity_list_pic), 5);
             }
+        } else {
+
+        }
         helper.setText(R.id.tv_commondity_list_good_detail, StringUtil.isEmptyandnull(item.getProductName()) ? "未知" : item.getProductName())
                 .setText(R.id.tv_commondity_list_goods_sku, item.getSkuOAname() + "-" + item.getSkuOname() + " " + item.getSkuTAname() + "-" + item.getSkuTname())
                 .setText(R.id.tv_commondity_list_warehouse_num, "库存:" + (item.getSkuid() == 0 ? item.getInventory() : item.getSkuinventory()))

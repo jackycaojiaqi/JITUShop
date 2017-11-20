@@ -30,6 +30,7 @@ import com.lzy.okgo.model.Response;
 import com.socks.library.KLog;
 
 import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -225,7 +226,10 @@ public class OrderListSixFragment extends ViewPagerFragment {
             }
         });
     }
-
+    @Subscriber(tag = "orderListSixFragment_Refresh")
+    private void RefreshEvent(String obj) {
+        initdate();
+    }
 
     @Override
     public void onDestroyView() {

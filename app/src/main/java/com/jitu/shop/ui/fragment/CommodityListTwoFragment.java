@@ -148,7 +148,6 @@ public class CommodityListTwoFragment extends BaseFragment {
     }
 
     private void initdate() {
-        DialogFactory.showRequestDialog(context);
         Map<String, String> map = new HashMap<>();
         map.put("token", (String) SPUtil.get(context, AppConstant.TOKEN, ""));
         map.put("type", "1");
@@ -157,14 +156,12 @@ public class CommodityListTwoFragment extends BaseFragment {
         NetClient.getInstance(CommondityListEntity.class).Get(getActivity(), AppConstant.BASE_URL + AppConstant.URL_QUERYPRODUCTS, map, new MyCallBack() {
             @Override
             public void onFailure(int code) {
-                DialogFactory.hideRequestDialog();
                 if (srlOrderList != null)
                     srlOrderList.setRefreshing(false);
             }
 
             @Override
             public void onResponse(Response object) {
-                DialogFactory.hideRequestDialog();
                 srlOrderList.setRefreshing(false);
                 CommondityListEntity entity = (CommondityListEntity) object.body();
                 if (entity.getErrorCode() == 0) {
@@ -267,7 +264,7 @@ public class CommodityListTwoFragment extends BaseFragment {
                         //没有sku
                         if (resultBean.getSkuid() == 0) {
                             obj.setProductid(resultBean.getId());
-                            obj.setCount(String.valueOf(resultBean.getInventory()));
+                            obj.setCount("0");
                             obj_sku.setInventory("0");
                             obj_sku.setSkuid("0");
                             list_sku.add(obj_sku);

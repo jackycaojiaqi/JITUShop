@@ -31,6 +31,8 @@ import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.vondear.rxtools.RxImageUtils;
 
+import org.simple.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -234,7 +236,7 @@ public class AfterSaleActivity extends BaseActivity {
 
                 break;
             case R.id.iv_after_sale_goods_pic1:
-                if (list_img.length > 1)
+                if (list_img.length >= 1)
                     showBigImg(AppConstant.IMAGPATH + list_img[0]);
                 break;
             case R.id.iv_after_sale_goods_pic2:
@@ -278,6 +280,7 @@ public class AfterSaleActivity extends BaseActivity {
                     if (service_type.equals("2")) {
                         agreeAfterSale("1");
                     } else {
+                        EventBus.getDefault().post("1", "orderListSixFragment_Refresh");
                         finish();
                     }
                 }
